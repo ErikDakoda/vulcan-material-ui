@@ -1,0 +1,141 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import Formsy from 'formsy-react';
+import ComponentMixin from './mixins/component';
+import withStyles from 'material-ui/styles/withStyles';
+import Row from './row';
+import { FormGroup, FormControlLabel, } from 'material-ui/Form';
+import Checkbox from 'material-ui/Checkbox';
+import classNames from 'classnames';
+
+
+const styles = theme => ({
+  group: {
+    marginTop: '8px',
+  },
+  twoColumn: {
+    display: 'block',
+    [theme.breakpoints.down('md')]: {
+      '& > label': {
+        marginRight: theme.spacing.unit * 5,
+      },
+    },
+    [theme.breakpoints.up('md')]: {
+      '& > label': {
+        width: '49%',
+      },
+    },
+  },
+  threeColumn: {
+    display: 'block',
+    [theme.breakpoints.down('xs')]: {
+      '& > label': {
+        marginRight: theme.spacing.unit * 5,
+      },
+    },
+    [theme.breakpoints.up('xs')]: {
+      '& > label': {
+        width: '49%',
+      },
+    },
+    [theme.breakpoints.up('md')]: {
+      '& > label': {
+        width: '32%',
+      },
+    },
+  },
+  checkbox: {
+    width: '32px',
+    height: '32px',
+    marginLeft: '8px',
+  },
+});
+
+
+const FormsyMuiCheckboxGroup = createReactClass({
+  
+  mixins: [Formsy.Mixin, ComponentMixin],
+  
+  propTypes: {
+    name: PropTypes.string.isRequired,
+    options: PropTypes.array.isRequired,
+    classes: PropTypes.object.isRequired,
+  },
+  
+  getDefaultProps: function () {
+    return {
+      label: '',
+      help: null
+    };
+  },
+  
+  changeCheckbox: function () {
+    const value = [];
+    this.props.options.forEach(function (option, key) {
+      if (this[this.props.name + '-' + option.value].checked) {
+        value.push(option.value);
+      }
+    }.bind(this));
+    this.setValue(value);
+    this.props.onChange(this.props.name, value);
+  },
+  
+  renderElement: function () {
+    const controls = this.props.options.map((checkbox, key) => {
+      let checked = (this.getValue().indexOf(checkbox.value) !== -1);
+      let disabled = this.isFormDisabled() || checkbox.disabled || this.props.disabled;
+      
+      return (
+        <FormControlLabel
+          key={key}
+          control={
+            <Checkbox
+              className={this.props.classes.checkbox}
+              inputRef={(c) => this[this.props.name + '-' + checkbox.value] = c}
+              checked={checked}
+              onChange={this.changeCheckbox}
+              value={checkbox.value}
+              disabled={disabled}
+            />
+          }
+          label={checkbox.label}
+        />
+      );
+    });
+    
+    const maxLength = this.props.options.reduce((max, option) => 
+      option.label.length > max ? option.label.length : max, 0);
+  
+    const columnClass = maxLength < 18 ? 'threeColumn' : maxLength < 30 ? 'twoColumn' : '';
+    
+    return (
+      <FormGroup className={classNames(this.props.classes.group, this.props.classes[columnClass])}>
+        {controls}
+      </FormGroup>
+    );
+  },
+  
+  render: function () {
+    
+    if (this.getLayout() === 'elementOnly') {
+      return (
+        <div>{this.renderElement()}</div>
+      );
+    }
+    
+    return (
+      <Row
+        {...this.getRowProperties()}
+        fakeLabel={true}
+      >
+        {this.renderElement()}
+        {this.renderHelp()}
+        {this.renderErrorMessage()}
+      </Row>
+    );
+  }
+});
+
+
+export default withStyles(styles)(FormsyMuiCheckboxGroup);
