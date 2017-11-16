@@ -4,9 +4,10 @@ import createReactClass from 'create-react-class';
 import Formsy from 'formsy-react';
 import ComponentMixin from './mixins/component';
 import Row from './row';
-import Icon from './icon';
 import propUtilities from './prop-utilities';
-import Input from 'material-ui/Input';
+import Input, { InputAdornment } from 'material-ui/Input';
+import OpenInNewIcon from 'material-ui-icons/OpenInNew';
+import IconButton from 'material-ui/IconButton';
 
 
 const FormsyMuiInput = createReactClass({
@@ -60,27 +61,52 @@ const FormsyMuiInput = createReactClass({
     this.props.onChange(this.props.name, value);
   },
   
+  renderUrlButton: function () {
+    const style = {
+      verticalAlign: 'bottom',
+      width: '24px',
+      height: '24px',
+      fontSize: '20px',
+      paddingTop: '4px',
+    };
+    return (
+      <IconButton style={style}
+                  href={this.getValue()}
+                  target="_blank"
+                  disabled={!this.getValue()}
+      >
+        <OpenInNewIcon/>
+      </IconButton>
+    );
+  },
+  
   render: function () {
-    let element = this.renderElement();
+    let startAdornment;
+    let endAdornment;
     
-    if (this.props.type === 'hidden') {
+    if (this.props.addonBefore || this.props.buttonBefore) {
+      startAdornment =
+        <InputAdornment position="start" style={{ whiteSpace: 'nowrap' }}>
+          {this.props.addonBefore && this.props.addonBefore}
+          {this.props.buttonBefore && this.props.buttonBefore}
+        </InputAdornment>;
+    }
+    
+      const urlButton = this.props.type === 'url' && this.renderUrlButton();
+    
+    if (this.props.addonAfter || this.props.buttonAfter || urlButton) {
+      endAdornment =
+        <InputAdornment position="end" style={{ whiteSpace: 'nowrap' }}>
+          {urlButton && urlButton}
+          {this.props.buttonAfter && this.props.buttonAfter}
+          {this.props.addonAfter && this.props.addonAfter}
+        </InputAdornment>;
+    }
+    
+    let element = this.renderElement(startAdornment, endAdornment);
+    
+    if (this.getLayout() === 'elementOnly' || this.props.type === 'hidden') {
       return element;
-    }
-    
-    if (this.props.addonBefore || this.props.addonAfter || this.props.buttonBefore ||
-      this.props.buttonAfter) {
-      element = this.renderInputGroup(element);
-    }
-    
-    if (this.getLayout() === 'elementOnly') {
-      return element;
-    }
-    
-    let warningIcon = null;
-    if (this.showErrors()) {
-      warningIcon = (
-        <Icon symbol="remove" className="form-control-feedback"/>
-      );
     }
     
     return (
@@ -89,14 +115,13 @@ const FormsyMuiInput = createReactClass({
         htmlFor={this.getId()}
       >
         {element}
-        {warningIcon}
         {this.renderHelp()}
         {this.renderErrorMessage()}
       </Row>
     );
   },
   
-  renderElement: function () {
+  renderElement: function (startAdornment, endAdornment) {
     const options = this.props.options || {};
     return (
       <Input ref={(c) => this.element = c}
@@ -106,40 +131,12 @@ const FormsyMuiInput = createReactClass({
              onChange={this.changeValue}
              disabled={this.isFormDisabled() || this.props.disabled}
              rows={options.rows || this.props.rows}
-             autoFocus={options.autoFocus}
+             autoFocus={options.autoFocus || this.props.autoFocus}
+             startAdornment={startAdornment}
+             endAdornment={endAdornment}
       />
     );
   },
-  
-  renderInputGroup: function (element) {
-    return (
-      <div className="input-group">
-        {this.renderAddon(this.props.addonBefore)}
-        {this.renderButton(this.props.buttonBefore)}
-        {element}
-        {this.renderAddon(this.props.addonAfter)}
-        {this.renderButton(this.props.buttonAfter)}
-      </div>
-    );
-  },
-  
-  renderAddon: function (addon) {
-    if (!addon) {
-      return false;
-    }
-    return (
-      <span className="input-group-addon">{addon}</span>
-    );
-  },
-  
-  renderButton: function (button) {
-    if (!button) {
-      return false;
-    }
-    return (
-      <span className="input-group-btn">{button}</span>
-    );
-  }
   
 });
 

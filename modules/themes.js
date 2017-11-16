@@ -33,9 +33,7 @@ export const registerTheme = (name, theme) => {
  */
 export const getTheme = (name) => {
   const themeInfo = ThemesTable[name];
-  if (!themeInfo) {
-    throw new Error(`Theme ${name} not registered.`);
-  }
+  if (!themeInfo) return null;
   return themeInfo.theme;
 };
 

@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { replaceComponent } from 'meteor/vulcan:core';
+import { browserHistory } from 'react-router';
 import Users from 'meteor/vulcan:users';
 import { withStyles } from 'material-ui/styles';
-import { Link } from 'react-router';
 import Avatar from 'material-ui/Avatar';
+import ButtonBase from 'material-ui/ButtonBase';
 import classNames from 'classnames';
 
 
 const styles = theme => ({
+  root: {
+    padding: 0,
+    borderRadius: '50%',
+    display: 'inline-block',
+    verticalAlign: 'middle',
+  },
   avatar: {
   },
   small: {
@@ -37,30 +44,51 @@ const styles = theme => ({
 });
 
 
-const UsersAvatar = ({ classes, className, user, size, gutter, link }) => {
+const UsersAvatar = ({
+                       classes,
+                       className,
+                       user,
+                       size,
+                       gutter,
+                       link,
+                       buttonRef,
+                       onClick
+                     }) => {
   
-  const avatarUrl = user.avatarUrl || Users.avatar.getUrl(user);
+  let avatarUrl = user.avatarUrl || Users.avatar.getUrl(user);
+  if (avatarUrl.indexOf('gravatar.com') > -1) avatarUrl = null;
   
   const avatar =
     <Avatar alt={Users.getDisplayName(user)}
             src={avatarUrl}
-            className={classNames(classes.avatar, classes[size], classes[gutter], className)}>
-      {!avatarUrl ? Users.avatar.getInitials(user) : null}
+            className={classNames(classes.avatar, classes[size], classes[gutter])}>
+      {
+        !avatarUrl
+        ?
+        Users.avatar.getInitials(user)
+        :
+        null
+      }
     </Avatar>;
   
+  onClick = onClick || function () { browserHistory.go(Users.getProfileUrl(user)); };
+  
+  const rootClassNames = classNames(classes.root, className);
   
   return (
-    <div className={classNames(className)}>
-      {
-        link
-          ?
-          <Link to={Users.getProfileUrl(user)}>
-            <span>{avatar}</span>
-          </Link>
-          :
-          avatar
-      }
-    </div>
+    link
+      
+      ?
+      
+      <ButtonBase className={rootClassNames} ref={buttonRef} onClick={onClick}>
+        {avatar}
+      </ButtonBase>
+      
+      :
+      
+      <div className={rootClassNames}>
+        {avatar}
+      </div>
   );
   
 };
@@ -73,6 +101,8 @@ UsersAvatar.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   gutter: PropTypes.oneOf(['left', 'right', 'both', 'none']),
   link: PropTypes.bool,
+  buttonRef: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 

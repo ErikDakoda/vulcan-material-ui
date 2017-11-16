@@ -60,7 +60,7 @@ const styles = theme => ({
     marginTop: topBarHeight,
     overflowY: 'scroll',
   },
-  contentShift: {
+  mainShift: {
     marginLeft: 0,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
@@ -116,7 +116,7 @@ class Layout extends React.Component {
                 <Components.SideNavigation/>
               </Drawer>
               
-              <main className={classNames(classes.content, isOpen.sideNav && classes.contentShift)}>
+              <main className={classNames(classes.content, isOpen.sideNav && classes.mainShift)}>
                 {this.props.children}
               </main>
               

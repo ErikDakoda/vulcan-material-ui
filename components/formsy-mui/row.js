@@ -29,6 +29,7 @@ const Row = createReactClass({
     required: PropTypes.bool,
     hasErrors: PropTypes.bool,
     fakeLabel: PropTypes.bool,
+    hideLabel: PropTypes.bool,
     layout: PropTypes.oneOf(['horizontal', 'vertical', 'elementOnly']),
     htmlFor: PropTypes.string
   },
@@ -41,7 +42,8 @@ const Row = createReactClass({
       elementWrapperClassName: '',
       required: false,
       hasErrors: false,
-      fakeLabel: false
+      fakeLabel: false,
+      hideLabel: false,
     };
   },
   
@@ -56,7 +58,7 @@ const Row = createReactClass({
   
   renderLabel: function () {
     
-    if (this.props.layout === 'elementOnly') {
+    if (this.props.layout === 'elementOnly' || this.props.hideLabel) {
       return null;
     }
     

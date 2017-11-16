@@ -15,12 +15,25 @@ import createJssContext from '../../modules/createJssContext';
 
 class App extends PureComponent {
   
+  constructor () {
+    super();
+    
+    this.getChildContext = this.getChildContext.bind(this);
+  }
+  
+  componentDidMount () {
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
+  }
+  
+  
   getLocale () {
     return getSetting('locale', 'en');
   }
   
   getChildContext () {
-    
     const messages = Strings[this.getLocale()] || {};
     const intlProvider = new IntlProvider({ locale: this.getLocale() }, messages);
     const { intl } = intlProvider.getChildContext();
@@ -45,9 +58,20 @@ class App extends PureComponent {
               <Components.HeadTags/>
               
               <LayoutComponent {...this.props} currentRoute={currentRoute}>
-                {this.props.currentUserLoading ? <Components.Loading/> :
-                  (this.props.children ? this.props.children : <Components.Welcome/>)}
+                {
+                  this.props.currentUserLoading
+                    ?
+                    <Components.Loading/>
+                    :
+                    this.props.children
+                      ?
+                      this.props.children
+                      :
+                      <Components.Welcome/>
+                }
               </LayoutComponent>
+              
+              <style id="jss-server-side">{jssContext.sheetsRegistry.toString()}</style>
             
             </div>
           </IntlProvider>

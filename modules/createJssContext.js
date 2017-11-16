@@ -2,7 +2,6 @@ import jss from 'jss';
 import preset from 'jss-preset-default';
 import { SheetsRegistry } from 'react-jss/lib/jss';
 import { getCurrentTheme } from './themes';
-//import { theme } from 'meteor/qeebi:mui-theme-ultrapunch';
 import warning from 'warning';
 
 
@@ -25,7 +24,12 @@ const  generateClassName = (rule, sheet) => {
   }
   
   if (sheet && sheet.options.meta) {
-    return `${sheet.options.meta}-${rule.key}-${ruleCounter}`;
+    let meta = sheet.options.meta;
+    // Sanitize the string as will be used in development to prefix the generated
+    // class name.
+    meta = meta.replace(new RegExp(/[!"#$%&'()*+,./:; <=>?@[\\\]^`{|}~]/g), '-');
+  
+    return `${meta}-${rule.key}-${ruleCounter}`;
   }
   
   return `${rule.key}-${ruleCounter}`;

@@ -7,8 +7,19 @@ import { FormattedMessage } from 'meteor/vulcan:i18n';
 import List, { ListItem } from 'material-ui/List';
 import { Meteor } from 'meteor/meteor';
 import { withApollo } from 'react-apollo';
+import { withStyles } from 'material-ui/styles';
 import Popover from 'material-ui/Popover';
-import ButtonBase from 'material-ui/ButtonBase';
+
+
+const styles = theme => ({
+  avatar: {
+    padding: '5px',
+  },
+  popover: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  }
+});
 
 
 class UsersMenu extends PureComponent {
@@ -16,8 +27,6 @@ class UsersMenu extends PureComponent {
   
   constructor (props) {
     super(props);
-    
-    this.handleRequestLogout = this.handleRequestLogout.bind(this);
     
     this.state = {
       popupOpen: false,
@@ -29,7 +38,7 @@ class UsersMenu extends PureComponent {
   handleClickButton = () => {
     this.setState({
       popupOpen: true,
-      anchorEl: findDOMNode(this.button),
+      anchorEl: findDOMNode(this.button), // eslint-disable-line react/no-find-dom-node
     });
   };
   
@@ -41,12 +50,6 @@ class UsersMenu extends PureComponent {
   };
   
   
-  handleRequestLogout = () => {
-    Meteor.logout(() => this.props.client.resetStore());
-    this.handleRequestClose();
-  };
-  
-  
   render () {
     const {
       popupOpen,
@@ -54,22 +57,27 @@ class UsersMenu extends PureComponent {
     } = this.state;
     
     const {
+      classes,
       currentUser,
       client,
     } = this.props;
     
     return (
       <div className="users-account-menu">
-        <ButtonBase ref={node => {this.button = node;}} onClick={this.handleClickButton}>
-          <Components.UsersAvatar user={currentUser} link={false} gutter="none"/>
-        </ButtonBase>
         
-        <Popover
-          open={popupOpen}
-          anchorEl={anchorEl}
-          onRequestClose={this.handleRequestClose}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right', }}
+        <Components.UsersAvatar user={currentUser}
+                                gutter="none"
+                                buttonRef={node => {this.button = node;}}
+                                onClick={this.handleClickButton}
+                                className={classes.avatar}
+        />
+        
+        <Popover open={popupOpen}
+                 anchorEl={anchorEl}
+                 onRequestClose={this.handleRequestClose}
+                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}
+                 transformOrigin={{ vertical: 'top', horizontal: 'right', }}
+                 className={classes.popover}
         >
           <List>
             <ListItem button onClick={() => {
@@ -93,6 +101,7 @@ class UsersMenu extends PureComponent {
             </ListItem>
           </List>
         </Popover>
+      
       </div>
     );
   }
@@ -102,6 +111,7 @@ class UsersMenu extends PureComponent {
 
 
 UsersMenu.propsTypes = {
+  classes: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
   client: PropTypes.object,
 };
@@ -110,4 +120,4 @@ UsersMenu.propsTypes = {
 UsersMenu.displayName = 'UsersMenu';
 
 
-replaceComponent('UsersMenu', UsersMenu, withCurrentUser, withApollo);
+replaceComponent('UsersMenu', UsersMenu, withCurrentUser, withApollo, [withStyles, styles]);

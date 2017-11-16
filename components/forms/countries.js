@@ -251,7 +251,18 @@ export const countries = [
 ];
 
 
+export const regions = {
+  US: [
+    { value: 'NY', label: 'New York' },
+  ],
+  CA: [
+    { value: 'AB', label: 'Alberta' },
+    { value: 'ON', label: 'Ontario' },
+  ],
+};
+
+
 export const getCountryLabel = (countryValue) => {
-  const country = countries.find({ 'value': countryValue });
+  const country = countries.find(country => country.value === countryValue);
   return country ? country.label : '';
 };

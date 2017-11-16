@@ -2,99 +2,30 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Components, replaceComponent } from 'meteor/vulcan:core';
 import withStyles from 'material-ui/styles/withStyles';
-import Collapse from 'material-ui/transitions/Collapse';
-import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
-import ExpandLessIcon from 'material-ui-icons/ExpandLess';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import Paper from 'material-ui/Paper';
 
 
 const styles = theme => ({
   root: {
-  },
-  divider: {
-    marginLeft: theme.spacing.unit * -3,
-    marginRight: theme.spacing.unit * -3,
+    minWidth: '320px',
   },
   head: {
+    paddingLeft: '4px',
     marginTop: theme.spacing.unit * 5,
-    position: 'relative',
-    cursor: 'pointer',
+    marginBottom: theme.spacing.unit,
+    color: theme.palette.primary[500],
   },
-  typography: {
-    display: 'flex',
-    alignItems: 'center',
-    '& > div': {
-      display: 'flex',
-      alignItems: 'center',
-    },
-    '& > div:first-child': {
-      ...theme.typography.section,
-      flexGrow: 1,
-    },
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-  },
-  toggle: {
-    color: theme.palette.action.active,
-  },
-  entered: {
-    overflow: 'visible',
+  paper: {
+    padding: theme.spacing.unit * 3,
   },
 });
 
 
 class FormGroup extends PureComponent {
   
-  constructor (props) {
-    super(props);
-    
-    this.toggle = this.toggle.bind(this);
-    this.renderHeading = this.renderHeading.bind(this);
-    
-    this.state = {
-      collapsed: props.startCollapsed || false
-    };
-  }
-  
-  toggle () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
-  
-  renderHeading () {
-    const { classes } = this.props;
-    
-    return (
-      <div className={classes.head} onClick={this.toggle}>
-        
-        <Divider className={classes.divider}/>
-        
-        <Typography className={classes.typography} type="subheading" gutterBottom>
-          <div>
-            {this.props.label}
-          </div>
-          <div className={classes.toggle}>
-            {
-              this.state.collapsed
-                ?
-                <ExpandMoreIcon/>
-                :
-                <ExpandLessIcon/>
-            }
-          </div>
-        </Typography>
-      
-      </div>
-    );
-  }
-  
   render () {
-    const { classes, fields } = this.props;
-    
-    const hasErrors = _.some(fields, field => field.errors && field.errors.length);
-    const collapseIn = !this.state.collapsed || hasErrors;
+    const { classes } = this.props;
     
     return (
       <div className={classes.root}>
@@ -104,10 +35,14 @@ class FormGroup extends PureComponent {
             ?
             null
             :
-            this.renderHeading()
+            <Typography className={classes.head} type="subheading">
+              <div>
+                {this.props.label}
+              </div>
+            </Typography>
         }
-  
-        <Collapse classes={{entered: classes.entered}} in={collapseIn} transitionDuration="auto">
+        
+        <Paper className={classes.paper}>
           {
             this.props.fields.map(field =>
               <Components.FormComponent key={field.name}
@@ -115,7 +50,7 @@ class FormGroup extends PureComponent {
                                         updateCurrentValues={this.props.updateCurrentValues}
               />)
           }
-        </Collapse>
+        </Paper>
       
       </div>
     );

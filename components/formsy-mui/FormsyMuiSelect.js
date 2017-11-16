@@ -6,6 +6,7 @@ import Row from './row';
 import propUtilities from './prop-utilities';
 import Select from 'material-ui/Select';
 import Input from 'material-ui/Input';
+import _isArray from 'lodash/isArray';
 
 
 const FormsyMuiSelect = createReactClass({
@@ -51,7 +52,7 @@ const FormsyMuiSelect = createReactClass({
     const renderOption = function (item, key) {
       const { group, label, ...rest } = item;
       return (
-        <option key={key} {...rest}>{label}</option>
+        <option key={key} {...rest}>{key ? label : ''}</option>
       );
     };
     
@@ -95,11 +96,16 @@ const FormsyMuiSelect = createReactClass({
       });
     }
     
+    let value = this.getValue();
+    if (!this.props.multiple && _isArray(value)) {
+      value = value.length ? value[0] : '';
+    }
+    
     return (
       <Select native={true}
               ref={(c) => this.element = c}
               {...propUtilities.cleanProps(this.props)}
-              value={this.getValue()}
+              value={value}
               onChange={this.changeValue}
               disabled={this.isFormDisabled() || this.props.disabled}
               input={<Input id={this.getId()}/>}
@@ -107,19 +113,6 @@ const FormsyMuiSelect = createReactClass({
         {optionNodes}
       </Select>
     );
-    /*return (
-        <select
-            ref={(c) => this.element = c}
-            className="form-control"
-            {...propUtilities.cleanProps(this.props)}
-            id={this.getId()}
-            value={this.getValue()}
-            onChange={this.changeValue}
-            disabled={this.isFormDisabled() || this.props.disabled}
-        >
-            {optionNodes}
-        </select>
-    );*/
   }
 });
 

@@ -37,9 +37,7 @@ Input options:
     label: 'Name',
     type: String,
     form: {
-      options: {
-        autoFocus: true,
-      }
+      autoFocus: true,
     },
   },
 ```
@@ -52,9 +50,7 @@ Textarea options:
     type: String,
     control: 'textarea',
     form: {
-      options: {
-        rows: 10,
-      }
+      rows: 10,
     },
   },
 ```

@@ -98,6 +98,7 @@ export default {
   getRowProperties: function () {
     return {
       label: this.props.label,
+      hideLabel: this.props.hideLabel,
       rowClassName: this.getRowClassName(),
       labelClassName: this.getLabelClassName(),
       elementWrapperClassName: this.getElementWrapperClassName(),
