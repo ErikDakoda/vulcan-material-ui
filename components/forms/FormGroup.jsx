@@ -11,7 +11,7 @@ const styles = theme => ({
     minWidth: '320px',
   },
   head: {
-    paddingLeft: '4px',
+    paddingLeft: theme.spacing.unit / 2,
     marginTop: theme.spacing.unit * 5,
     marginBottom: theme.spacing.unit,
     color: theme.palette.primary[500],

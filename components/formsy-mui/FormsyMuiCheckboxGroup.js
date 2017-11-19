@@ -45,11 +45,6 @@ const styles = theme => ({
       },
     },
   },
-  checkbox: {
-    width: '32px',
-    height: '32px',
-    marginLeft: '8px',
-  },
 });
 
 
@@ -91,7 +86,6 @@ const FormsyMuiCheckboxGroup = createReactClass({
           key={key}
           control={
             <Checkbox
-              className={this.props.classes.checkbox}
               inputRef={(c) => this[this.props.name + '-' + checkbox.value] = c}
               checked={checked}
               onChange={this.changeCheckbox}
