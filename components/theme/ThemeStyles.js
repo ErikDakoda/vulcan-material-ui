@@ -124,16 +124,16 @@ const ThemeStyles = ({ theme, classes }) => {
     <Grid container className={classes.root}>
       
       <Grid item xs={12}>
-        <Typography type="display4" gutterBottom>
+        <Typography type="display4">
           Display 4: {describeTypography(theme, 'display4')}
         </Typography>
-        <Typography type="display3" gutterBottom>
+        <Typography type="display3">
           Display 3: {describeTypography(theme, 'display3')}
         </Typography>
-        <Typography type="display2" gutterBottom>
+        <Typography type="display2">
           Display 2: {describeTypography(theme, 'display2')}
         </Typography>
-        <Typography type="display1" gutterBottom>
+        <Typography type="display1">
           Display 1: {describeTypography(theme, 'display1')}
         </Typography>
       </Grid>
@@ -152,8 +152,14 @@ const ThemeStyles = ({ theme, classes }) => {
           <Typography type="body1" gutterBottom>
             Body 1: {describeTypography(theme, 'body1')} - {latin}
           </Typography>
+          <Typography type="body1" gutterBottom>
+            {latin}
+          </Typography>
           <Typography type="body2" gutterBottom>
             Body 2: {describeTypography(theme, 'body2')} - {latin}
+          </Typography>
+          <Typography type="body2" gutterBottom>
+            {latin}
           </Typography>
           <Typography type="caption" gutterBottom align="center">
             Caption: {describeTypography(theme, 'caption')}

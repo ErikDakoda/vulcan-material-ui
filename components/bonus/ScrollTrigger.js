@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import throttle from 'lodash/throttle';
+import _throttle from 'lodash/throttle';
 
 
 class ScrollTrigger extends Component {
@@ -9,11 +9,13 @@ class ScrollTrigger extends Component {
   constructor (props) {
     super();
     
-    this.onScroll = throttle(this.onScroll.bind(this), 100, {
+    this.onScroll = _throttle(this.onScroll.bind(this), 100, {
+      leading: true,
       trailing: true,
     });
     
-    this.onResize = throttle(this.onResize.bind(this), 100, {
+    this.onResize = _throttle(this.onResize.bind(this), 100, {
+      leading: true,
       trailing: true,
     });
     
@@ -27,7 +29,12 @@ class ScrollTrigger extends Component {
     this.scroller = document.getElementById('main');
     this.scroller.addEventListener('resize', this.onResize);
     this.scroller.addEventListener('scroll', this.onScroll);
-    
+  
+    this.inViewport = false;
+    this.progress = 0;
+    this.lastScrollPosition = null;
+    this.lastScrollTime = null;
+
     if (this.props.triggerOnLoad) {
       this.checkStatus();
     }
@@ -50,7 +57,7 @@ class ScrollTrigger extends Component {
   
   checkStatus () {
     if (!this.scroller) return;
-    
+  
     const {
       onEnter,
       onExit,
@@ -68,7 +75,7 @@ class ScrollTrigger extends Component {
     const velocity = this.lastScrollPosition && this.lastScrollTime
       ? Math.abs((this.lastScrollPosition - position) / (this.lastScrollTime - Date.now()))
       : null;
-    
+  
     if (inViewport) {
       const progress = Math.max(0,
         Math.min(1, 1 - (elementRect.bottom / (viewportEnd + elementRect.height))));
@@ -90,6 +97,10 @@ class ScrollTrigger extends Component {
         velocity,
       }, this);
       return;
+    } else {
+      if (this.inViewport) {
+        this.inViewport = false;
+      }
     }
     
     if (this.inViewport) {
@@ -97,7 +108,6 @@ class ScrollTrigger extends Component {
       
       this.lastScrollPosition = position;
       this.lastScrollTime = Date.now();
-      this.inViewport = true;
       this.progress = progress;
       
       onProgress({
