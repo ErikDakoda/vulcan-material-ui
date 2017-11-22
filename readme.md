@@ -13,7 +13,7 @@ For some parts of vulcan:forms to use Material-UI you need to check out [devel b
 
 There are some nice bonus features like a CountrySelect with autocomplete and theming. Documentation is forthcoming.
 
-The following components are not implemented yet: ModalTrigger, Icon, Card, Datatable & DateTime.
+The following components are not implemented yet: Icon, DateTime.
 
 ## Installation
 

@@ -178,8 +178,8 @@ class Upload extends PureComponent {
     });
     
     // request url to cloudinary
-    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${getSetting(
-      'cloudinary.cloudName')}/upload`;
+    const cloudinaryUrl =
+      `https://api.cloudinary.com/v1_1/${getSetting('cloudinary.cloudName')}/upload`;
     
     // request body
     const body = new FormData();

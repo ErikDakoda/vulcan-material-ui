@@ -10,7 +10,6 @@ export class AccountsButton extends PureComponent {
     
     const {
       label,
-      href = null,
       type,
       disabled = false,
       className,

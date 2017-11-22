@@ -1,6 +1,6 @@
-import { replaceComponent } from 'meteor/vulcan:lib';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { replaceComponent } from 'meteor/vulcan:lib';
 import Dialog, { DialogContent, DialogTitle, } from 'material-ui/Dialog';
 
 
