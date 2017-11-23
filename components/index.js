@@ -26,6 +26,3 @@ import './forms/Select';
 import './forms/Textarea';
 import './forms/Url';
 import './theme/ThemeStyles';
-import './users/UsersAccountMenu';
-import './users/UsersAvatar';
-import './users/UsersMenu';
