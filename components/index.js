@@ -5,7 +5,6 @@ import './accounts/Fields';
 import './accounts/Form';
 import './bonus/LoadMore';
 import './bonus/SearchInput';
-import './bonus/Upload';
 import './core/App';
 import './core/Card';
 import './core/Datatable';

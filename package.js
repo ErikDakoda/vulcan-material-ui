@@ -1,6 +1,6 @@
 Package.describe({
   name: 'erikdakoda:vulcan-material-ui',
-  version: '0.7.6',
+  version: '0.7.7',
   summary: 'Replacement for Vulcan (http://vulcanjs.org/) components using material-ui',
   git: 'https://github.com/ErikDakoda/vulcan-material-ui',
   documentation: 'README.md'
@@ -15,7 +15,6 @@ Package.onUse(function (api) {
     'vulcan:core@1.8.0',
     'vulcan:forms@1.8.0',
     'vulcan:accounts@1.8.0',
-    'vulcan:forms-upload@1.8.0',
   ]);
   
   api.addFiles('components/forms/forms.css', 'client');
