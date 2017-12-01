@@ -20,6 +20,7 @@ const styles = theme => ({
   },
   delete: {
     float: 'left',
+    width: 0,
   },
   tooltip: {
     margin: 0,

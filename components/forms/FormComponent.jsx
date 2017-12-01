@@ -4,6 +4,26 @@ import { intlShape } from 'meteor/vulcan:i18n';
 import classNames from 'classnames';
 import { Components } from 'meteor/vulcan:core';
 import { registerComponent } from 'meteor/vulcan:core';
+import withStyles from 'material-ui/styles/withStyles';
+
+
+const styles = theme => ({
+  formInput: {
+    marginBottom: theme.spacing.unit * 2,
+  },
+  halfWidthLeft: {
+    display: 'inline-block',
+    width: '48%',
+    verticalAlign: 'top',
+    marginRight: '4%',
+  },
+  halfWidthRight: {
+    display: 'inline-block',
+    width: '48%',
+    verticalAlign: 'top',
+  },
+});
+
 
 class FormComponent extends PureComponent {
   
@@ -53,6 +73,7 @@ class FormComponent extends PureComponent {
       afterComponent,
       limit,
       errors,
+      classes,
       ...rest
     } = this.props;
     /* eslint-enable */
@@ -107,10 +128,7 @@ class FormComponent extends PureComponent {
           return <Components.FormComponentRadioGroup {...properties} />;
         
         case 'select':
-          properties.options = [{
-            label: this.context.intl.formatMessage({ id: 'forms.select_option' }),
-            disabled: true
-          }, ...properties.options];
+          properties.options = [{ value: '', label: 'None' }, ...properties.options];
           return <Components.FormComponentSelect {...properties} />;
         
         case 'datetime':
@@ -143,7 +161,7 @@ class FormComponent extends PureComponent {
   }
   
   showClear = () => {
-    return ['datetime', 'select', 'radiogroup'].includes(this.props.control);
+    return ['datetime', 'radiogroup'].includes(this.props.control);
   };
   
   clearField = (e) => {
@@ -176,9 +194,16 @@ class FormComponent extends PureComponent {
   }
   
   render () {
-    const hasErrors = this.props.errors && this.props.errors.length;
-    const inputClass = classNames('form-input', `input-${this.props.name}`,
-      `form-component-${this.props.control || 'default'}`, { 'input-error': hasErrors });
+    const {
+      errors,
+      classes,
+      inputClassName,
+      name,
+      control,
+    } = this.props;
+    const hasErrors = errors && errors.length;
+    const inputClass = classNames(classes.formInput, inputClassName && classes[inputClassName],
+      `input-${name}`, `form-component-${control || 'default'}`, { 'input-error': hasErrors });
     
     return (
       <div className={inputClass}>
@@ -206,7 +231,8 @@ FormComponent.propTypes = {
   control: PropTypes.any,
   datatype: PropTypes.any,
   disabled: PropTypes.bool,
-  updateCurrentValues: PropTypes.func
+  updateCurrentValues: PropTypes.func,
+  classes: PropTypes.object.isRequired,
 };
 
 FormComponent.contextTypes = {
@@ -214,4 +240,4 @@ FormComponent.contextTypes = {
   addToDeletedValues: PropTypes.func,
 };
 
-registerComponent('FormComponent', FormComponent);
+registerComponent('FormComponent', FormComponent, [withStyles, styles]);

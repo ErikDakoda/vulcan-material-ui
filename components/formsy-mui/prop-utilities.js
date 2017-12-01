@@ -37,6 +37,8 @@ const cleanProps = (props) => {
     validatePristine,
     validateOnSubmit,
     
+    inputClassName,
+    
     // Vulcan
     document,
     
