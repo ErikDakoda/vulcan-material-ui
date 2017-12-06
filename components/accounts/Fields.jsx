@@ -5,16 +5,17 @@ import { CardContent } from 'material-ui/Card';
 
 export class AccountsFields extends React.Component {
   render () {
-    let {
+    const {
       fields = {},
-      className = 'fields'
     } = this.props;
     
     return (
-      <CardContent className={className}>
-        {Object.keys(fields).map((id, i) =>
-          <Components.AccountsField {...fields[id]} autoFocus={i === 0} key={i}/>
-        )}
+      <CardContent>
+        {
+          Object.keys(fields).map((id, i) =>
+            <Components.AccountsField {...fields[id]} autoFocus={i === 0} key={i}/>
+          )
+        }
       </CardContent>
     );
   }
