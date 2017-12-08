@@ -148,7 +148,7 @@ ScrollTrigger.propTypes = {
 
 ScrollTrigger.defaultProps = {
   scrollerId: 'main',
-  preload: 500,
+  preload: 1000,
   triggerOnLoad: true,
   onEnter: () => {},
   onExit: () => {},
