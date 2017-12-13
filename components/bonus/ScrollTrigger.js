@@ -7,7 +7,7 @@ import _throttle from 'lodash/throttle';
 class ScrollTrigger extends Component {
   
   constructor (props) {
-    super();
+    super(props);
     
     this.onScroll = _throttle(this.onScroll.bind(this), 100, {
       leading: true,
