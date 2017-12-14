@@ -20,6 +20,9 @@ class ScrollTrigger extends Component {
     });
     
     this.inViewport = false;
+    this.progress = 0;
+    this.lastScrollPosition = null;
+    this.lastScrollTime = null;
   }
   
   componentDidMount () {
@@ -28,6 +31,9 @@ class ScrollTrigger extends Component {
     this.scroller.addEventListener('scroll', this.onScroll);
   
     this.inViewport = false;
+    this.progress = 0;
+    this.lastScrollPosition = null;
+    this.lastScrollTime = null;
 
     if (this.props.triggerOnLoad) {
       this.checkStatus();
@@ -54,25 +60,65 @@ class ScrollTrigger extends Component {
   
     const {
       onEnter,
+      onExit,
+      onProgress,
     } = this.props;
     
     //eslint-disable-next-line
     const element = ReactDOM.findDOMNode(this.element);
     const elementRect = element.getBoundingClientRect();
+    const viewportStart = 0;
     const viewportEnd = this.scroller.clientHeight + this.props.preload;
-    const inViewport = elementRect.top < viewportEnd;
+    const inViewport = elementRect.top < viewportEnd && elementRect.bottom > viewportStart;
     
+    const position = this.scroller.scrollTop;
+    const velocity = this.lastScrollPosition && this.lastScrollTime
+      ? Math.abs((this.lastScrollPosition - position) / (this.lastScrollTime - Date.now()))
+      : null;
+  
     if (inViewport) {
+      const progress = Math.max(0,
+        Math.min(1, 1 - (elementRect.bottom / (viewportEnd + elementRect.height))));
+      
       if (!this.inViewport) {
         this.inViewport = true;
         
-        onEnter(this);
+        onEnter({
+          progress,
+          velocity,
+        }, this);
       }
       
+      this.lastScrollPosition = position;
+      this.lastScrollTime = Date.now();
+      
+      onProgress({
+        progress,
+        velocity,
+      }, this);
+      return;
     } else {
       if (this.inViewport) {
         this.inViewport = false;
       }
+    }
+    
+    if (this.inViewport) {
+      const progress = elementRect.top <= viewportEnd ? 1 : 0;
+      
+      this.lastScrollPosition = position;
+      this.lastScrollTime = Date.now();
+      this.progress = progress;
+      
+      onProgress({
+        progress,
+        velocity,
+      }, this);
+      
+      onExit({
+        progress,
+        velocity,
+      }, this);
     }
   }
   
@@ -95,6 +141,8 @@ ScrollTrigger.propTypes = {
   triggerOnLoad: PropTypes.bool,
   preload: PropTypes.number,
   onEnter: PropTypes.func,
+  onExit: PropTypes.func,
+  onProgress: PropTypes.func,
 };
 
 
@@ -103,6 +151,8 @@ ScrollTrigger.defaultProps = {
   preload: 1000,
   triggerOnLoad: true,
   onEnter: () => {},
+  onExit: () => {},
+  onProgress: () => {},
 };
 
 
