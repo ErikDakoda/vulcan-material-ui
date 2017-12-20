@@ -13,7 +13,7 @@ const RegionSelect = ({ refFunction, ...properties }) => {
   }
   
   if (options) {
-    return <FormsyMuiSuggest {...properties} ref={refFunction} options={options}/>;
+    return <FormsyMuiSuggest {...properties} refFunction={refFunction} options={options}/>;
   } else {
     return <FormsyMuiInput {...properties} ref={refFunction}/>;
   }

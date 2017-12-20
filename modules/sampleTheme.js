@@ -6,6 +6,8 @@ import red from 'material-ui/colors/red';
 import grey from 'material-ui/colors/grey';
 
 
+/** @ignore */
+
 /**
  * 
  * Sample theme to get you out of the gate quickly

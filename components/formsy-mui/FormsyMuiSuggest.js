@@ -81,9 +81,14 @@ const FormsyMuiSuggest = createReactClass({
   
   propTypes: {
     classes: PropTypes.object.isRequired,
+    limitToList: PropTypes.bool,
   },
   
   getInitialState: function () {
+    if (this.props.refFunction) {
+      this.props.refFunction(this);
+    }
+  
     return {
       inputValue: null,
       suggestions: [],
@@ -93,7 +98,7 @@ const FormsyMuiSuggest = createReactClass({
   componentWillMount: function () {
     const value = this.getValue();
     if (!value) return;
-  
+    
     const selectedOption = this.props.options.find((opt) => opt.value === value);
     if (!selectedOption) {
       this.setValue(null);
@@ -120,14 +125,26 @@ const FormsyMuiSuggest = createReactClass({
     
     this.setValue(suggestionValue);
     this.props.onChange(this.props.name, suggestionValue);
+    
+    if (this.props.limitToList) {
+      setTimeout(() => {document.activeElement.blur();});
+    }
   },
   
+  validate: function () {
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
+    return true;
+  },
+
   handleInputChange: function (event) {
     const value = event.currentTarget.value;
     this.setState({
       inputValue: value,
     });
   },
+  
   
   handleSuggestionsFetchRequested: function ({ value }) {
     this.setState({
@@ -185,11 +202,11 @@ const FormsyMuiSuggest = createReactClass({
         renderSuggestion={this.renderSuggestion}
         onSuggestionSelected={this.suggestionSelected}
         inputProps={{
-          ref: (c) => this.element = c,
           autoFocus: autoFocus,
           classes,
           onChange: this.handleInputChange,
           value: this.getInputValue(),
+          readOnly: this.props.limitToList,
           disabled: this.isFormDisabled() || this.props.disabled,
         }}
       />
@@ -204,7 +221,10 @@ const FormsyMuiSuggest = createReactClass({
         autoFocus={autoFocus}
         className={classes.textField}
         value={value}
-        inputRef={ref}
+        inputRef={(c) => {
+          ref(c);
+          this.element = c;
+        }}
         type="text"
         inputProps={{
           ...rest,
@@ -219,14 +239,18 @@ const FormsyMuiSuggest = createReactClass({
     
     return (
       <MenuItem selected={isHighlighted} component="div">
+        {
+          suggestion.iconComponent &&
+          suggestion.iconComponent
+        }
         <div>
           {parts.map((part, index) => {
             return part.highlight ? (
-              <span key={index} style={{ fontWeight: 300 }}>
+              <span key={index} style={{ fontWeight: 500 }}>
               {part.text}
             </span>
             ) : (
-              <strong key={index} style={{ fontWeight: 500 }}>
+              <strong key={index} style={{ fontWeight: 300 }}>
                 {part.text}
               </strong>
             );
@@ -255,7 +279,15 @@ const FormsyMuiSuggest = createReactClass({
     const inputLength = inputValue.length;
     let count = 0;
     
-    return inputLength === 0
+    return this.props.limitToList ?
+  
+      this.props.options.filter(suggestion => {
+        return true;
+      })
+  
+      :
+  
+      inputLength === 0
       
       ?
       

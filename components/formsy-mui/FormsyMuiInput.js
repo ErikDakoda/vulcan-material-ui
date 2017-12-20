@@ -55,8 +55,12 @@ const FormsyMuiInput = createReactClass({
     };
   },
   
-  changeValue: function (event) {
+  handleChange: function (event) {
     const value = event.currentTarget.value;
+    this.changeValue(value);
+  },
+  
+  changeValue: function (value) {
     this.setValue(value);
     this.props.onChange(this.props.name, value);
   },
@@ -128,7 +132,7 @@ const FormsyMuiInput = createReactClass({
              {...propUtilities.cleanProps(this.props)}
              id={this.getId()}
              value={this.getValue()}
-             onChange={this.changeValue}
+             onChange={this.handleChange}
              disabled={this.isFormDisabled() || this.props.disabled}
              rows={options.rows || this.props.rows}
              autoFocus={options.autoFocus || this.props.autoFocus}

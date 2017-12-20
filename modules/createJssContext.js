@@ -1,3 +1,4 @@
+/** @module vulcan-material-ui */
 import jss from 'jss';
 import preset from 'jss-preset-default';
 import { SheetsRegistry } from 'react-jss/lib/jss';

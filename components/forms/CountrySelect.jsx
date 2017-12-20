@@ -4,8 +4,8 @@ import { registerComponent } from 'meteor/vulcan:core';
 import { countries } from './countries';
 
 
-const CountrySelect = ({ refFunction, ...properties }) =>
-  <FormsyMuiSuggest {...properties} ref={refFunction} options={countries}/>;
+const CountrySelect = (props) =>
+  <FormsyMuiSuggest {...props} options={countries}/>;
 
 
 registerComponent('CountrySelect', CountrySelect);

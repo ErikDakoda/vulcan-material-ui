@@ -1,3 +1,5 @@
+/** @module vulcan-material-ui */
+
 import { registerSetting, getSetting } from 'meteor/vulcan:lib';
 
 

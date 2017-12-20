@@ -45,8 +45,7 @@ class FormComponent extends PureComponent {
   }
   
   handleBlur () {
-    // see https://facebook.github.io/react/docs/more-about-refs.html
-    if (this.formControl !== null) {
+    if (this.formControl) {
       this.props.updateCurrentValues({ [this.props.name]: this.formControl.getValue() });
     }
   }
@@ -184,10 +183,31 @@ class FormComponent extends PureComponent {
   
   renderExtraComponent (extraComponent) {
     if (!extraComponent) return null;
-    
+  
+    /* eslint-disable */
+    const {
+      control,
+      group,
+      updateCurrentValues,
+      beforeComponent,
+      afterComponent,
+      limit,
+      errors,
+      classes,
+      ...rest
+    } = this.props;
+    /* eslint-enable */
+  
+    // const base = typeof this.props.control === 'function' ? this.props : rest;
+  
+    const properties = {
+      value: '',
+      ...rest,
+    };
+  
     if (typeof extraComponent === 'string') {
       const ExtraComponent = Components[extraComponent];
-      return <ExtraComponent/>;
+      return <ExtraComponent {...properties}/>;
     } else {
       return extraComponent;
     }

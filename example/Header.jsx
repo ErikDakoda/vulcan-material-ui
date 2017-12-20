@@ -86,7 +86,7 @@ const Header = (props, context) => {
           }
         </div>
         
-        {!!props.currentUser ? <Components.UsersMenu/> : <Components.UsersAccountMenu/>}
+        {!!props.currentUser ? <Components.UsersMenu/> : <Components.UsersLoggedOutMenu/>}
       
       </Toolbar>
     </AppBar>

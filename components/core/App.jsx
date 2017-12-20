@@ -71,7 +71,9 @@ class App extends PureComponent {
                 }
               </LayoutComponent>
               
-              <style id="jss-server-side">{jssContext.sheetsRegistry.toString()}</style>
+              <style id="jss-server-side">
+                {jssContext.sheetsRegistry.toString()}
+                </style>
             
             </div>
           </IntlProvider>
