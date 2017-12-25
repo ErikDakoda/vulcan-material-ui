@@ -80,6 +80,11 @@ const FormsyMuiSuggest = createReactClass({
   mixins: [Formsy.Mixin, ComponentMixin],
   
   propTypes: {
+    options: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+      iconComponent: PropTypes.node,
+    })),
     classes: PropTypes.object.isRequired,
     limitToList: PropTypes.bool,
   },
@@ -95,16 +100,6 @@ const FormsyMuiSuggest = createReactClass({
     };
   },
   
-  componentWillMount: function () {
-    const value = this.getValue();
-    if (!value) return;
-    
-    const selectedOption = this.props.options.find((opt) => opt.value === value);
-    if (!selectedOption) {
-      this.setValue(null);
-    }
-  },
-  
   getInputValue: function () {
     if (this.state.inputValue !== null) {
       return this.state.inputValue;
@@ -114,6 +109,7 @@ const FormsyMuiSuggest = createReactClass({
       return '';
     }
     const selectedOption = this.props.options.find((opt) => opt.value === value);
+    
     return selectedOption ? selectedOption.label : '';
   },
   
