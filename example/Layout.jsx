@@ -131,7 +131,7 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.object,
+  children: PropTypes.node,
 };
 
 
