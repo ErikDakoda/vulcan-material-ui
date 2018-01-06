@@ -1,6 +1,6 @@
 Package.describe({
   name: 'erikdakoda:vulcan-material-ui',
-  version: '0.9.0',
+  version: '0.9.4',
   summary: 'Replacement for Vulcan (http://vulcanjs.org/) components using material-ui',
   git: 'https://github.com/ErikDakoda/vulcan-material-ui',
   documentation: 'README.md'
@@ -8,7 +8,7 @@ Package.describe({
 
 
 Package.onUse(function (api) {
-  api.versionsFrom('METEOR@1.5.2');
+  api.versionsFrom('METEOR@1.6');
   
   api.use([
     'ecmascript',
