@@ -73,11 +73,20 @@ const body = {
 const theme = createMuiTheme({
   
   palette: {
-    primary: palettes.primary,
-    secondary: palettes.secondary,
-    error: palettes.error,
+    primary: {
+      light: palettes.primary[200],
+      main: palettes.primary[500],
+      dark: palettes.primary[800],
+    },
+    secondary: {
+      light: palettes.secondary[200],
+      main: palettes.secondary[500],
+      dark: palettes.secondary[800],
+    },
+    error: {
+      main: palettes.error[500],
+    },
     background: {
-      ...palettes.background,
       default: palettes.background[100],
     }
   },

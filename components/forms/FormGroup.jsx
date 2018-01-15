@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Components, replaceComponent } from 'meteor/vulcan:core';
+import { Components, replaceComponent, withCurrentUser } from 'meteor/vulcan:core';
 import withStyles from 'material-ui/styles/withStyles';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
+import Users from 'meteor/vulcan:users';
 
 
 const styles = theme => ({
@@ -25,29 +26,40 @@ const styles = theme => ({
 class FormGroup extends PureComponent {
   
   render () {
-    const { classes } = this.props;
+    const {
+      name,
+      label,
+      classes,
+      currentUser,
+      fields,
+      updateCurrentValues,
+    } = this.props;
+    
+    if (name === 'admin' && !Users.isAdmin(currentUser)) {
+      return null;
+    }
     
     return (
       <div className={classes.root}>
         
         {
-          this.props.name === 'default'
+          name === 'default'
             ?
             null
             :
             <Typography className={classes.head} type="subheading">
               <div>
-                {this.props.label}
+                {label}
               </div>
             </Typography>
         }
         
         <Paper className={classes.paper}>
           {
-            this.props.fields.map(field =>
+            fields.map(field =>
               <Components.FormComponent key={field.name}
                                         {...field}
-                                        updateCurrentValues={this.props.updateCurrentValues}
+                                        updateCurrentValues={updateCurrentValues}
               />)
           }
         </Paper>
@@ -65,7 +77,8 @@ FormGroup.propTypes = {
   fields: PropTypes.array,
   startCollapsed: PropTypes.bool,
   updateCurrentValues: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
 
-replaceComponent('FormGroup', FormGroup, [withStyles, styles]);
+replaceComponent('FormGroup', FormGroup, withCurrentUser, [withStyles, styles]);

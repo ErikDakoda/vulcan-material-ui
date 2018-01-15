@@ -57,7 +57,7 @@ class ModalTrigger extends PureComponent {
         
         <Dialog className={className}
                 open={this.state.modalIsOpen}
-                onRequestClose={this.closeModal}
+                onClose={this.closeModal}
         >
           
           {
