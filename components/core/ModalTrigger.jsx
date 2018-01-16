@@ -35,8 +35,10 @@ class ModalTrigger extends PureComponent {
       children,
     } = this.props;
     
-    const label = labelId ? this.context.intl.formatMessage({ id: labelId }) : this.props.label;
-    const title = titleId ? this.context.intl.formatMessage({ id: titleId }) : this.props.title;
+    const intl = this.context.intl;
+    
+    const label = labelId ? intl.formatMessage({ id: labelId }) : this.props.label;
+    const title = titleId ? intl.formatMessage({ id: titleId }) : this.props.title;
     
     const triggerComponent = component
       ?

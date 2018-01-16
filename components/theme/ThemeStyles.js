@@ -7,6 +7,7 @@ import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { getContrastRatio } from 'material-ui/styles/colorManipulator';
+import classNames from 'classnames';
 
 
 const describeTypography = (theme, className) => {
@@ -121,7 +122,7 @@ const latin = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitu
 
 const ThemeStyles = ({ theme, classes }) => {
   return (
-    <Grid container className={classes.root}>
+    <Grid container className={classNames('theme-styles', classes.root)}>
       
       <Grid item xs={12}>
         <Typography type="display4">

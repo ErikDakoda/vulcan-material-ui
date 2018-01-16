@@ -5,6 +5,15 @@ import { Components, registerComponent } from 'meteor/vulcan:core';
 
 
 export class AccountsForm extends PureComponent {
+  
+  
+  /*constructor (props) {
+    super(props);
+    
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }*/
+  
+  
   componentDidMount () {
     let form = this.form;
     if (form) {
@@ -14,23 +23,28 @@ export class AccountsForm extends PureComponent {
     }
   }
   
+  
+  /*handleSubmit (event) {
+    event.preventDefault();
+    const buttons = this.props.buttons;
+    buttons.signIn.onClick(event);
+  }*/
+  
+  
   render () {
     const {
-      hasPasswordService,
       oauthServices,
       fields,
       buttons,
-      error,
       messages,
       ready = true,
       className
     } = this.props;
     
     return (
-      <form
-        ref={(ref) => this.form = ref}
-        className={classNames(className, 'accounts-ui', { 'ready': ready, })}
-        noValidate
+      <form ref={(ref) => this.form = ref}
+            className={classNames(className, 'accounts-ui', { 'ready': ready, })}
+            noValidate
       >
         <Components.AccountsFields fields={fields}/>
         <Components.AccountsButtons buttons={buttons}/>
@@ -40,6 +54,8 @@ export class AccountsForm extends PureComponent {
       </form>
     );
   }
+  
+  
 }
 
 
@@ -50,6 +66,9 @@ AccountsForm.propTypes = {
   error: PropTypes.string,
   ready: PropTypes.bool
 };
+
+
+AccountsForm.displayName = 'ShopsSuppliers';
 
 
 registerComponent('AccountsForm', AccountsForm);

@@ -101,7 +101,7 @@ class SearchInput extends PureComponent {
     } = this.props;
     
     return (
-      <div className={classNames(classes.root, className, dense && classes.dense)}>
+      <div className={classNames('search-input', classes.root, className, dense && classes.dense)}>
         <FormControl className={classes.search}>
           
           <SearchIcon className={classes.icon} onClick={this.focusInput}/>

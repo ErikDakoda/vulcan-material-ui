@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import { getSetting, Components, replaceComponent } from 'meteor/vulcan:core';
+import { Components, replaceComponent, Utils } from 'meteor/vulcan:core';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 
@@ -85,45 +85,45 @@ class Layout extends React.Component {
   
   render = () => {
     const currentUser = this.props.currentUser;
-    const currentRouteName = this.props.currentRoute.name.replace('.', '-');
+    const routeName = Utils.slugify(this.props.currentRoute.name);
     const classes = this.props.classes;
     const isOpen = this.state.isOpen;
-  
+    
     return (
-          <div className={classNames(classes.root, 'wrapper', `wrapper-${currentRouteName}`)}>
-            <div className={classes.appFrame}>
-              
-              {
-                currentUser &&
-                
-                <Components.UsersProfileCheck currentUser={currentUser}
-                                              documentId={currentUser._id}
-                />
-              }
-              
-              <Components.Header isSideNavOpen={isOpen.sideNav}
-                                 toggleSideNav={openOrClose => this.toggle('sideNav',
-                                   openOrClose)}/>
-              
-              <Drawer type="persistent"
-                      classes={{ paper: classes.drawerPaper, }}
-                      open={isOpen.sideNav}
-              >
-                <AppBar className={classes.drawerHeader} elevation={4} square={true}>
-                  <Toolbar>
-                  </Toolbar>
-                </AppBar>
-                <Components.SideNavigation/>
-              </Drawer>
-              
-              <main className={classNames(classes.content, isOpen.sideNav && classes.mainShift)}>
-                {this.props.children}
-              </main>
-              
-              <Components.FlashMessages/>
+      <div className={classNames(classes.root, 'wrapper', `wrapper-${routeName}`)}>
+        <div className={classes.appFrame}>
+          
+          {
+            currentUser &&
             
-            </div>
-          </div>
+            <Components.UsersProfileCheck currentUser={currentUser}
+                                          documentId={currentUser._id}
+            />
+          }
+          
+          <Components.Header isSideNavOpen={isOpen.sideNav}
+                             toggleSideNav={openOrClose =>
+                               this.toggle('sideNav', openOrClose)}/>
+          
+          <Drawer type="persistent"
+                  classes={{ paper: classes.drawerPaper, }}
+                  open={isOpen.sideNav}
+          >
+            <AppBar className={classes.drawerHeader} elevation={4} square={true}>
+              <Toolbar>
+              </Toolbar>
+            </AppBar>
+            <Components.SideNavigation/>
+          </Drawer>
+          
+          <main className={classNames(classes.content, isOpen.sideNav && classes.mainShift)}>
+            {this.props.children}
+          </main>
+          
+          <Components.FlashMessages/>
+        
+        </div>
+      </div>
     );
   };
 }
