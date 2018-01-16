@@ -53,60 +53,60 @@ const styles = theme => ({
 
 
 class SearchInput extends PureComponent {
-  
+
   constructor () {
     super();
-    
+
     this.state = {
       value: '',
     };
-    
+
     this.focusInput = this.focusInput.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.updateQuery = _.debounce(this.updateQuery, 500);
   }
-  
+
   focusInput () {
     this.input.focus();
   }
-  
+
   clearSearch () {
     this.setState({
       value: '',
     });
     this.updateQuery('');
   }
-  
+
   updateSearch (event) {
     //event.preventDefault();
-    
+
     const value = event.target.value;
     this.setState({
       value: value
     });
     this.updateQuery(value);
   }
-  
+
   updateQuery (value) {
     this.props.updateQuery(value);
   }
-  
+
   render () {
     const {
       classes,
       className,
       dense
     } = this.props;
-    
+
     return (
       <div className={classNames('search-input', classes.root, className, dense && classes.dense)}>
         <FormControl className={classes.search}>
-          
+
           <SearchIcon className={classes.icon} onClick={this.focusInput}/>
-          
-          <Input className={classes.input}
+
+          <Input className={classNames('search-input', classes.input)}
                  id="search-input"
                  inputRef={(input) => this.input = input}
                  value={this.state.value}
@@ -114,19 +114,19 @@ class SearchInput extends PureComponent {
                  onChange={this.updateSearch}
                  disableUnderline={true}
           />
-          
+
           <IconButton className={classes.cancel}
                       onClick={this.clearSearch}
                       disabled={!this.state.value}
           >
             <CancelIcon/>
           </IconButton>
-        
+
         </FormControl>
       </div>
     );
   }
-  
+
 }
 
 
