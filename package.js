@@ -12,9 +12,9 @@ Package.onUse(function (api) {
   
   api.use([
     'ecmascript',
-    //'vulcan:accounts@1.8.3',
-    //'vulcan:forms@1.8.3',
-    //'vulcan:core@1.8.3',
+    'vulcan:accounts@1.8.3',
+    'vulcan:forms@1.8.3',
+    'vulcan:core@1.8.3',
   ]);
   
   api.mainModule('client/main.js', 'client');
