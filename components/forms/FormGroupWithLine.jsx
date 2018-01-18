@@ -30,7 +30,7 @@ const styles = theme => ({
       alignItems: 'center',
     },
     '& > div:first-child': {
-      ...theme.typography.section,
+      ...theme.typography.subheading,
       flexGrow: 1,
     },
     paddingTop: theme.spacing.unit,

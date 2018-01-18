@@ -4,8 +4,6 @@ import { Components, replaceComponent, withCurrentUser, withList } from 'meteor/
 import { intlShape } from 'meteor/vulcan:i18n';
 import withStyles from 'material-ui/styles/withStyles';
 import Table, { TableBody, TableHead, TableRow, TableCell } from 'material-ui/Table';
-import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui-icons/Edit';
 import { getFieldValue } from './Card';
 import _assign from 'lodash/assign';
 import classNames from 'classnames';
@@ -16,7 +14,15 @@ import classNames from 'classnames';
 Datatable Component
 
 */
-const stylesBase = {
+const baseStyles = {
+  root: {
+    position: 'relative',
+  },
+  addButton: {
+    position: 'absolute',
+    top: '-8px',
+    right: 0,
+  },
   table: {},
   tableHead: {},
   tableBody: {},
@@ -29,14 +35,14 @@ const stylesBase = {
 
 class Datatable extends PureComponent {
   
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
+    
+    this.updateQuery = this.updateQuery.bind(this);
     
     this.state = {
       query: '',
     };
-    
-    this.updateQuery = this.updateQuery.bind(this);
   }
   
   updateQuery (value) {
@@ -47,27 +53,48 @@ class Datatable extends PureComponent {
   
   render () {
     
+    const {
+      className,
+      collection,
+      options,
+      showSearch,
+      showNew,
+      currentUser,
+      classes,
+    } = this.props;
+    
     const listOptions = {
-      collection: this.props.collection,
-      ...this.props.options,
+      collection: collection,
+      ...options,
     };
     
     const DatatableWithList = withList(listOptions)(Components.DatatableContents);
     
     return (
-      <div className={`datatable datatable-${this.props.collection._name}`}>
+      <div className={classNames('datatable', `datatable-${collection._name}`, classes.root,
+        className)}>
         
         {
-          this.props.showSearch &&
+          showSearch &&
           
           <Components.SearchInput value={this.state.query}
                                   updateQuery={this.updateQuery}
           />
         }
+        {
+          showNew &&
+          
+          <Components.NewButton collection={collection}
+                                fab={true}
+                                color="primary"
+                                className={classes.addButton}
+          />
+        }
+        
         
         <DatatableWithList {...this.props}
                            terms={{ query: this.state.query }}
-                           currentUser={this.props.currentUser}
+                           currentUser={currentUser}
         />
       
       </div>
@@ -77,11 +104,15 @@ class Datatable extends PureComponent {
 
 
 Datatable.propTypes = {
+  className: PropTypes.string,
   collection: PropTypes.object,
   options: PropTypes.object,
   columns: PropTypes.array,
   showEdit: PropTypes.bool,
+  showNew: PropTypes.bool,
   showSearch: PropTypes.bool,
+  emptyState: PropTypes.node,
+  currentUser: PropTypes.object,
   classes: PropTypes.object,
 };
 
@@ -93,7 +124,7 @@ Datatable.defaultProps = {
 };
 
 
-replaceComponent('Datatable', Datatable, withCurrentUser);
+replaceComponent('Datatable', Datatable, withCurrentUser, [withStyles, baseStyles]);
 
 
 /*
@@ -101,7 +132,7 @@ replaceComponent('Datatable', Datatable, withCurrentUser);
 DatatableContents Component
 
 */
-const datatableContentsStyles = theme => (_assign({}, stylesBase, {
+const datatableContentsStyles = theme => (_assign({}, baseStyles, {
   table: {
     marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 3,
@@ -119,17 +150,19 @@ const DatatableContents = ({
                              totalCount,
                              networkStatus,
                              showEdit,
+                             emptyState,
                              currentUser,
                              classes,
                            }) => {
   
+  if (loading) {
+    return <Components.Loading/>;
+  } else if (!results.length) {
+    return emptyState || null;
+  }
+  
   return (
-    <Components.ListWrap className="datatable-list"
-                         loading={loading}
-                         listItems={results}
-                         notAuthorized={false}
-    >
-      
+    <div className="datatable-list">
       <Table className={classes.table}>
         
         <TableHead className={classes.tableHead}>
@@ -151,20 +184,24 @@ const DatatableContents = ({
           </TableRow>
         </TableHead>
         
-        <TableBody className={classes.tableBody}>
-          {
-            results && results.map(
-              (document, index) =>
-                <Components.DatatableRow collection={collection}
-                                         columns={columns}
-                                         document={document}
-                                         key={index}
-                                         showEdit={showEdit}
-                                         currentUser={currentUser}
-                                         classes={classes}
-                />)
-          }
-        </TableBody>
+        {
+          results &&
+          
+          <TableBody className={classes.tableBody}>
+            {
+              results.map(
+                (document, index) =>
+                  <Components.DatatableRow collection={collection}
+                                           columns={columns}
+                                           document={document}
+                                           key={index}
+                                           showEdit={showEdit}
+                                           currentUser={currentUser}
+                                           classes={classes}
+                  />)
+            }
+          </TableBody>
+        }
       
       </Table>
       
@@ -174,8 +211,7 @@ const DatatableContents = ({
                            loadMore={loadMore}
                            networkStatus={networkStatus}
       />
-    
-    </Components.ListWrap>
+    </div>
   );
 };
 
@@ -221,7 +257,7 @@ replaceComponent('DatatableHeader', DatatableHeader);
 DatatableRow Component
 
 */
-const datatableRowStyles = theme => (_assign({}, stylesBase, {
+const datatableRowStyles = theme => (_assign({}, baseStyles, {
   editCell: {
     paddingTop: '0 !important',
     paddingBottom: '0 !important',
@@ -243,8 +279,6 @@ const DatatableRow = ({
                         classes
                       }, { intl }) => {
   
-  const editTitle = intl.formatMessage({ id: 'datatable.edit' });
-  
   return (
     <TableRow className={classNames('datatable-item', classes.tableRow)}>
       
@@ -263,14 +297,10 @@ const DatatableRow = ({
         showEdit &&
         
         <TableCell className={classes.editCell}>
-          <Components.ModalTrigger
-            label={intl.formatMessage({ id: 'datatable.edit' })}
-            component={<IconButton className={classes.editButton} aria-label={editTitle}>
-              <EditIcon/>
-            </IconButton>}
-          >
-            <Components.DatatableEditForm collection={collection} document={document}/>
-          </Components.ModalTrigger>
+          <Components.EditButton collection={collection}
+                                 document={document}
+                                 buttonClasses={{button: classes.editButton}}
+          />
         </TableCell>
       }
     

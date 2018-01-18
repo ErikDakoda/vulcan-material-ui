@@ -7,7 +7,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import Typography from 'material-ui/Typography';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import { withStyles } from 'material-ui/styles';
-import { getSetting, Components, replaceComponent } from 'meteor/vulcan:core';
+import { getSetting, Components, registerComponent } from 'meteor/vulcan:core';
 import classNames from 'classnames';
 
 
@@ -86,8 +86,6 @@ const Header = (props, context) => {
           }
         </div>
         
-        {!!props.currentUser ? <Components.UsersMenu/> : <Components.UsersLoggedOutMenu/>}
-      
       </Toolbar>
     </AppBar>
   );
@@ -104,4 +102,4 @@ Header.propTypes = {
 Header.displayName = 'Header';
 
 
-replaceComponent('Header', Header, [withStyles, styles]);
+registerComponent('Header', Header, [withStyles, styles]);

@@ -38,12 +38,12 @@ const styles = theme => ({
   drawerPaper: {
     position: 'relative',
     width: drawerWidth,
-    paddingTop: `${topBarHeight}px`,
     backgroundColor: theme.palette.background[200],
   },
   drawerHeader: {
     height: `${topBarHeight}px !important`,
     minHeight: `${topBarHeight}px !important`,
+    position: 'relative !important',
   },
   content: {
     padding: theme.spacing.unit * 8,

@@ -12,7 +12,6 @@ import GroupIcon from 'material-ui-icons/Group';
 import ThemeIcon from 'material-ui-icons/ColorLens';
 import withStyles from 'material-ui/styles/withStyles';
 import HomeIcon from 'material-ui-icons/Home';
-import { Link } from 'react-router';
 import Users from 'meteor/vulcan:users';
 
 

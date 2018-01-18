@@ -2,8 +2,24 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'meteor/vulcan:i18n';
 import { replaceComponent } from 'meteor/vulcan:lib';
+import withStyles from 'material-ui/styles/withStyles';
 import Dialog, { DialogContent, DialogTitle, } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
+import classNames from 'classnames';
+
+
+const styles = theme => ({
+  root: {
+    display: 'inline-block',
+  },
+  button: {},
+  anchor: {},
+  dialog: {},
+  dialogTitle: {},
+  dialogContent: {
+    paddingTop: '4px',
+  },
+});
 
 
 class ModalTrigger extends PureComponent {
@@ -28,11 +44,13 @@ class ModalTrigger extends PureComponent {
   render () {
     const {
       className,
+      dialogClassName,
       labelId,
       component,
       titleId,
       type,
       children,
+      classes,
     } = this.props;
     
     const intl = this.context.intl;
@@ -46,35 +64,36 @@ class ModalTrigger extends PureComponent {
       :
       type === 'button'
         ?
-        <Button raised onClick={this.openModal}>{label}</Button>
+        <Button className={classes.button} raised onClick={this.openModal}>{label}</Button>
         :
-        <a href="#" onClick={this.openModal}>{label}</a>;
+        <a className={classes.anchor} href="#" onClick={this.openModal}>{label}</a>;
     
     const childrenComponent = React.cloneElement(children, { closeModal: this.closeModal });
     
     return (
-      <div className="modal-trigger">
+      <span className={classNames('modal-trigger', classes.root, className)}>
         
         {triggerComponent}
         
-        <Dialog className={className}
+        <Dialog className={classNames(dialogClassName)}
                 open={this.state.modalIsOpen}
                 onClose={this.closeModal}
+                fullWidth={true}
         >
           
           {
             title &&
             
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle className={classes.dialogTitle}>{title}</DialogTitle>
           }
           
-          <DialogContent>
+          <DialogContent className={classes.dialogContent}>
             {childrenComponent}
           </DialogContent>
         
         </Dialog>
       
-      </div>
+      </span>
     );
   }
 }
@@ -82,13 +101,15 @@ class ModalTrigger extends PureComponent {
 
 ModalTrigger.propTypes = {
   className: PropTypes.string,
+  dialogClassName: PropTypes.string,
   label: PropTypes.string,
   labelId: PropTypes.string,
   component: PropTypes.object,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   titleId: PropTypes.string,
   type: PropTypes.oneOf(['link', 'button']),
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
+  children: PropTypes.node,
+  classes: PropTypes.object,
 };
 
 
@@ -97,4 +118,4 @@ ModalTrigger.contextTypes = {
 };
 
 
-replaceComponent('ModalTrigger', ModalTrigger);
+replaceComponent('ModalTrigger', ModalTrigger, [withStyles, styles]);

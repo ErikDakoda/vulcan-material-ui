@@ -15,11 +15,6 @@ import grey from 'material-ui/colors/grey';
  * For a complete list of configuration variables see:
  * https://material-ui-next.com/customization/themes/
  * 
- * The following variables are not standard in material-ui 1.0:
- *  - theme.palette.background
- *  - theme.typography.section
- *  - theme.utils.noList
- * 
  */
 
 
@@ -77,17 +72,21 @@ const theme = createMuiTheme({
       light: palettes.primary[200],
       main: palettes.primary[500],
       dark: palettes.primary[800],
+      ...palettes.primary
     },
     secondary: {
       light: palettes.secondary[200],
       main: palettes.secondary[500],
       dark: palettes.secondary[800],
+      ...palettes.secondary
     },
     error: {
       main: palettes.error[500],
+      ...palettes.error
     },
     background: {
       default: palettes.background[100],
+      ...palettes.background
     }
   },
   
@@ -155,14 +154,6 @@ const theme = createMuiTheme({
       color: body.fontColorRegular,
     },
     
-    section: {
-      fontSize: 14,
-      fontWeight: body.fontWeightMedium,
-      fontFamily: sansSerif(body.fontFamily),
-      lineHeight: '24px',
-      color: palettes.primary[500],
-    },
-    
     body2: {
       fontSize: body.fontSize,
       fontWeight: body.fontWeightMedium,
@@ -197,14 +188,6 @@ const theme = createMuiTheme({
     }
     
   },
-  
-  utils: {
-    noList: {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-    },
-  }
   
 });
 

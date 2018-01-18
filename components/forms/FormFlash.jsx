@@ -12,7 +12,11 @@ const styles = theme => ({
   root: {
     position: 'relative',
     boxShadow: 'none',
-    '& ul': theme.utils.noList,
+    '& ul': {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    },
   },
   error: { '& > div': { backgroundColor: theme.palette.error[500] } },
   danger: { '& > div': { backgroundColor: theme.palette.error[500] } },
@@ -25,7 +29,7 @@ const FormFlash = ({ classes, message, type }) => {
   type = type === 'error' ? 'danger' : type; // if type is "error", use "danger" instead
   
   const errorClass = ['warning', 'error', 'danger'].includes(type) && classes[type];
-
+  
   const messageNode = Array.isArray(message)
     ?
     <ul>

@@ -82,7 +82,7 @@ const FormsyMuiSuggest = createReactClass({
   propTypes: {
     options: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,
-      value: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       iconComponent: PropTypes.node,
     })),
     classes: PropTypes.object.isRequired,

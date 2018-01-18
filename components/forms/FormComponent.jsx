@@ -9,6 +9,7 @@ import withStyles from 'material-ui/styles/withStyles';
 
 const styles = theme => ({
   formInput: {
+    position: 'relative',
     marginBottom: theme.spacing.unit * 2,
   },
   halfWidthLeft: {
