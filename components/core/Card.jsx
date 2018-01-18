@@ -1,4 +1,4 @@
-import { replaceComponent, Components } from 'meteor/vulcan:lib';
+import { replaceComponent, Components } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 import React from 'react';
 import PropTypes from 'prop-types';

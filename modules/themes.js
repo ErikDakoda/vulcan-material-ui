@@ -1,6 +1,6 @@
 /** @module vulcan-material-ui */
 
-import { registerSetting, getSetting } from 'meteor/vulcan:lib';
+import { registerSetting, getSetting } from 'meteor/vulcan:core';
 
 
 registerSetting('muiTheme', 'Sample', 'Material UI theme used by erikdakota:vulcan-material-ui');

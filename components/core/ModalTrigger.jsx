@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'meteor/vulcan:i18n';
-import { replaceComponent } from 'meteor/vulcan:lib';
+import { replaceComponent } from 'meteor/vulcan:core';
 import withStyles from 'material-ui/styles/withStyles';
 import Dialog, { DialogContent, DialogTitle, } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
