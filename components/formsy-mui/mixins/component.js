@@ -104,7 +104,7 @@ export default {
       elementWrapperClassName: this.getElementWrapperClassName(),
       layout: this.getLayout(),
       required: this.isRequired(),
-      hasErrors: this.showErrors()
+      hasErrors: this.hasErrors()
     };
   },
   
@@ -138,18 +138,30 @@ export default {
   },
   
   renderHelp: function () {
-    return (this.props.help &&
+    return (this.props.help && !this.hasErrors() &&
       <FormHelperText>{this.props.help}</FormHelperText>
     );
   },
   
-  renderErrorMessage: function () {
+  /*renderErrorMessage: function () {
     const errorMessages = this.showErrors() ? this.getErrorMessages() || [] : [];
     const messages = errorMessages.map((message, index) => `message${index ? '; ' : ''}`);
     
     return (!!messages.length &&
       <FormHelperText>{messages.join('; ')}</FormHelperText>
     );
+  },*/
+  
+  renderErrorMessage: function () {
+    if (!this.hasErrors()) return;
+    
+    const messages = this.props.errors.map((error, index) => `${error.message}${index ? '; ' : ''}`);
+    
+    return <FormHelperText>{messages}</FormHelperText>;
+  },
+  
+  hasErrors: function () {
+    return !!(this.props.errors && this.props.errors.length);
   },
   
   showErrors: function () {

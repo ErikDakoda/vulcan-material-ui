@@ -29,6 +29,7 @@ class FormGroup extends PureComponent {
     const {
       name,
       label,
+      hidden,
       classes,
       currentUser,
       fields,
@@ -36,6 +37,10 @@ class FormGroup extends PureComponent {
     } = this.props;
     
     if (name === 'admin' && !Users.isAdmin(currentUser)) {
+      return null;
+    }
+    
+    if (hidden) {
       return null;
     }
     
@@ -74,6 +79,7 @@ FormGroup.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   order: PropTypes.number,
+  hidden: PropTypes.bool,
   fields: PropTypes.array,
   startCollapsed: PropTypes.bool,
   updateCurrentValues: PropTypes.func,

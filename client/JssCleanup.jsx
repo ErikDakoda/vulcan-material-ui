@@ -8,7 +8,7 @@ class JssCleanup extends PureComponent {
   componentDidMount() {
     const jssStyles = document.getElementById('jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
+      //jssStyles.parentNode.removeChild(jssStyles);
     }
   }
   

@@ -32,7 +32,6 @@ class FormComponent extends PureComponent {
     super(props);
     this.handleBlur = this.handleBlur.bind(this);
     this.updateCharacterCount = this.updateCharacterCount.bind(this);
-    this.renderErrors = this.renderErrors.bind(this);
     
     if (props.limit) {
       this.state = {
@@ -47,7 +46,8 @@ class FormComponent extends PureComponent {
   
   handleBlur () {
     if (this.formControl) {
-      this.props.updateCurrentValues({ [this.props.name]: this.formControl.getValue() });
+      const value = this.formControl.getValue();
+      this.props.updateCurrentValues({ [this.props.name]: value });
     }
   }
   
@@ -72,7 +72,7 @@ class FormComponent extends PureComponent {
       beforeComponent,
       afterComponent,
       limit,
-      errors,
+      //errors,
       classes,
       ...rest
     } = this.props;
@@ -142,7 +142,7 @@ class FormComponent extends PureComponent {
         
         default:
           const CustomComponent = Components[this.props.control];
-          return <CustomComponent {...properties} document={document}/>;
+          return <CustomComponent {...properties} updateCurrentValues={this.props.updateCurrentValues} document={document}/>;
       }
       
     } else {
@@ -150,14 +150,6 @@ class FormComponent extends PureComponent {
       return <Components.FormComponentDefault {...properties}/>;
       
     }
-  }
-  
-  renderErrors () {
-    return (
-      <ul className='form-input-errors'>
-        {this.props.errors.map((error, index) => <li key={index}>{error.message}</li>)}
-      </ul>
-    );
   }
   
   showClear = () => {
@@ -216,21 +208,18 @@ class FormComponent extends PureComponent {
   
   render () {
     const {
-      errors,
       classes,
       inputClassName,
       name,
       control,
     } = this.props;
-    const hasErrors = errors && errors.length;
     const inputClass = classNames(classes.formInput, inputClassName && classes[inputClassName],
-      `input-${name}`, `form-component-${control || 'default'}`, { 'input-error': hasErrors });
+      `input-${name}`, `form-component-${control || 'default'}`);
     
     return (
       <div className={inputClass}>
         {this.renderExtraComponent(this.props.beforeComponent)}
         {this.renderComponent()}
-        {hasErrors ? this.renderErrors() : null}
         {this.showClear() ? this.renderClear() : null}
         {this.props.limit ? <div className={classNames('form-control-limit',
           { danger: this.state.limit < 10 })}>{this.state.limit}</div> : null}

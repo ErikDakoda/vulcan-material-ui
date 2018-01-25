@@ -69,6 +69,12 @@ const FormsyMuiRadioGroup = createReactClass({
     options: PropTypes.array.isRequired
   },
   
+  getInitialState: function () {
+    if (this.props.refFunction) {
+      this.props.refFunction(this);
+    }
+  },
+  
   getDefaultProps: function () {
     return {
       type: 'stacked',
@@ -82,6 +88,13 @@ const FormsyMuiRadioGroup = createReactClass({
     const value = event.currentTarget.value;
     this.setValue(value);
     this.props.onChange(this.props.name, value);
+  },
+  
+  validate: function () {
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
+    return true;
   },
   
   renderElement: function () {

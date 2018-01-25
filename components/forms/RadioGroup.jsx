@@ -4,7 +4,7 @@ import { replaceComponent } from 'meteor/vulcan:core';
 
 
 const RadioGroupComponent = ({refFunction, ...properties}) =>
-  <FormsyMuiRadioGroup {...properties} ref={refFunction}/>;
+  <FormsyMuiRadioGroup {...properties}/>;
 
 
 replaceComponent('FormComponentRadioGroup', RadioGroupComponent);

@@ -90,7 +90,7 @@ const FormsyMuiInput = createReactClass({
     
     if (this.props.addonBefore || this.props.buttonBefore) {
       startAdornment =
-        <InputAdornment position="start" style={{ whiteSpace: 'nowrap' }}>
+        <InputAdornment position="start">
           {this.props.addonBefore && this.props.addonBefore}
           {this.props.buttonBefore && this.props.buttonBefore}
         </InputAdornment>;
@@ -100,7 +100,7 @@ const FormsyMuiInput = createReactClass({
     
     if (this.props.addonAfter || this.props.buttonAfter || urlButton) {
       endAdornment =
-        <InputAdornment position="end" style={{ whiteSpace: 'nowrap' }}>
+        <InputAdornment position="end">
           {urlButton && urlButton}
           {this.props.buttonAfter && this.props.buttonAfter}
           {this.props.addonAfter && this.props.addonAfter}

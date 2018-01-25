@@ -6,8 +6,8 @@ import _throttle from 'lodash/throttle';
 
 class ScrollTrigger extends Component {
   
-  constructor (props) {
-    super(props);
+  constructor () {
+    super();
     
     this.onScroll = _throttle(this.onScroll.bind(this), 100, {
       leading: true,
@@ -20,12 +20,28 @@ class ScrollTrigger extends Component {
     });
     
     this.inViewport = false;
+    this.passive = this.supportsPassive ? { passive: true } : false;
+  }
+  
+  supportsPassive () {
+    let supportsPassive = false;
+    try {
+      const opts = Object.defineProperty({}, 'passive', {
+        get: function() {
+          supportsPassive = true;
+        }
+      });
+      window.addEventListener("testPassive", null, opts);
+      window.removeEventListener("testPassive", null, opts);
+      //eslint-disable-next-line no-empty
+    } catch (e) {}
+    return supportsPassive;
   }
   
   componentDidMount () {
     this.scroller = document.getElementById('main');
-    this.scroller.addEventListener('resize', this.onResize);
-    this.scroller.addEventListener('scroll', this.onScroll);
+    this.scroller.addEventListener('resize', this.onResize, this.passive);
+    this.scroller.addEventListener('scroll', this.onScroll, this.passive);
   
     this.inViewport = false;
 

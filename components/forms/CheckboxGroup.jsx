@@ -3,8 +3,8 @@ import FormsyMuiCheckboxGroup from '../formsy-mui/FormsyMuiCheckboxGroup';
 import { replaceComponent } from 'meteor/vulcan:core';
 
 
-const CheckboxGroupComponent = ({refFunction, ...properties}) =>
-  <FormsyMuiCheckboxGroup {...properties} ref={refFunction} />;
+const CheckboxGroupComponent = ({...properties}) =>
+  <FormsyMuiCheckboxGroup {...properties}/>;
 
 
 replaceComponent('FormComponentCheckboxGroup', CheckboxGroupComponent);

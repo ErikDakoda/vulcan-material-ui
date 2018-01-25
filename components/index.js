@@ -18,6 +18,7 @@ import './forms/Default';
 import './forms/Email';
 import './forms/Email';
 import './forms/FormComponent';
+import './forms/FormFlash';
 import './forms/FormGroup';
 import './forms/FormSubmit';
 import './forms/Number';

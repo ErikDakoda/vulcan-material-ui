@@ -58,6 +58,12 @@ const FormsyMuiCheckboxGroup = createReactClass({
     classes: PropTypes.object.isRequired,
   },
   
+  getInitialState: function () {
+    if (this.props.refFunction) {
+      this.props.refFunction(this);
+    }
+  },
+  
   getDefaultProps: function () {
     return {
       label: '',
@@ -76,9 +82,17 @@ const FormsyMuiCheckboxGroup = createReactClass({
     this.props.onChange(this.props.name, value);
   },
   
+  validate: function () {
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
+    return true;
+  },
+  
   renderElement: function () {
     const controls = this.props.options.map((checkbox, key) => {
-      let checked = (this.getValue().indexOf(checkbox.value) !== -1);
+      let value = checkbox.value;
+      let checked = (this.getValue().indexOf(value) !== -1);
       let disabled = this.isFormDisabled() || checkbox.disabled || this.props.disabled;
       
       return (
@@ -86,10 +100,10 @@ const FormsyMuiCheckboxGroup = createReactClass({
           key={key}
           control={
             <Checkbox
-              inputRef={(c) => this[this.props.name + '-' + checkbox.value] = c}
+              inputRef={(c) => this[this.props.name + '-' + value] = c}
               checked={checked}
               onChange={this.changeCheckbox}
-              value={checkbox.value}
+              value={value}
               disabled={disabled}
             />
           }
@@ -98,10 +112,10 @@ const FormsyMuiCheckboxGroup = createReactClass({
       );
     });
     
-    const maxLength = this.props.options.reduce((max, option) => 
+    const maxLength = this.props.options.reduce((max, option) =>
       option.label.length > max ? option.label.length : max, 0);
   
-    const columnClass = maxLength < 18 ? 'threeColumn' : maxLength < 30 ? 'twoColumn' : '';
+    const columnClass = maxLength < 20 ? 'threeColumn' : maxLength < 30 ? 'twoColumn' : '';
     
     return (
       <FormGroup className={classNames(this.props.classes.group, this.props.classes[columnClass])}>

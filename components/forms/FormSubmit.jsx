@@ -7,7 +7,7 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Tooltip from 'material-ui/Tooltip';
-import { FormattedMessage } from 'meteor/vulcan:i18n';
+import { FormattedMessage } from 'react-intl';
 
 
 const styles = theme => ({

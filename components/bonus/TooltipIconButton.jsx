@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 import { Components, registerComponent, Utils } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 import withStyles from 'material-ui/styles/withStyles';
+import withTheme from 'material-ui/styles/withTheme';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
+import classNames from 'classnames';
 
 
 const styles = theme => ({
   root: {},
   tooltip: {
-    margin: '2px !important',
+    margin: '4px !important',
   },
-  buttonWrap: {},
+  buttonWrap: {
+    display: 'inline-block',
+  },
   button: {},
 });
 
@@ -24,21 +28,21 @@ const TooltipIconButton = (props, { intl }) => {
     titleId,
     icon,
     classes,
-    tooltipId,
+    theme,
     buttonRef,
     fab,
     ...properties
   } = props;
   
   const title = intl.formatMessage({ id: titleId });
-  const id = tooltipId || 'tooltip-' + Utils.slugify(titleId);
+  const slug = Utils.slugify(titleId);
   
   return (
     <Tooltip classes={{ tooltip: classes.tooltip }}
-             id={id}
+             id={`tooltip-${slug}`}
              title={title}
              placement="bottom"
-             enterDelay={300}
+             enterDelay={theme.utils.tooltipEnterDelay}
     >
       <div className={classes.buttonWrap}>
         {
@@ -46,7 +50,7 @@ const TooltipIconButton = (props, { intl }) => {
             
             ?
             
-            <Button className={classes.button}
+            <Button className={classNames(classes.button, slug)}
                     fab
                     aria-label={title}
                     ref={buttonRef}
@@ -57,7 +61,7 @@ const TooltipIconButton = (props, { intl }) => {
             
             :
             
-            <IconButton className={classes.button}
+            <IconButton className={classNames(classes.button, slug)}
                         aria-label={title}
                         ref={buttonRef}
                         {...properties}
@@ -76,9 +80,9 @@ TooltipIconButton.propTypes = {
   titleId: PropTypes.string.isRequired,
   icon: PropTypes.node.isRequired,
   classes: PropTypes.object,
-  tooltipId: PropTypes.string,
   buttonRef: PropTypes.func,
   fab: PropTypes.bool,
+  theme: PropTypes.object,
 };
 
 
@@ -90,4 +94,4 @@ TooltipIconButton.contextTypes = {
 TooltipIconButton.displayName = 'TooltipIconButton';
 
 
-registerComponent('TooltipIconButton', TooltipIconButton, [withStyles, styles]);
+registerComponent('TooltipIconButton', TooltipIconButton, [withStyles, styles], [withTheme]);

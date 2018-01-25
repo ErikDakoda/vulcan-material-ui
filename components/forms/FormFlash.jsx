@@ -5,18 +5,16 @@ import { Components } from 'meteor/vulcan:core';
 import Snackbar from 'material-ui/Snackbar';
 import withStyles from 'material-ui/styles/withStyles';
 import classNames from 'classnames';
-import Grow from 'material-ui/transitions/Grow';
 
 
 const styles = theme => ({
   root: {
     position: 'relative',
     boxShadow: 'none',
-    '& ul': {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-    },
+    marginBottom: theme.spacing.unit * 2,
+  },
+  list: {
+    marginBottom: 0,
   },
   error: { '& > div': { backgroundColor: theme.palette.error[500] } },
   danger: { '& > div': { backgroundColor: theme.palette.error[500] } },
@@ -32,7 +30,7 @@ const FormFlash = ({ classes, message, type }) => {
   
   const messageNode = Array.isArray(message)
     ?
-    <ul>
+    <ul className={classes.list}>
       {message.map((message, index) =>
         <li key={index}>{message.content}</li>
       )}
@@ -46,7 +44,6 @@ const FormFlash = ({ classes, message, type }) => {
       open={true}
       className={classNames(classes.root, errorClass)}
       message={messageNode}
-      transition={<Grow/>}
     />
   );
 };

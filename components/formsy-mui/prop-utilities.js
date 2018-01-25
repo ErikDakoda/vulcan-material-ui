@@ -41,6 +41,7 @@ const cleanProps = (props) => {
     
     // Vulcan
     document,
+    updateCurrentValues,
     
     ...rest
   } = props;

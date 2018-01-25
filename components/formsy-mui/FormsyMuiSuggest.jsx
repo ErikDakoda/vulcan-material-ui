@@ -5,13 +5,14 @@ import Formsy from 'formsy-react';
 import ComponentMixin from './mixins/component';
 import Row from './row';
 import withStyles from 'material-ui/styles/withStyles';
-import Input from 'material-ui/Input';
+import Input, { InputAdornment } from 'material-ui/Input';
 import Autosuggest from 'react-autosuggest';
 import Paper from 'material-ui/Paper';
 import { MenuItem } from 'material-ui/Menu';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { registerComponent } from 'meteor/vulcan:core';
+import classNames from 'classnames';
 
 
 /*{
@@ -35,9 +36,13 @@ const styles = theme => ({
     flexGrow: 1,
     position: 'relative',
   },
+  textField: {
+    width: '100%',
+    'label + div > &': {
+      marginTop: theme.spacing.unit * 2,
+    },
+  },
   input: {
-    marginTop: '16px',
-    height: '1em',
     outline: 0,
     font: 'inherit',
     color: 'currentColor',
@@ -50,12 +55,15 @@ const styles = theme => ({
     background: 'none',
     verticalAlign: 'middle',
   },
+  readOnly: {
+    cursor: 'pointer',
+  },
   suggestionsContainer: {
     display: 'none',
     position: 'absolute',
     left: 0,
     right: 0,
-    zIndex: theme.zIndex.menu,
+    zIndex: theme.zIndex.modal,
     marginBottom: theme.spacing.unit * 3,
   },
   suggestionsContainerOpen: {
@@ -68,9 +76,6 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     listStyleType: 'none',
-  },
-  textField: {
-    width: '100%',
   },
 });
 
@@ -159,8 +164,29 @@ const FormsyMuiSuggest = createReactClass({
   },
   
   render: function () {
+    let startAdornment;
+    let endAdornment;
+  
+    if (this.props.addonBefore || this.props.buttonBefore) {
+      startAdornment =
+        <InputAdornment position="start">
+          {this.props.addonBefore && this.props.addonBefore}
+          {this.props.buttonBefore && this.props.buttonBefore}
+        </InputAdornment>;
+    }
+  
+    if (this.props.addonAfter || this.props.buttonAfter) {
+      endAdornment =
+        <InputAdornment position="end">
+          {this.props.buttonAfter && this.props.buttonAfter}
+          {this.props.addonAfter && this.props.addonAfter}
+        </InputAdornment>;
+    }
+  
+    let element = this.renderElement(startAdornment, endAdornment);
+
     if (this.getLayout() === 'elementOnly') {
-      return this.renderElement();
+      return element;
     }
     
     return (
@@ -168,21 +194,21 @@ const FormsyMuiSuggest = createReactClass({
         {...this.getRowProperties()}
         htmlFor={this.getId()}
       >
-        {this.renderElement()}
+        {element}
         {this.renderHelp()}
         {this.renderErrorMessage()}
       </Row>
     );
   },
   
-  renderElement: function () {
+  renderElement: function (startAdornment, endAdornment) {
     const { classes, autoFocus } = this.props;
     
     return (
       <Autosuggest
         theme={{
           container: classes.container,
-          input: classes.input,
+          input: classNames(classes.input, this.props.limitToList && classes.readOnly),
           suggestionsContainer: classes.suggestionsContainer,
           suggestionsContainerOpen: classes.suggestionsContainerOpen,
           suggestion: classes.suggestion,
@@ -204,13 +230,15 @@ const FormsyMuiSuggest = createReactClass({
           value: this.getInputValue(),
           readOnly: this.props.limitToList,
           disabled: this.isFormDisabled() || this.props.disabled,
+          startAdornment,
+          endAdornment,
         }}
       />
     );
   },
   
   renderInputComponent: function (inputProps) {
-    const { classes, autoFocus, value, ref, ...rest } = inputProps;
+    const { classes, autoFocus, value, ref, startAdornment, endAdornment, ...rest } = inputProps;
     
     return (
       <Input
@@ -222,6 +250,8 @@ const FormsyMuiSuggest = createReactClass({
           this.element = c;
         }}
         type="text"
+        startAdornment={startAdornment}
+        endAdornment={endAdornment}
         inputProps={{
           ...rest,
         }}
