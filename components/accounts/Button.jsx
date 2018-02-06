@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import { replaceComponent, Utils } from 'meteor/vulcan:core';
 import classNames from 'classnames';
 
 
-export class AccountsButton extends PureComponent {
+export class AccountsButton extends Component {
   render () {
     
     const {
@@ -19,12 +19,14 @@ export class AccountsButton extends PureComponent {
     return (
       <Button
         raised={type !== 'link'}
-        dense={type === 'link'}
+        size={type === 'link' ? 'small' : undefined}
         color="primary"
         className={classNames(`button-${Utils.slugify(label)}`, className)}
         type={type}
         disabled={disabled}
-        onClick={onClick}>
+        onClick={onClick}
+        disableRipple={true}
+      >
         {label}
       </Button>
     );
@@ -33,7 +35,11 @@ export class AccountsButton extends PureComponent {
 
 
 AccountsButton.propTypes = {
-  onClick: PropTypes.func,
+  label: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['link', 'submit']),
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
 };
 
 

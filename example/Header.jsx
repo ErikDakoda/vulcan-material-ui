@@ -65,7 +65,6 @@ const Header = (props, context) => {
       <Toolbar className={classes.toolbar}>
         
         <IconButton
-          color="contrast"
           aria-label="open drawer"
           onClick={e => toggleSideNav()}
           className={classNames(classes.menuButton)}

@@ -25,8 +25,10 @@ const styles = theme => ({
 const TooltipIconButton = (props, { intl }) => {
   
   const {
+    title,
     titleId,
     icon,
+    className,
     classes,
     theme,
     buttonRef,
@@ -34,13 +36,14 @@ const TooltipIconButton = (props, { intl }) => {
     ...properties
   } = props;
   
-  const title = intl.formatMessage({ id: titleId });
+  const titleText = props.title || intl.formatMessage({ id: titleId });
   const slug = Utils.slugify(titleId);
   
   return (
-    <Tooltip classes={{ tooltip: classes.tooltip }}
+    <Tooltip className={className}
+             classes={{ tooltip: classes.tooltip }}
              id={`tooltip-${slug}`}
-             title={title}
+             title={titleText}
              placement="bottom"
              enterDelay={theme.utils.tooltipEnterDelay}
     >
@@ -77,8 +80,10 @@ const TooltipIconButton = (props, { intl }) => {
 
 
 TooltipIconButton.propTypes = {
-  titleId: PropTypes.string.isRequired,
+  title: PropTypes.node,
+  titleId: PropTypes.string,
   icon: PropTypes.node.isRequired,
+  className: PropTypes.string,
   classes: PropTypes.object,
   buttonRef: PropTypes.func,
   fab: PropTypes.bool,

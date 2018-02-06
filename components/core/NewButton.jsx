@@ -28,7 +28,7 @@ const NewButton = ({
 NewButton.propTypes = {
   className: PropTypes.string,
   collection: PropTypes.object.isRequired,
-  color: PropTypes.oneOf(['default', 'inherit', 'primary', 'contrast', 'accent']),
+  color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
   fab: PropTypes.bool,
 };
 

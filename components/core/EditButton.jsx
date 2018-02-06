@@ -31,7 +31,7 @@ const EditButton = ({
 EditButton.propTypes = {
   collection: PropTypes.object.isRequired,
   document: PropTypes.object.isRequired,
-  color: PropTypes.oneOf(['default', 'inherit', 'primary', 'contrast', 'accent']),
+  color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
   fab: PropTypes.bool,
   triggerClasses: PropTypes.object,
   buttonClasses: PropTypes.object,

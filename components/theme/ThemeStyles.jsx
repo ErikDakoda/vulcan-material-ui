@@ -24,9 +24,9 @@ const altPalette = ['A100', 'A200', 'A400', 'A700'];
 function getColorBlock(theme, classes, colorName, colorValue, colorTitle) {
   const bgColor = theme.palette[colorName][colorValue];
   
-  let fgColor = theme.palette.common.fullBlack;
+  let fgColor = theme.palette.common.black;
   if (getContrastRatio(bgColor, fgColor) < 7) {
-    fgColor = theme.palette.common.fullWhite;
+    fgColor = theme.palette.common.white;
   }
   
   let blockTitle;

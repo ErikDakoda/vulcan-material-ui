@@ -66,7 +66,7 @@ const FormSubmit = ({
         null
     }
     
-    <Button raised type="submit" color="accent" className={classes.button}>
+    <Button raised type="submit" color="secondary" className={classes.button}>
       {submitLabel ? submitLabel : <FormattedMessage id="forms.submit"/>}
     </Button>
     

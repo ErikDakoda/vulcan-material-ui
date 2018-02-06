@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Components, replaceComponent } from 'meteor/vulcan:core';
 import { CardActions } from 'material-ui/Card';
@@ -15,15 +15,15 @@ const styles = theme => ({
 });
 
 
-export class Buttons extends React.Component {
+export class Buttons extends Component {
   render () {
     
     const {
       classes,
       buttons = {},
-      className = null,
+      className = 'buttons',
     } = this.props;
-    
+  
     return (
       <CardActions className={classNames(classes.root, className)}>
         {Object.keys(buttons).map((id, i) =>
@@ -37,6 +37,8 @@ export class Buttons extends React.Component {
 
 Buttons.propTypes = {
   classes: PropTypes.object.isRequired,
+  buttons: PropTypes.object,
+  className: PropTypes.string,
 };
 
 
