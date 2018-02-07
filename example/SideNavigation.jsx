@@ -64,7 +64,7 @@ class SideNavigation extends React.Component {
                 <ListItemText primary="Admin"/>
                 {isOpen.admin ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
               </ListItem>
-              <Collapse in={isOpen.admin} transitionDuration="auto" unmountOnExit>
+              <Collapse in={isOpen.admin} transitionduration="auto" unmountOnExit>
                 <ListItem button className={classes.nested}
                           onClick={() => {browserHistory.push('/admin');}}>
                   <ListItemIcon>

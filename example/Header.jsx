@@ -56,9 +56,7 @@ const Header = (props, context) => {
   const isSideNavOpen = props.isSideNavOpen;
   const toggleSideNav = props.toggleSideNav;
   
-  const logoUrl = getSetting('logoUrl');
   const siteTitle = getSetting('title', 'My App');
-  const tagline = getSetting('tagline');
   
   return (
     <AppBar className={classNames(classes.appBar, isSideNavOpen && classes.appBarShift)}>
@@ -68,21 +66,17 @@ const Header = (props, context) => {
           aria-label="open drawer"
           onClick={e => toggleSideNav()}
           className={classNames(classes.menuButton)}
+          color="inherit"
         >
           {isSideNavOpen ? <ChevronLeftIcon/> : <MenuIcon/>}
         </IconButton>
         
         <div className={classNames(classes.headerMid)}>
-          <Components.Logo logoUrl={logoUrl} siteTitle={siteTitle}/>
-          {
-            tagline
-            
-            &&
-            
+          
             <Typography type="title" color="inherit" className="tagline">
-              {tagline}
+              {siteTitle}
             </Typography>
-          }
+
         </div>
         
       </Toolbar>

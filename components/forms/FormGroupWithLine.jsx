@@ -108,7 +108,7 @@ class FormGroup extends PureComponent {
             this.renderHeading()
         }
   
-        <Collapse classes={{entered: classes.entered}} in={collapseIn} transitionDuration="auto">
+        <Collapse classes={{entered: classes.entered}} in={collapseIn}>
           {
             this.props.fields.map(field =>
               <Components.FormComponent key={field.name}

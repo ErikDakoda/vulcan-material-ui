@@ -84,7 +84,6 @@ class Layout extends React.Component {
   };
   
   render = () => {
-    const currentUser = this.props.currentUser;
     const routeName = Utils.slugify(this.props.currentRoute.name);
     const classes = this.props.classes;
     const isOpen = this.state.isOpen;
@@ -92,14 +91,6 @@ class Layout extends React.Component {
     return (
       <div className={classNames(classes.root, 'wrapper', `wrapper-${routeName}`)}>
         <div className={classes.appFrame}>
-          
-          {
-            currentUser &&
-            
-            <Components.UsersProfileCheck currentUser={currentUser}
-                                          documentId={currentUser._id}
-            />
-          }
           
           <Components.Header isSideNavOpen={isOpen.sideNav}
                              toggleSideNav={openOrClose =>
