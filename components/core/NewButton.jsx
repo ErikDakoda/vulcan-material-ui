@@ -9,7 +9,7 @@ const NewButton = ({
                      className,
                      collection,
                      color = 'default',
-                     fab,
+                     variant,
                    }, { intl }) => (
   
   <Components.ModalTrigger
@@ -17,7 +17,7 @@ const NewButton = ({
     component={<Components.TooltipIconButton titleId="datatable.new"
                                              icon={<AddIcon/>}
                                              color={color}
-                                             fab={fab}
+                                             variant={variant}
     />}
   >
     <Components.DatatableEditForm collection={collection}/>
@@ -29,7 +29,7 @@ NewButton.propTypes = {
   className: PropTypes.string,
   collection: PropTypes.object.isRequired,
   color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
-  fab: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
 

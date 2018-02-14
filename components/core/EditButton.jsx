@@ -9,7 +9,7 @@ const EditButton = ({
                       collection,
                       document,
                       color = 'default',
-                      fab,
+                      variant,
                       triggerClasses,
                       buttonClasses,
                     }, { intl }) => (
@@ -19,7 +19,7 @@ const EditButton = ({
     component={<Components.TooltipIconButton titleId="datatable.edit"
                                              icon={<EditIcon/>}
                                              color={color}
-                                             fab={fab}
+                                             variant={variant}
                                              classes={buttonClasses}
     />}
   >
@@ -32,7 +32,7 @@ EditButton.propTypes = {
   collection: PropTypes.object.isRequired,
   document: PropTypes.object.isRequired,
   color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
-  fab: PropTypes.bool,
+  variant: PropTypes.string,
   triggerClasses: PropTypes.object,
   buttonClasses: PropTypes.object,
 };

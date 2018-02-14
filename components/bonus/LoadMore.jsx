@@ -97,7 +97,7 @@ const LoadMore = ({
             
             showNoMore &&
             
-            <Typography type="caption" className={classes.caption}>
+            <Typography variant="caption" className={classes.caption}>
               <FormattedMessage
                 id="common.no_more"
                 defaultMessage="No more items"

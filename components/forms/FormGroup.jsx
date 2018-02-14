@@ -52,10 +52,8 @@ class FormGroup extends PureComponent {
             ?
             null
             :
-            <Typography className={classes.head} type="subheading">
-              <div>
-                {label}
-              </div>
+            <Typography className={classes.head} variant="subheading">
+              {label}
             </Typography>
         }
         

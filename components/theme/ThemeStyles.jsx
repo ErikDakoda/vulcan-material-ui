@@ -125,50 +125,50 @@ const ThemeStyles = ({ theme, classes }) => {
     <Grid container className={classNames('theme-styles', classes.root)}>
       
       <Grid item xs={12}>
-        <Typography type="display4">
+        <Typography variant="display4">
           Display 4: {describeTypography(theme, 'display4')}
         </Typography>
-        <Typography type="display3">
+        <Typography variant="display3">
           Display 3: {describeTypography(theme, 'display3')}
         </Typography>
-        <Typography type="display2">
+        <Typography variant="display2">
           Display 2: {describeTypography(theme, 'display2')}
         </Typography>
-        <Typography type="display1">
+        <Typography variant="display1">
           Display 1: {describeTypography(theme, 'display1')}
         </Typography>
       </Grid>
       
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Typography type="headline" gutterBottom>
+          <Typography variant="headline" gutterBottom>
             Headline: {describeTypography(theme, 'headline')}
           </Typography>
-          <Typography type="title" gutterBottom>
+          <Typography variant="title" gutterBottom>
             Title: {describeTypography(theme, 'title')}
           </Typography>
-          <Typography type="subheading" gutterBottom>
+          <Typography variant="subheading" gutterBottom>
             Subheading: {describeTypography(theme, 'subheading')}
           </Typography>
-          <Typography type="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom>
             Body 1: {describeTypography(theme, 'body1')} - {latin}
           </Typography>
-          <Typography type="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom>
             {latin}
           </Typography>
-          <Typography type="body2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             Body 2: {describeTypography(theme, 'body2')} - {latin}
           </Typography>
-          <Typography type="body2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             {latin}
           </Typography>
-          <Typography type="caption" gutterBottom align="center">
+          <Typography variant="caption" gutterBottom align="center">
             Caption: {describeTypography(theme, 'caption')}
           </Typography>
           <Typography gutterBottom>
             Base: {describeTypography(theme)} - {latin}
           </Typography>
-          <Typography type="button" gutterBottom align="center">
+          <Typography variant="button" gutterBottom align="center">
             Button - {describeTypography(theme)}
           </Typography>
         </Paper>

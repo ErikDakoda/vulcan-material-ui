@@ -1,5 +1,5 @@
 
-# erikdakoda:vulcan-material-ui 0.10.4
+# erikdakoda:vulcan-material-ui 0.13.1
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui-next.com/). 
 It's based on the latest [v1-beta branch](https://github.com/callemall/material-ui/tree/v1-beta) of Material-UI.
@@ -8,17 +8,20 @@ This package is progressing and is now beta quality. Further changes are likely 
 the example layout into a separate package. To give me feedback open an issue on GitHub
 or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) channel as erikdakoda.
 
-This version has been tested against Vulcan 1.8.9 and Material UI v1.0.0-beta.31. NOTE: Material UI is still in 
-beta and the API is still in flux. I suggest that you lock your project to v1.0.0-beta.31 by removing the ^ before
-the version number in your package.json.
+This version has been tested against Vulcan 1.8.9 and Material UI v1.0.0-beta.33.
+
+NOTE: Material UI is still in beta and the API is still in flux. 
+If you are experiencing problems, try locking your project to 
+v1.0.0-beta.33 by removing the ^ before the version number in your package.json.
 
 ``` json
-    "material-ui": "1.0.0-beta.31",
+    "material-ui": "1.0.0-beta.33",
 ```
 
 There are some nice bonus features like a CountrySelect with autocomplete and theming.
 
-All components that use bootstrap in vulcan:core, vulcan:forms and vulcan:accounts have been implemented except for Icon, DateTime.
+All components that use bootstrap in vulcan:core, vulcan:forms and vulcan:accounts 
+have been implemented except for Icon and DateTime (but they will still work).
 
 ## Installation
 
@@ -102,7 +105,7 @@ Countries are stored as their 2-letter country codes. I have included a helper f
 import Typography from 'material-ui/Typography';
 import { getCountryLabel } from 'meteor/erikdakoda:vulcan-material-ui';
 
-<Typography type="subheading">
+<Typography variant="subheading">
   {getCountryLabel(supplier.country)}
 </Typography>
 ```

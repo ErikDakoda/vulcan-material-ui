@@ -64,7 +64,7 @@ class ModalTrigger extends PureComponent {
       :
       type === 'button'
         ?
-        <Button className={classes.button} raised onClick={this.openModal}>{label}</Button>
+        <Button className={classes.button} variant="raised" onClick={this.openModal}>{label}</Button>
         :
         <a className={classes.anchor} href="#" onClick={this.openModal}>{label}</a>;
     

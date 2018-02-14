@@ -58,7 +58,7 @@ const FormSubmit = ({
     {
       cancelCallback
         ?
-        <Button raised className={classes.button} onClick={(e) => {
+        <Button variant="raised" className={classes.button} onClick={(e) => {
           e.preventDefault();
           cancelCallback(document);
         }}>{cancelLabel ? cancelLabel : <FormattedMessage id="forms.cancel"/>}</Button>
@@ -66,7 +66,7 @@ const FormSubmit = ({
         null
     }
     
-    <Button raised type="submit" color="secondary" className={classes.button}>
+    <Button variant="raised" type="submit" color="secondary" className={classes.button}>
       {submitLabel ? submitLabel : <FormattedMessage id="forms.submit"/>}
     </Button>
     

@@ -85,7 +85,7 @@ class Datatable extends PureComponent {
           showNew &&
           
           <Components.NewButton collection={collection}
-                                fab={true}
+                                variant="fab"
                                 color="primary"
                                 className={classes.addButton}
           />

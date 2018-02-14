@@ -96,7 +96,7 @@ class Layout extends React.Component {
                              toggleSideNav={openOrClose =>
                                this.toggle('sideNav', openOrClose)}/>
           
-          <Drawer type="persistent"
+          <Drawer variant="persistent"
                   classes={{ paper: classes.drawerPaper, }}
                   open={isOpen.sideNav}
           >

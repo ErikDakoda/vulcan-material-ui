@@ -73,7 +73,7 @@ const Header = (props, context) => {
         
         <div className={classNames(classes.headerMid)}>
           
-            <Typography type="title" color="inherit" className="tagline">
+            <Typography variant="title" color="inherit" className="tagline">
               {siteTitle}
             </Typography>
 

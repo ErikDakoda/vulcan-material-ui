@@ -32,7 +32,7 @@ const TooltipIconButton = (props, { intl }) => {
     classes,
     theme,
     buttonRef,
-    fab,
+    variant,
     ...properties
   } = props;
   
@@ -49,12 +49,12 @@ const TooltipIconButton = (props, { intl }) => {
     >
       <div className={classes.buttonWrap}>
         {
-          fab
+          variant === 'fab'
             
             ?
             
             <Button className={classNames(classes.button, slug)}
-                    fab
+                    variant="fab"
                     aria-label={title}
                     ref={buttonRef}
                     {...properties}
@@ -86,7 +86,7 @@ TooltipIconButton.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object,
   buttonRef: PropTypes.func,
-  fab: PropTypes.bool,
+  variant: PropTypes.string,
   theme: PropTypes.object,
 };
 

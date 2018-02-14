@@ -72,7 +72,7 @@ class FormGroup extends PureComponent {
         
         <Divider className={classes.divider}/>
         
-        <Typography className={classes.typography} type="subheading" gutterBottom>
+        <Typography className={classes.typography} variant="subheading" gutterBottom>
           <div>
             {this.props.label}
           </div>
