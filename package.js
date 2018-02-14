@@ -17,6 +17,8 @@ Package.onUse(function (api) {
     'vulcan:core@1.3.2',
   ]);
   
+  api.addFiles('accounts.css', ['client', 'server']);
+  
   api.mainModule('client/main.js', 'client');
   api.mainModule('server/main.js', 'server');
 });
