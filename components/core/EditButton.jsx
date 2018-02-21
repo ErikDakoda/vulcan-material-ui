@@ -23,7 +23,7 @@ const EditButton = ({
                                              classes={buttonClasses}
     />}
   >
-    <Components.DatatableEditForm collection={collection} document={document}/>
+    <Components.EditForm collection={collection} document={document}/>
   </Components.ModalTrigger>
 );
 
@@ -47,3 +47,22 @@ EditButton.displayName = 'EditButton';
 
 
 replaceComponent('EditButton', EditButton);
+
+
+/*
+
+EditForm Component
+
+*/
+const EditForm = ({ collection, document, closeModal }) =>
+  <Components.SmartForm
+    collection={collection}
+    documentId={document && document._id}
+    showRemove={true}
+    successCallback={document => {closeModal();}}
+  />;
+
+
+replaceComponent('EditForm', EditForm);
+
+

@@ -20,7 +20,7 @@ const NewButton = ({
                                              variant={variant}
     />}
   >
-    <Components.DatatableEditForm collection={collection}/>
+    <Components.EditForm collection={collection}/>
   </Components.ModalTrigger>
 );
 
