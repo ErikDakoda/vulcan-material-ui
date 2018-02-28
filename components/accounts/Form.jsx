@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Components, registerComponent } from 'meteor/vulcan:core';
+import withStyles from 'material-ui/styles/withStyles';
+
+
+const styles = theme => ({
+  messages: {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error[50],
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});
 
 
 export class AccountsForm extends Component {
@@ -25,6 +36,7 @@ export class AccountsForm extends Component {
       messages,
       ready = true,
       className,
+      classes,
     } = this.props;
   
     return (
@@ -36,7 +48,7 @@ export class AccountsForm extends Component {
         <Components.AccountsButtons buttons={{...buttons}}/>
         <Components.AccountsPasswordOrService oauthServices={oauthServices}/>
         <Components.AccountsSocialButtons oauthServices={oauthServices}/>
-        <Components.AccountsFormMessages messages={messages}/>
+        <Components.AccountsFormMessages messages={messages} className={classes.messages}/>
       </form>
     );
   }
@@ -50,11 +62,12 @@ AccountsForm.propTypes = {
   fields: PropTypes.object.isRequired,
   buttons: PropTypes.object.isRequired,
   error: PropTypes.string,
-  ready: PropTypes.bool
+  ready: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
 };
 
 
 AccountsForm.displayName = 'AccountsForm';
 
 
-registerComponent('AccountsForm', AccountsForm);
+registerComponent('AccountsForm', AccountsForm, [withStyles, styles]);

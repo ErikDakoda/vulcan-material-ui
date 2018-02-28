@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Components, replaceComponent } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
-import AddIcon from 'material-ui-icons/Add';
+import AddIcon from 'mdi-material-ui/Plus';
 
 
 const NewButton = ({

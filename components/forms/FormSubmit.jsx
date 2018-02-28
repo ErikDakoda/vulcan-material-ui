@@ -5,7 +5,7 @@ import { intlShape } from 'meteor/vulcan:i18n';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui-icons/Delete';
+import DeleteIcon from 'mdi-material-ui/Delete';
 import Tooltip from 'material-ui/Tooltip';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
 

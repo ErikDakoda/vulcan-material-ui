@@ -14,7 +14,7 @@ import classNames from 'classnames';
 Datatable Component
 
 */
-const baseStyles = {
+const baseStyles = theme => ({
   root: {
     position: 'relative',
   },
@@ -23,14 +23,20 @@ const baseStyles = {
     top: '-8px',
     right: 0,
   },
+  search: {
+    marginBottom: theme.spacing.unit * 8,
+  },
   table: {},
+  denseTable: {},
+  denserTable: {},
+  flatTable: {},
   tableHead: {},
   tableBody: {},
   tableRow: {},
   tableCell: {},
   editCell: {},
   editButton: {}
-};
+});
 
 
 class Datatable extends PureComponent {
@@ -84,6 +90,7 @@ class Datatable extends PureComponent {
             
             <Components.SearchInput value={this.state.query}
                                     updateQuery={this.updateQuery}
+                                    className={classes.search}
             />
           }
           {
@@ -115,19 +122,20 @@ Datatable.propTypes = {
   options: PropTypes.object,
   columns: PropTypes.array,
   showEdit: PropTypes.bool,
+  editComponent: PropTypes.func,
   showNew: PropTypes.bool,
   showSearch: PropTypes.bool,
   emptyState: PropTypes.node,
   currentUser: PropTypes.object,
   classes: PropTypes.object,
   data: PropTypes.array,
+  dense: PropTypes.string,
 };
 
 
 Datatable.defaultProps = {
   showEdit: true,
   showSearch: true,
-  classes: {},
 };
 
 
@@ -139,11 +147,14 @@ replaceComponent('Datatable', Datatable, withCurrentUser, [withStyles, baseStyle
 DatatableContents Component
 
 */
-const datatableContentsStyles = theme => (_assign({}, baseStyles, {
+const datatableContentsStyles = theme => (_assign({}, baseStyles(theme), {
   table: {
     marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 3,
   },
+  denseTable: theme.utils.denseTable,
+  flatTable: theme.utils.flatTable,
+  denserTable: theme.utils.denserTable,
 }));
 
 
@@ -157,9 +168,11 @@ const DatatableContents = ({
                              totalCount,
                              networkStatus,
                              showEdit,
+                             editComponent,
                              emptyState,
                              currentUser,
                              classes,
+                             dense,
                            }) => {
   
   if (loading) {
@@ -168,9 +181,11 @@ const DatatableContents = ({
     return emptyState || null;
   }
   
+  const denseClass = dense && classes[dense + 'Table'];
+  
   return (
     <div className="datatable-list">
-      <Table className={classes.table}>
+      <Table className={classNames(classes.table, denseClass)}>
         
         <TableHead className={classes.tableHead}>
           <TableRow className={classes.tableRow}>
@@ -184,7 +199,7 @@ const DatatableContents = ({
                   />)
             }
             {
-              showEdit &&
+              (showEdit || editComponent) &&
               
               <TableCell className={classes.tableCell}/>
             }
@@ -203,6 +218,7 @@ const DatatableContents = ({
                                            document={document}
                                            key={index}
                                            showEdit={showEdit}
+                                           editComponent={editComponent}
                                            currentUser={currentUser}
                                            classes={classes}
                   />)
@@ -243,10 +259,12 @@ const DatatableHeader = ({ collection, column, classes }, { intl }) => {
     2. the column name label in the schema (if the column name matches a schema field)
     3. the raw column name.
     */
-    const formattedLabel = intl.formatMessage({
-      id: `${collection._name}.${columnName}`,
-      defaultMessage: schema[columnName] ? schema[columnName].label : columnName
-    });
+    const formattedLabel = typeof columnName === 'string' ?
+      intl.formatMessage({
+        id: `${collection._name}.${columnName}`,
+        defaultMessage: schema[columnName] ? schema[columnName].label : columnName
+      }) :
+      '';
     
     return <TableCell className={classes.tableCell}>{formattedLabel}</TableCell>;
   } else {
@@ -269,16 +287,12 @@ replaceComponent('DatatableHeader', DatatableHeader);
 DatatableRow Component
 
 */
-const datatableRowStyles = theme => (_assign({}, baseStyles, {
+const datatableRowStyles = theme => (_assign({}, baseStyles(theme), {
   editCell: {
     paddingTop: '0 !important',
     paddingBottom: '0 !important',
     textAlign: 'right',
   },
-  editButton: {
-    width: '40px',
-    height: '40px',
-  }
 }));
 
 
@@ -287,12 +301,15 @@ const DatatableRow = ({
                         columns,
                         document,
                         showEdit,
+                        editComponent,
                         currentUser,
                         classes
                       }, { intl }) => {
   
+  const EditComponent = editComponent;
+  
   return (
-    <TableRow className={classNames('datatable-item', classes.tableRow)}>
+    <TableRow className={classNames('datatable-item', classes.tableRow)} hover>
       
       {
         _.sortBy(columns, column => column.order).map(
@@ -306,9 +323,14 @@ const DatatableRow = ({
       }
       
       {
-        showEdit &&
+        (showEdit || editComponent) &&
         
         <TableCell className={classes.editCell}>
+          {
+            EditComponent &&
+            
+            <EditComponent collection={collection} document={document}/>
+          }
           <Components.EditButton collection={collection}
                                  document={document}
                                  buttonClasses={{ button: classes.editButton }}
@@ -339,14 +361,17 @@ const DatatableCell = ({ column, document, currentUser, classes }) => {
     Components[column.componentName] ||
     Components.DatatableDefaultCell;
   
-  const columnName = column.name || column;
+  const columnName = typeof column === 'string' ? column : column.name;
+  const className = typeof columnName === 'string' ?
+    `datatable-item-${columnName.toLowerCase()}` :
+    '';
   
   return (
-    <TableCell
-      className={classNames(classes.tableCell, `datatable-item-${columnName.toLowerCase()}`)}>
+    <TableCell className={classNames(classes.tableCell, className)}>
       <Component column={column}
                  document={document}
-                 currentUser={currentUser}/>
+                 currentUser={currentUser}
+      />
     </TableCell>
   );
 };

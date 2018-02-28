@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Components, replaceComponent } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
-import EditIcon from 'material-ui-icons/Edit';
+import EditIcon from 'mdi-material-ui/Pencil';
 
 
 const EditButton = ({

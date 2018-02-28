@@ -4,14 +4,14 @@ import { browserHistory } from 'react-router';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Collapse from 'material-ui/transitions/Collapse';
-import ExpandLessIcon from 'material-ui-icons/ExpandLess';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import ExpandLessIcon from 'mdi-material-ui/ChevronUp';
+import ExpandMoreIcon from 'mdi-material-ui/ChevronDown';
 import { Components, registerComponent, withCurrentUser } from 'meteor/vulcan:core';
-import LockIcon from 'material-ui-icons/Lock';
-import GroupIcon from 'material-ui-icons/Group';
-import ThemeIcon from 'material-ui-icons/ColorLens';
+import LockIcon from 'mdi-material-ui/Lock';
+import UsersIcon from 'mdi-material-ui/AccountMultiple';
+import ThemeIcon from 'mdi-material-ui/Palette';
+import HomeIcon from 'mdi-material-ui/Home';
 import withStyles from 'material-ui/styles/withStyles';
-import HomeIcon from 'material-ui-icons/Home';
 import Users from 'meteor/vulcan:users';
 
 
@@ -68,7 +68,7 @@ class SideNavigation extends React.Component {
                 <ListItem button className={classes.nested}
                           onClick={() => {browserHistory.push('/admin');}}>
                   <ListItemIcon>
-                    <GroupIcon/>
+                    <UsersIcon/>
                   </ListItemIcon>
                   <ListItemText inset primary="Users"/>
                 </ListItem>

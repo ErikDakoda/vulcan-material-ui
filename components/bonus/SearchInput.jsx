@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { registerComponent } from 'meteor/vulcan:core';
 import withStyles from 'material-ui/styles/withStyles';
-import SearchIcon from 'material-ui-icons/Search';
-import CancelIcon from 'material-ui-icons/Cancel';
+import SearchIcon from 'mdi-material-ui/Magnify';
+import ClearIcon from 'mdi-material-ui/CloseCircle';
 import Input from 'material-ui/Input';
 import IconButton from 'material-ui/IconButton';
 import { FormControl } from 'material-ui/Form';
@@ -19,6 +19,11 @@ const styles = theme => ({
       padding: '2px',
       width: '180px',
     },
+    '& $clear': {
+      width: '32px',
+      height: '32px',
+      margin: '-2px -2px -2px 0',
+    }
   },
   search: {
     display: 'inline-flex',
@@ -41,13 +46,20 @@ const styles = theme => ({
     lineHeight: 1,
     padding: 0,
   },
-  cancel: {
+  clear: {
+    transition: theme.transitions.create('opacity', {
+      duration: theme.transitions.duration.short,
+    }),
     opacity: '0.65',
-    width: '28px',
-    height: '28px',
+    width: '36px',
+    height: '36px',
+    margin: '-4px -4px -4px 0',
     '& svg': {
       width: '16px'
     },
+  },
+  clearDisabled: {
+    opacity: 0,
   }
 });
 
@@ -116,11 +128,11 @@ class SearchInput extends PureComponent {
                  disableUnderline={true}
           />
 
-          <IconButton className={classes.cancel}
+          <IconButton className={classNames(classes.clear, !this.state.value && classes.clearDisabled)}
                       onClick={this.clearSearch}
                       disabled={!this.state.value}
           >
-            <CancelIcon/>
+            <ClearIcon/>
           </IconButton>
 
         </FormControl>

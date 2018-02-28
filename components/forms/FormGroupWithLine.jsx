@@ -5,8 +5,8 @@ import withStyles from 'material-ui/styles/withStyles';
 import Collapse from 'material-ui/transitions/Collapse';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
-import ExpandLessIcon from 'material-ui-icons/ExpandLess';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import ExpandLessIcon from 'mdi-material-ui/ChevronUp';
+import ExpandMoreIcon from 'mdi-material-ui/ChevronDown';
 
 
 const styles = theme => ({

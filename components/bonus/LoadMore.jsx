@@ -7,8 +7,8 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Tooltip from 'material-ui/Tooltip';
-import ArrowDownwardIcon from 'material-ui-icons/ArrowDownward';
-import MoreIcon from 'material-ui-icons/More';
+import ArrowDownIcon from 'mdi-material-ui/ArrowDown';
+import MoreIcon from 'mdi-material-ui/More';
 import ScrollTrigger from './ScrollTrigger';
 import classNames from 'classnames';
 
@@ -89,7 +89,7 @@ const LoadMore = ({
                          placement="top"
                 >
                   <IconButton className={classes.iconButton} onClick={() => loadMore()}>
-                    <ArrowDownwardIcon/>
+                    <ArrowDownIcon/>
                   </IconButton>
                 </Tooltip>
             

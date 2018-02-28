@@ -6,7 +6,7 @@ import ComponentMixin from './mixins/component';
 import Row from './row';
 import propUtilities from './prop-utilities';
 import Input, { InputAdornment } from 'material-ui/Input';
-import OpenInNewIcon from 'material-ui-icons/OpenInNew';
+import OpenInNewIcon from 'mdi-material-ui/OpenInNew';
 import IconButton from 'material-ui/IconButton';
 
 
