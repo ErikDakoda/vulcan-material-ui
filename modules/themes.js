@@ -1,5 +1,6 @@
 /** @module vulcan-material-ui */
 
+import { createMuiTheme } from 'material-ui/styles/index';
 import { registerSetting, getSetting } from 'meteor/vulcan:core';
 
 
@@ -36,7 +37,7 @@ export const registerTheme = (name, theme) => {
 export const getTheme = (name) => {
   const themeInfo = ThemesTable[name];
   if (!themeInfo) return null;
-  return themeInfo.theme;
+  return createMuiTheme(themeInfo.theme);
 };
 
 
@@ -47,5 +48,6 @@ export const getTheme = (name) => {
  */
 export const getCurrentTheme = () => {
   const themeName = getSetting('muiTheme', 'Sample');
-  return getTheme(themeName);
+  const theme = getTheme(themeName);
+  return theme;
 };

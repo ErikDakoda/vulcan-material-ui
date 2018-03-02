@@ -6,9 +6,11 @@ class JssCleanup extends PureComponent {
 
   // Remove the server-side injected CSS.
   componentDidMount() {
+    if (!document || !document.getElementById) return;
+    
     const jssStyles = document.getElementById('jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
-      //jssStyles.parentNode.removeChild(jssStyles);
+      jssStyles.parentNode.removeChild(jssStyles);
     }
   }
   

@@ -2,14 +2,15 @@ import React from 'react';
 import { addCallback } from 'meteor/vulcan:core';
 import { MuiThemeProvider } from 'material-ui/styles';
 import { getCurrentTheme } from '../modules/themes';
-import JssCleanup from './JssCleanup';
+import JssCleanup from '../components/theme/JssCleanup';
 
 
 function wrapWithMuiTheme (app) {
+  const theme = getCurrentTheme();
   return (
-    <MuiThemeProvider theme={getCurrentTheme()}>
+    <MuiThemeProvider theme={theme}>
       <JssCleanup>
-        {app}
+          {app}
       </JssCleanup>
     </MuiThemeProvider>
   );

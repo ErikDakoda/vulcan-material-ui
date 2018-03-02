@@ -1,5 +1,4 @@
 import { registerTheme } from './themes';
-import { createMuiTheme } from 'material-ui/styles';
 import indigo from 'material-ui/colors/indigo';
 import blue from 'material-ui/colors/blue';
 import red from 'material-ui/colors/red';
@@ -65,7 +64,7 @@ const body = {
 };
 
 
-const theme = createMuiTheme({
+const theme = {
   
   palette: {
     primary: {
@@ -189,7 +188,7 @@ const theme = createMuiTheme({
     
   },
   
-});
+};
 
 
 registerTheme('Sample', theme);

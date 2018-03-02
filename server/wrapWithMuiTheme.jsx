@@ -2,19 +2,24 @@ import React from 'react';
 import { addCallback } from 'meteor/vulcan:core';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { MuiThemeProvider, createGenerateClassName } from 'material-ui/styles';
+//import createGenerateClassName from './createGenerateClassName';
 import { getCurrentTheme } from '../modules/themes';
 import { SheetsRegistry } from 'react-jss/lib/jss';
+import JssCleanup from '../components/theme/JssCleanup';
 
 
 function wrapWithMuiTheme (app, { req, res, store, apolloClient }) {
   const sheetsRegistry = new SheetsRegistry();
   req.sheetsRegistry = sheetsRegistry;
   const generateClassName = createGenerateClassName();
+  const theme = getCurrentTheme();
   
   return (
     <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-      <MuiThemeProvider theme={getCurrentTheme()} sheetsManager={new Map()}>
-        {app}
+      <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+        <JssCleanup>
+          {app}
+        </JssCleanup>
       </MuiThemeProvider>
     </JssProvider>
   );

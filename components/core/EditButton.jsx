@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Components, replaceComponent } from 'meteor/vulcan:core';
+import { Components, registerComponent } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 import EditIcon from 'mdi-material-ui/Pencil';
 
@@ -12,6 +12,7 @@ const EditButton = ({
                       variant,
                       triggerClasses,
                       buttonClasses,
+                      ...props
                     }, { intl }) => (
   
   <Components.ModalTrigger
@@ -23,7 +24,7 @@ const EditButton = ({
                                              classes={buttonClasses}
     />}
   >
-    <Components.EditForm collection={collection} document={document}/>
+    <Components.EditForm collection={collection} document={document} {...props}/>
   </Components.ModalTrigger>
 );
 
@@ -46,7 +47,7 @@ EditButton.contextTypes = {
 EditButton.displayName = 'EditButton';
 
 
-replaceComponent('EditButton', EditButton);
+registerComponent('EditButton', EditButton);
 
 
 /*
@@ -54,15 +55,17 @@ replaceComponent('EditButton', EditButton);
 EditForm Component
 
 */
-const EditForm = ({ collection, document, closeModal }) =>
+const EditForm = ({ collection, document, closeModal, options, ...props }) =>
   <Components.SmartForm
+    {...props}
     collection={collection}
     documentId={document && document._id}
     showRemove={true}
     successCallback={document => {closeModal();}}
+    removeSuccessCallback={document => {closeModal();}}
   />;
 
 
-replaceComponent('EditForm', EditForm);
+registerComponent('EditForm', EditForm);
 
 
