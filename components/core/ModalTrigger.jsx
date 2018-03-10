@@ -24,8 +24,8 @@ const styles = theme => ({
 
 class ModalTrigger extends PureComponent {
   
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);

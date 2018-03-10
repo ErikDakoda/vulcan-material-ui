@@ -1,5 +1,5 @@
 
-# erikdakoda:vulcan-material-ui 0.13.5
+# erikdakoda:vulcan-material-ui 0.13.9
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui-next.com/). 
 It's based on the latest [v1-beta branch](https://github.com/callemall/material-ui/tree/v1-beta) of Material-UI.
@@ -54,6 +54,38 @@ see the [MUI Default Theme](https://material-ui-next.com/customization/theme-def
 Register your theme in the Vulcan environment by giving it a name: `registerTheme('MyTheme', theme);`. 
 You can have multiple themes registered and you can specify which one to use in your settings file using the `muiTheme` public setting.
 
+In addition to the Material UI spec, I use a `utils` section in my themes where I place global variables for reusable styles. 
+For example the sample theme contains 
+
+```
+const theme = {
+  
+  . . .
+  
+  utils: {
+    
+    tooltipEnterDelay: 700,
+    
+    errorMessage: {
+      textAlign: 'center',
+      backgroundColor: red[500],
+      color: 'white',
+      borderRadius: '4px',
+    },
+    
+    . . .
+    
+    // additional utils definitions go here
+    
+  },
+  
+};
+```
+
+You can use tooltipEnterDelay (or any other variable you define in utils) anywhere you include the withTheme HOC. See `/components/bonus/TooltipIconButton.jsx` for an example.
+
+You can use errorMessage (or any other style fragment you define in utils) anywhere you include the withStyles HOC. See `/components/accounts/Form.jsx` for an example.
+
 ## Form Controls
 
 You can pass a couple of extra options to text inputs from the `form` property of your schema:
@@ -71,7 +103,11 @@ You can pass a couple of extra options to text inputs from the `form` property o
       inputClassName: 'halfWidthLeft',  // add this class to the input
       hideLabel: true,                  // hide the label
       help: 'Enter your key here',      // add help text below the input
+      getHidden: () => function () {    // function that returns true if input
+        return !this.document.useKey;   //   should be temporarily hidden
+      },
     },
+    group: platformGroup,
     viewableBy: ['members'],
     insertableBy: ['members'],
     editableBy: ['members'],
@@ -84,6 +120,20 @@ And to textarea inputs:
     form: {
       rows: 10,
     },
+```
+
+## Form Groups
+
+You can pass a couple of extra options form groups as well:
+
+``` javascript
+  const platformGroup: {
+    name: 'shops.platform',
+    order: 4,
+    startComponent: 'ShopsPlatformTitle', // component to put at the top of the form group
+    endComponent: 'ShopsConnectButtons', // component to put at the bottom of the form group
+  },
+
 ```
 
 ## DataTable
@@ -112,6 +162,16 @@ AgendaJobActionsInner.propTypes = {
    ...
 />
 ```
+
+You can also control the spacing of the table cells using the `dense` property. Valid values are:
+
+|--------|--------------|
+|dense   | right cell padding of 16px instead of 56px |
+|flat    | right cell padding of 16px and nowrap |
+|denser  | right cell padding of 16px, nowrap, and row height of 40px instead of 56px |
+
+You can also use other string values, as long as you define a `utils` entry named the same + `Table`, for example `myCustomTable`. Check out the sample theme for examples.
+
 
 ## CountrySelect
 

@@ -66,8 +66,8 @@ const styles = theme => ({
 
 class SearchInput extends PureComponent {
 
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
 
     this.state = {
       value: '',

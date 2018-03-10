@@ -25,6 +25,19 @@ const styles = theme => ({
 
 class FormGroup extends PureComponent {
   
+  renderExtraComponent (extraComponent) {
+    if (!extraComponent) return null;
+    
+    const { document, updateCurrentValues } = this.props;
+    
+    if (typeof extraComponent === 'string') {
+      const ExtraComponent = Components[extraComponent];
+      return <ExtraComponent document={document} updateCurrentValues={updateCurrentValues}/>;
+    } else {
+      return extraComponent;
+    }
+  }
+  
   render () {
     const {
       name,
@@ -34,6 +47,8 @@ class FormGroup extends PureComponent {
       currentUser,
       fields,
       updateCurrentValues,
+      startComponent,
+      endComponent,
     } = this.props;
     
     if (name === 'admin' && !Users.isAdmin(currentUser)) {
@@ -58,13 +73,21 @@ class FormGroup extends PureComponent {
         }
         
         <Paper className={classes.paper}>
+          {this.renderExtraComponent(startComponent)}
           {
-            fields.map(field =>
-              <Components.FormComponent key={field.name}
-                                        {...field}
-                                        updateCurrentValues={updateCurrentValues}
-              />)
+            fields.map(field => {
+              if (typeof field.getHidden === 'function') {
+                if (field.getHidden.call(field)) {
+                  return null;
+                }
+              }
+              return <Components.FormComponent key={field.name}
+                                               {...field}
+                                               updateCurrentValues={updateCurrentValues}
+              />;
+            })
           }
+          {this.renderExtraComponent(endComponent)}
         </Paper>
       
       </div>
@@ -81,6 +104,8 @@ FormGroup.propTypes = {
   fields: PropTypes.array,
   startCollapsed: PropTypes.bool,
   updateCurrentValues: PropTypes.func,
+  startComponent: PropTypes.node,
+  endComponent: PropTypes.node,
   currentUser: PropTypes.object,
 };
 

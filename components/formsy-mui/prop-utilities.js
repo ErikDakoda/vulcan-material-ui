@@ -28,6 +28,7 @@ const cleanProps = (props) => {
     elementWrapperClassName,
     help,
     label,
+    getHidden,
     hideLabel,
     options,
     labelClassName,

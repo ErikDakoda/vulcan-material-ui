@@ -6,12 +6,7 @@ import withStyles from 'material-ui/styles/withStyles';
 
 
 const styles = theme => ({
-  messages: {
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error[50],
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
+  messages: theme.utils.errorMessage,
 });
 
 
