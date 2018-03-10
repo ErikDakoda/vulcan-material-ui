@@ -165,10 +165,11 @@ AgendaJobActionsInner.propTypes = {
 
 You can also control the spacing of the table cells using the `dense` property. Valid values are:
 
-|--------|--------------|
-|dense   | right cell padding of 16px instead of 56px |
-|flat    | right cell padding of 16px and nowrap |
-|denser  | right cell padding of 16px, nowrap, and row height of 40px instead of 56px |
+| Value   | Description  |
+| ------- | ------------ |
+| dense   | right cell padding of 16px instead of 56px |
+| flat    | right cell padding of 16px and nowrap |
+| denser  | right cell padding of 16px, nowrap, and row height of 40px instead of 56px |
 
 You can also use other string values, as long as you define a `utils` entry named the same + `Table`, for example `myCustomTable`. Check out the sample theme for examples.
 
