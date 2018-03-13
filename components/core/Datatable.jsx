@@ -167,6 +167,7 @@ const DatatableContents = ({
                              count,
                              totalCount,
                              networkStatus,
+                             refetch,
                              showEdit,
                              editComponent,
                              emptyState,
@@ -216,6 +217,7 @@ const DatatableContents = ({
                   <Components.DatatableRow collection={collection}
                                            columns={columns}
                                            document={document}
+                                           refetch={refetch}
                                            key={index}
                                            showEdit={showEdit}
                                            editComponent={editComponent}
@@ -300,6 +302,7 @@ const DatatableRow = ({
                         collection,
                         columns,
                         document,
+                        refetch,
                         showEdit,
                         editComponent,
                         currentUser,
@@ -329,7 +332,7 @@ const DatatableRow = ({
           {
             EditComponent &&
             
-            <EditComponent collection={collection} document={document}/>
+            <EditComponent collection={collection} document={document} refetch={refetch}/>
           }
           <Components.EditButton collection={collection}
                                  document={document}

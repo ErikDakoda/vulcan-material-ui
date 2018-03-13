@@ -127,6 +127,7 @@ const FormsyMuiInput = createReactClass({
   
   renderElement: function (startAdornment, endAdornment) {
     const options = this.props.options || {};
+
     return (
       <Input ref={(c) => this.element = c}
              {...propUtilities.cleanProps(this.props)}

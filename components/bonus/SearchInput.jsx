@@ -16,14 +16,14 @@ const styles = theme => ({
   },
   dense: {
     '& $search': {
-      padding: '2px',
+      padding: '4px 8px',
       width: '180px',
     },
-    '& $clear': {
+    /*'& $clear': {
       width: '32px',
       height: '32px',
       margin: '-2px -2px -2px 0',
-    }
+    }*/
   },
   search: {
     display: 'inline-flex',
@@ -32,7 +32,7 @@ const styles = theme => ({
     width: '200px',
     backgroundColor: theme.palette.common.faintBlack,
     borderRadius: '18px',
-    padding: '4px;',
+    padding: '8px 16px',
     '&:focus': {
       backgroundColor: theme.palette.common.darkBlack,
     }
@@ -46,7 +46,7 @@ const styles = theme => ({
     lineHeight: 1,
     padding: 0,
   },
-  clear: {
+  /*clear: {
     transition: theme.transitions.create('opacity', {
       duration: theme.transitions.duration.short,
     }),
@@ -60,7 +60,7 @@ const styles = theme => ({
   },
   clearDisabled: {
     opacity: 0,
-  }
+  }*/
 });
 
 
@@ -74,7 +74,7 @@ class SearchInput extends PureComponent {
     };
 
     this.focusInput = this.focusInput.bind(this);
-    this.clearSearch = this.clearSearch.bind(this);
+    //this.clearSearch = this.clearSearch.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.updateQuery = _.debounce(this.updateQuery, 500);
@@ -84,12 +84,12 @@ class SearchInput extends PureComponent {
     this.input.focus();
   }
 
-  clearSearch () {
+  /*clearSearch () {
     this.setState({
       value: '',
     });
     this.updateQuery('');
-  }
+  }*/
 
   updateSearch (event) {
     //event.preventDefault();
@@ -128,12 +128,12 @@ class SearchInput extends PureComponent {
                  disableUnderline={true}
           />
 
-          <IconButton className={classNames(classes.clear, !this.state.value && classes.clearDisabled)}
+          {/*<IconButton className={classNames(classes.clear, !this.state.value && classes.clearDisabled)}
                       onClick={this.clearSearch}
                       disabled={!this.state.value}
           >
             <ClearIcon/>
-          </IconButton>
+          </IconButton>*/}
 
         </FormControl>
       </div>

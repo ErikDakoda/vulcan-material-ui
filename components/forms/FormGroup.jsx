@@ -59,8 +59,12 @@ class FormGroup extends PureComponent {
       return null;
     }
     
+    const anchorName = name.split('.').length > 1 ? name.split('.')[1] : name;
+    
     return (
       <div className={classes.root}>
+        
+        <a name={anchorName}/>
         
         {
           name === 'default'
