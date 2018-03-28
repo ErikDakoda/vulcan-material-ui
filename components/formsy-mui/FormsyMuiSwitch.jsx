@@ -29,7 +29,7 @@ const FormsyMuiSwitch = createReactClass({
     this.props.onChange(this.props.name, value);
     
     /*if (this.props.onBlur) {
-      setTimeout(() => {this.props.onBlur();}, 1000);
+      setTimeout(() => {this.props.onBlur();}, 100);
     }*/
     setTimeout(() => {document.activeElement.blur();});
   },

@@ -27,6 +27,7 @@ const TooltipIconButton = (props, { intl }) => {
   const {
     title,
     titleId,
+    placement,
     icon,
     className,
     classes,
@@ -44,7 +45,7 @@ const TooltipIconButton = (props, { intl }) => {
              classes={{ tooltip: classes.tooltip }}
              id={`tooltip-${slug}`}
              title={titleText}
-             placement="bottom"
+             placement={placement}
              enterDelay={theme.utils.tooltipEnterDelay}
     >
       <div className={classes.buttonWrap}>
@@ -82,12 +83,18 @@ const TooltipIconButton = (props, { intl }) => {
 TooltipIconButton.propTypes = {
   title: PropTypes.node,
   titleId: PropTypes.string,
+  placement: PropTypes.string,
   icon: PropTypes.node.isRequired,
   className: PropTypes.string,
   classes: PropTypes.object,
   buttonRef: PropTypes.func,
   variant: PropTypes.string,
   theme: PropTypes.object,
+};
+
+
+TooltipIconButton.defaultProps = {
+  placement: 'bottom',
 };
 
 

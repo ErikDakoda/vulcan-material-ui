@@ -32,24 +32,29 @@ const FormSubmit = ({
                       submitLabel,
                       cancelLabel,
                       cancelCallback,
+                      discardLabel,
+                      discardChanges,
                       document,
                       deleteDocument,
                       collectionName,
                       classes
-                    }, { intl }) => (
+                    }, {
+                      intl,
+                      isChanged,
+                    }) => (
   <div className={classes.root}>
-  
+    
     {
       deleteDocument
         ?
         <Tooltip id={`tooltip-delete-${collectionName}`}
                  className={classes.delete}
-                 classes={{tooltip: classes.tooltip}}
+                 classes={{ tooltip: classes.tooltip }}
                  title={intl.formatMessage({ id: 'forms.delete' })}
                  placement="bottom">
-        <IconButton onClick={deleteDocument}>
-          <DeleteIcon/>
-        </IconButton>
+          <IconButton onClick={deleteDocument}>
+            <DeleteIcon/>
+          </IconButton>
         </Tooltip>
         :
         null
@@ -58,18 +63,44 @@ const FormSubmit = ({
     {
       cancelCallback
         ?
-        <Button variant="raised" className={classes.button} onClick={(e) => {
-          e.preventDefault();
-          cancelCallback(document);
-        }}>{cancelLabel ? cancelLabel : <FormattedMessage id="forms.cancel"/>}</Button>
+        <Button variant="raised"
+                className={classes.button}
+                onClick={(event) => {
+                  event.preventDefault();
+                  cancelCallback(document);
+                }}>
+          {cancelLabel ? cancelLabel : <FormattedMessage id="forms.cancel"/>}
+        </Button>
         :
         null
     }
     
-    <Button variant="raised" type="submit" color="secondary" className={classes.button}>
+    {
+      discardChanges
+        ?
+        <Button variant="raised"
+                className={classes.button}
+                disabled={!isChanged()}
+                onClick={(event) => {
+                  event.preventDefault();
+                  discardChanges();
+                }}
+        >
+          {cancelLabel ? cancelLabel : <FormattedMessage id="forms.revert"/>}
+        </Button>
+        :
+        null
+    }
+    
+    <Button variant="raised"
+            type="submit"
+            color="secondary"
+            className={classes.button}
+            disabled={!isChanged()}
+    >
       {submitLabel ? submitLabel : <FormattedMessage id="forms.submit"/>}
     </Button>
-    
+  
   </div>
 );
 
@@ -77,7 +108,9 @@ const FormSubmit = ({
 FormSubmit.propTypes = {
   submitLabel: PropTypes.string,
   cancelLabel: PropTypes.string,
+  discardLabel: PropTypes.string,
   cancelCallback: PropTypes.func,
+  discardChanges: PropTypes.func,
   document: PropTypes.object,
   deleteDocument: PropTypes.func,
   collectionName: PropTypes.string,
@@ -87,6 +120,7 @@ FormSubmit.propTypes = {
 
 FormSubmit.contextTypes = {
   intl: intlShape,
+  isChanged: PropTypes.func,
 };
 
 
