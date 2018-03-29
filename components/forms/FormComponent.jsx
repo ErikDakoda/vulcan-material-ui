@@ -116,6 +116,9 @@ class FormComponent extends PureComponent {
           return <Components.FormComponentTextarea {...properties}/>;
         
         case 'checkbox':
+          // not sure why, but onChange needs to be specified here
+          properties.onChange =
+            (name, value) => {this.props.updateCurrentValues({ [name]: value });};
           return <Components.FormComponentCheckbox {...properties} />;
         
         case 'checkboxgroup':

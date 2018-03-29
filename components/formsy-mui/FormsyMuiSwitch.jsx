@@ -23,14 +23,10 @@ const FormsyMuiSwitch = createReactClass({
   changeValue: function (event) {
     const target = event.currentTarget;
     const value = target.checked;
-    console.log(value);
     
     this.setValue(value);
     this.props.onChange(this.props.name, value);
     
-    /*if (this.props.onBlur) {
-      setTimeout(() => {this.props.onBlur();}, 100);
-    }*/
     setTimeout(() => {document.activeElement.blur();});
   },
   
