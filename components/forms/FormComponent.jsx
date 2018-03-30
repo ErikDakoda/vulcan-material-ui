@@ -37,7 +37,7 @@ class FormComponent extends PureComponent {
     if (this.showCharsRemaining(props)) {
       const characterCount = value ? value.length : 0;
       this.state = {
-        charsRemaining: props.max - characterCount
+        charsRemaining: this.props.max - characterCount > 0 ? this.props.max - characterCount : 0
       };
     }
     // TODO : remove if unnecessary
@@ -87,7 +87,8 @@ class FormComponent extends PureComponent {
   updateCharacterCount = value => {
     const characterCount = value ? value.length : 0;
     this.setState({
-      charsRemaining: this.props.max - characterCount
+      charsRemaining: this.props.max - characterCount > 0 ? this.props.max - characterCount : 0
+      
     });
   };
 
@@ -179,6 +180,8 @@ class FormComponent extends PureComponent {
       options,
       name,
       label,
+      description,
+      placeholder,
       form,
       formType,
       classes,
@@ -194,12 +197,18 @@ class FormComponent extends PureComponent {
 
     // these properties are whitelisted so that they can be safely passed to the actual form input
     // and avoid https://facebook.github.io/react/warnings/unknown-prop.html warnings
+    const hasErrors = this.getErrors() && this.getErrors().length;
+    
     const inputProperties = {
       name,
       options,
       label,
+      description,
+      placeholder,
       onChange: this.handleChange,
       value,
+      error: hasErrors ? true : false,
+      errors: this.getErrors(),
       ...form
     };
 

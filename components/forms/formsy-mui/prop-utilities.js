@@ -43,6 +43,8 @@ const cleanProps = (props) => {
     document,
     updateCurrentValues,
     classes,
+    errors,
+    description,
     
     ...rest
   } = props;
