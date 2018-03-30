@@ -12,7 +12,7 @@ import './core/EditButton';
 import './core/ModalTrigger';
 import './core/NewButton';
 import './forms/FormComponent';
-import './forms/FormFlash';
+import './forms/FormErrors';
 import './forms/FormGroup';
 import './forms/FormSubmit';
 import './forms/material-ui/Checkbox';
