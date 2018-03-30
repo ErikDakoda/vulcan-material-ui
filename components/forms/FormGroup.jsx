@@ -63,7 +63,9 @@ class FormGroup extends PureComponent {
 
     // if at least one of the fields in the group has an error, the group as a whole has an error
     const hasErrors = _.some(fields, field => {
-      return !!errors.filter(error => error.data.name === field.path).length;
+      return !!errors.filter(
+        error => error.data && error.data.name && error.data.name === field.path
+      ).length;
     });
 
     if (name === 'admin' && !Users.isAdmin(currentUser)) {
