@@ -75,6 +75,11 @@ class FormGroup extends PureComponent {
     if (hidden) {
       return null;
     }
+    
+    //do not display if no fields, no startComponent and no endComponent
+    if (!startComponent && !endComponent && !fields.length) {
+      return null;
+    }
 
     const anchorName = name.split('.').length > 1 ? name.split('.')[1] : name;
 
