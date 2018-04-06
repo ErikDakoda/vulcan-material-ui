@@ -1,5 +1,5 @@
 
-# erikdakoda:vulcan-material-ui 0.13.9
+# erikdakoda:vulcan-material-ui 0.14.4
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui-next.com/). 
 It's based on the latest [v1-beta branch](https://github.com/callemall/material-ui/tree/v1-beta) of Material-UI.
@@ -8,7 +8,7 @@ This package is progressing and is now beta quality. Further changes are likely 
 the example layout into a separate package. To give me feedback open an issue on GitHub
 or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) channel as erikdakoda.
 
-This version has been tested against Vulcan 1.8.9 and Material UI v1.0.0-beta.35.
+This version has been tested against Vulcan 1.8.11 and Material UI v1.0.0-beta.35.
 
 NOTE: Material UI is still in beta and the API is still in flux. 
 If you are experiencing problems, try locking your project to 
