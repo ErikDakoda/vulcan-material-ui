@@ -56,7 +56,7 @@ const cleanProps = (props) => {
 const cleanSwitchProps = (props) => {
   const {
     value,
-    
+    error,
     ...rest
   } = props;
   
