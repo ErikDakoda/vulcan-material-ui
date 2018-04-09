@@ -63,6 +63,11 @@ class FormComponent extends PureComponent {
   // }
 
   handleChange = (name, value) => {
+    
+    // if value is an empty string, delete the field
+   if (value === '') {
+    value = null;
+   }
     // if this is a number field, convert value before sending it up to Form
     if (this.getType() === 'number') {
       value = Number(value);
