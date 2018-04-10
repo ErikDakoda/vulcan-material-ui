@@ -55,17 +55,32 @@ registerComponent('EditButton', EditButton);
 EditForm Component
 
 */
-const EditForm = ({ collection, document, closeModal, options, ...props }) =>
+const EditForm = ({ collection, document, closeModal, options, successCallback, removeSuccessCallback,...props }) => {
+  
+  const success = successCallback
+    ? () => {
+        successCallback();
+        closeModal();
+      }
+    : closeModal;
+
+  const remove = removeSuccessCallback
+    ? () => {
+        removeSuccessCallback();
+        closeModal();
+      }
+    : closeModal;
+  
+  return (
   <Components.SmartForm
     {...props}
     collection={collection}
     documentId={document && document._id}
     showRemove={true}
-    successCallback={document => {closeModal();}}
-    removeSuccessCallback={document => {closeModal();}}
-  />;
-
+    successCallback={success}
+    removeSuccessCallback={remove}
+  />
+);
+}
 
 registerComponent('EditForm', EditForm);
-
-
