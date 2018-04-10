@@ -8,12 +8,19 @@ import debounce from 'lodash.debounce';
 import get from 'lodash/get';
 import merge from 'lodash/merge';
 import withStyles from 'material-ui/styles/withStyles';
+import Typography from 'material-ui/Typography';
 import { isEmptyValue } from '../../modules/utils.js';
 
 const styles = theme => ({
   formInput: {
     position: 'relative',
     marginBottom: theme.spacing.unit * 2
+  },
+  root: {
+    position:'absolute',
+    top:'15px',
+    right:'5px',
+    padding:'5px',
   }
 });
 
@@ -391,12 +398,9 @@ class FormComponent extends PureComponent {
         {this.renderComponent()}
         {this.showClear() ? this.renderClear() : null}
         {this.showCharsRemaining() && (
-          <div
-            className={classNames('form-control-limit', {
-              danger: this.state.charsRemaining < 10
-            })}>
+          <Typography variant='caption' color={this.state.charsRemaining>10 ? 'default' : 'error'} className={classes.root}>
             {this.state.charsRemaining}
-          </div>
+          </Typography>
         )}
         {this.renderExtraComponent(this.props.afterComponent)}
       </div>
