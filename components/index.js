@@ -15,6 +15,7 @@ import './forms/FormComponent';
 import './forms/FormErrors';
 import './forms/FormGroup';
 import './forms/FormSubmit';
+import './forms/FormNested';
 import './forms/material-ui/Checkbox';
 import './forms/material-ui/CheckboxGroup';
 import './forms/material-ui/CountrySelect';

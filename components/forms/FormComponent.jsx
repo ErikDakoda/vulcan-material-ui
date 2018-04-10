@@ -14,17 +14,6 @@ const styles = theme => ({
   formInput: {
     position: 'relative',
     marginBottom: theme.spacing.unit * 2
-  },
-  halfWidthLeft: {
-    display: 'inline-block',
-    width: '48%',
-    verticalAlign: 'top',
-    marginRight: '4%'
-  },
-  halfWidthRight: {
-    display: 'inline-block',
-    width: '48%',
-    verticalAlign: 'top'
   }
 });
 
@@ -248,7 +237,8 @@ class FormComponent extends PureComponent {
 
       switch (this.getType()) {
         case 'nested':
-          return <Components.FormNested {...properties} />;
+          const {classes, ...rest} = properties; // remove formInput class
+          return <Components.FormNested {...rest} />;
 
         case 'number':
           return <Components.FormComponentNumber {...properties} />;
@@ -272,6 +262,7 @@ class FormComponent extends PureComponent {
           return <Components.FormComponentCheckbox {...properties} />;
 
         case 'checkboxgroup':
+          console.log(properties.inputProperties.options);
           return <Components.FormComponentCheckboxGroup {...properties} />;
 
         case 'radiogroup':
