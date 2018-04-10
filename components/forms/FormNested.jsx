@@ -5,6 +5,7 @@ import { Components, replaceComponent } from 'meteor/vulcan:core';
 import withStyles from 'material-ui/styles/withStyles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
 import { Delete, Plus } from 'mdi-material-ui';
@@ -82,7 +83,9 @@ class FormNested extends PureComponent {
     return (
       <Grid container>
         <Grid item sm={3}>
-          <label>{this.props.label}</label>
+          <Typography component="label">
+            {this.props.label}
+          </Typography>
         </Grid>
         <Grid item sm={9}>
           {this.props.value &&
