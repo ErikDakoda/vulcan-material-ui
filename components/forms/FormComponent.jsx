@@ -16,11 +16,17 @@ const styles = theme => ({
     position: 'relative',
     marginBottom: theme.spacing.unit * 2
   },
-  root: {
-    position:'absolute',
-    top:'15px',
-    right:'5px',
-    padding:'5px',
+  counterWithHelper: {
+    position: 'absolute',
+    bottom: 0,
+    right: '5px',
+    padding: '5px'
+  },
+  counterWithoutHelper: {
+    position: 'absolute',
+    bottom: -theme.spacing.unit * 3,
+    right: '5px',
+    padding: '5px'
   }
 });
 
@@ -34,6 +40,7 @@ class FormComponent extends PureComponent {
       const characterCount = value ? value.length : 0;
       this.state = {
         charsRemaining: this.props.max - characterCount,
+        charsCount: characterCount
       };
     }
     // TODO : remove if unnecessary
@@ -59,11 +66,10 @@ class FormComponent extends PureComponent {
   // }
 
   handleChange = (name, value) => {
-    
     // if value is an empty string, delete the field
-   if (value === '') {
-    value = null;
-   }
+    if (value === '') {
+      value = null;
+    }
     // if this is a number field, convert value before sending it up to Form
     if (this.getType() === 'number') {
       value = Number(value);
@@ -75,7 +81,6 @@ class FormComponent extends PureComponent {
       this.updateCharacterCount(value);
     }
   };
-
 
   /*
 
@@ -89,7 +94,7 @@ class FormComponent extends PureComponent {
     const characterCount = value ? value.length : 0;
     this.setState({
       charsRemaining: this.props.max - characterCount,
-      
+      charsCount: characterCount
     });
   };
 
@@ -105,7 +110,7 @@ class FormComponent extends PureComponent {
     const documentValue = get(document, path);
     const currentValue = currentValues[path];
     const isDeleted = p.deletedValues.includes(path);
-    
+
     if (isDeleted) {
       value = '';
     } else {
@@ -199,7 +204,7 @@ class FormComponent extends PureComponent {
     // these properties are whitelisted so that they can be safely passed to the actual form input
     // and avoid https://facebook.github.io/react/warnings/unknown-prop.html warnings
     const hasErrors = this.getErrors() && this.getErrors().length;
-    
+
     const inputProperties = {
       name,
       options,
@@ -244,7 +249,7 @@ class FormComponent extends PureComponent {
 
       switch (this.getType()) {
         case 'nested':
-          const {classes, ...rest} = properties; // remove formInput class
+          const { classes, ...rest } = properties; // remove formInput class
           return <Components.FormNested {...rest} />;
 
         case 'number':
@@ -398,9 +403,18 @@ class FormComponent extends PureComponent {
         {this.renderComponent()}
         {this.showClear() ? this.renderClear() : null}
         {this.showCharsRemaining() && (
-          <Typography variant='caption' color={this.state.charsRemaining>10 ? 'default' : 'error'} className={classes.root}>
-            {this.state.charsRemaining}
-          </Typography>
+          <div
+            className={
+              this.hasErrors || this.props.description
+                ? classes.counterWithHelper
+                : classes.counterWithoutHelper
+            }>
+            <Typography
+              variant="caption"
+              color={this.state.charsRemaining > 10 ? 'default' : 'error'}>
+              {this.state.charsCount} / {this.props.max}
+            </Typography>
+          </div>
         )}
         {this.renderExtraComponent(this.props.afterComponent)}
       </div>
