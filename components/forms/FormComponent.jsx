@@ -9,25 +9,32 @@ import get from 'lodash/get';
 import merge from 'lodash/merge';
 import withStyles from 'material-ui/styles/withStyles';
 import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import { Close } from 'mdi-material-ui';
 import { isEmptyValue } from '../../modules/utils.js';
 
 const styles = theme => ({
   formInput: {
     position: 'relative',
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
   },
   counterWithHelper: {
     position: 'absolute',
     bottom: 0,
     right: '5px',
-    padding: '5px'
+    padding: '5px',
   },
   counterWithoutHelper: {
     position: 'absolute',
     bottom: -theme.spacing.unit * 3,
     right: '5px',
-    padding: '5px'
-  }
+    padding: '5px',
+  },
+  clearButton: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+  },
 });
 
 class FormComponent extends PureComponent {
@@ -40,7 +47,7 @@ class FormComponent extends PureComponent {
       const characterCount = value ? value.length : 0;
       this.state = {
         charsRemaining: this.props.max - characterCount,
-        charsCount: characterCount
+        charsCount: characterCount,
       };
     }
     // TODO : remove if unnecessary
@@ -94,7 +101,7 @@ class FormComponent extends PureComponent {
     const characterCount = value ? value.length : 0;
     this.setState({
       charsRemaining: this.props.max - characterCount,
-      charsCount: characterCount
+      charsCount: characterCount,
     });
   };
 
@@ -193,7 +200,7 @@ class FormComponent extends PureComponent {
       classes,
       //errors,
       updateCurrentValues,
-      document
+      document,
     } = this.props;
     /* eslint-enable */
 
@@ -215,7 +222,7 @@ class FormComponent extends PureComponent {
       value,
       error: hasErrors ? true : false,
       errors: this.getErrors(),
-      ...form
+      ...form,
     };
 
     // note: we also pass value on props directly
@@ -223,7 +230,7 @@ class FormComponent extends PureComponent {
       ...this.props,
       value,
       errors: this.getErrors(),
-      inputProperties
+      inputProperties,
 
       //onBlur: this.handleBlur, // TODO remove if unnecessary
       //refFunction: ref => (this.formControl = ref)
@@ -287,7 +294,7 @@ class FormComponent extends PureComponent {
         case 'select':
           properties.options = [
             { value: '', label: 'None' },
-            ...properties.options
+            ...properties.options,
           ];
           return <Components.FormComponentSelect {...properties} />;
 
@@ -325,13 +332,11 @@ class FormComponent extends PureComponent {
 
   renderClear() {
     return (
-      <a
-        href="javascript:void(0)"
-        className="form-component-clear"
-        title={this.context.intl.formatMessage({ id: 'forms.clear_field' })}
-        onClick={this.clearField}>
-        <span>✕</span>
-      </a>
+      <div className={this.props.classes.clearButton}>
+        <IconButton onClick={this.clearField}>
+          <Close />
+        </IconButton>
+      </div>
     );
   }
 
@@ -350,7 +355,7 @@ class FormComponent extends PureComponent {
       classes,
       //errors,
       updateCurrentValues,
-      document
+      document,
     } = this.props;
     /* eslint-enable */
 
@@ -366,7 +371,7 @@ class FormComponent extends PureComponent {
       label,
       onChange: this.handleChange,
       value,
-      ...form
+      ...form,
     };
 
     // note: we also pass value on props directly
@@ -374,7 +379,7 @@ class FormComponent extends PureComponent {
       ...this.props,
       value,
       errors: this.getErrors(),
-      inputProperties
+      inputProperties,
 
       //onBlur: this.handleBlur, // TODO remove if unnecessary
       //refFunction: ref => (this.formControl = ref)
@@ -434,7 +439,7 @@ FormComponent.propTypes = {
   datatype: PropTypes.any,
   disabled: PropTypes.bool,
   updateCurrentValues: PropTypes.func,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 FormComponent.contextTypes = {
@@ -444,7 +449,7 @@ FormComponent.contextTypes = {
   autofilledValues: PropTypes.object,
   deletedValues: PropTypes.array,
   getDocument: PropTypes.func,
-  updateCurrentValues: PropTypes.func
+  updateCurrentValues: PropTypes.func,
 };
 
 replaceComponent('FormComponent', FormComponent, [withStyles, styles]);
