@@ -133,8 +133,7 @@ class SearchInput extends PureComponent {
           
           <SearchIcon className={classes.icon} onClick={this.focusInput}/>
           
-          <Input className={classNames('search-input')}
-                 classes={{ input: classes.input }}
+          <Input classes={{ input: classes.input }}
                  id="search-input"
                  inputRef={(input) => this.input = input}
                  value={this.state.value}
@@ -144,7 +143,7 @@ class SearchInput extends PureComponent {
           />
           
           <IconButton
-            className={classNames(classes.clear, !this.state.value && classes.clearDisabled)}
+            className={classNames('clear-button', classes.clear, !this.state.value && classes.clearDisabled)}
             onClick={this.clearSearch}
             disabled={!this.state.value}
           >
