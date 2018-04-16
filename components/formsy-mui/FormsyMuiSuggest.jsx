@@ -225,6 +225,7 @@ const FormsyMuiSuggest = createReactClass({
         onSuggestionSelected={this.suggestionSelected}
         inputProps={{
           autoFocus: autoFocus,
+          autoComplete: 'off',
           classes,
           onChange: this.handleInputChange,
           value: this.getInputValue(),
