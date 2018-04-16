@@ -167,7 +167,7 @@ class FormComponent extends PureComponent {
 
   /*
 
-  Get form control type, either based on control props, or by guessing
+  Get form input type, either based on input props, or by guessing
   based on form field type
 
   */
@@ -180,14 +180,14 @@ class FormComponent extends PureComponent {
         : fieldType === Boolean
           ? 'checkbox'
           : fieldType === Date ? 'date' : 'text';
-    return p.control || autoType;
+    return p.input || autoType;
   };
 
   renderComponent() {
     // see https://facebook.github.io/react/warnings/unknown-prop.html
     /* eslint-disable */
     const {
-      control,
+      input,
       beforeComponent,
       afterComponent,
       options,
@@ -195,11 +195,15 @@ class FormComponent extends PureComponent {
       label,
       description,
       placeholder,
-      form,
       formType,
+      throwError,
       classes,
       //errors,
       updateCurrentValues,
+      currentValues,
+      addToDeletedValues,
+      deletedValues,
+      clearFieldErrors,
       document,
     } = this.props;
     /* eslint-enable */
@@ -222,7 +226,7 @@ class FormComponent extends PureComponent {
       value,
       error: hasErrors ? true : false,
       errors: this.getErrors(),
-      ...form,
+      ...this.props.inputProperties,
     };
 
     // note: we also pass value on props directly
@@ -231,6 +235,11 @@ class FormComponent extends PureComponent {
       value,
       errors: this.getErrors(),
       inputProperties,
+      currentValues,
+      addToDeletedValues,
+      deletedValues,
+      updateCurrentValues,
+      clearFieldErrors,
 
       //onBlur: this.handleBlur, // TODO remove if unnecessary
       //refFunction: ref => (this.formControl = ref)
@@ -247,10 +256,10 @@ class FormComponent extends PureComponent {
     //   properties.onChange = this.updateCharacterCount;
     // }
 
-    // if control is a React component, use it
-    if (typeof control === 'function') {
-      const ControlComponent = control;
-      return <ControlComponent {...properties} />;
+    // if input is a React component, use it
+    if (typeof input === 'function') {
+      const InputComponent = input;
+      return <InputComponent {...properties} />;
     } else {
       // else pick a predefined component
 
@@ -281,7 +290,6 @@ class FormComponent extends PureComponent {
           return <Components.FormComponentCheckbox {...properties} />;
 
         case 'checkboxgroup':
-          console.log(properties.inputProperties.options);
           return <Components.FormComponentCheckboxGroup {...properties} />;
 
         case 'radiogroup':
@@ -311,7 +319,7 @@ class FormComponent extends PureComponent {
           return <Components.FormComponentDefault {...properties} />;
 
         default:
-          const CustomComponent = Components[control];
+          const CustomComponent = Components[input];
           return CustomComponent ? (
             <CustomComponent {...properties} />
           ) : (
@@ -322,7 +330,7 @@ class FormComponent extends PureComponent {
   }
   //TODO make showClear available for select and time, and make it render in a nice way : currently it's ugly on select, did not test on time
   showClear = () => {
-    return ['datetime', 'radiogroup'].includes(this.props.control);
+    return ['datetime', 'radiogroup'].includes(this.props.input);
   };
 
   clearField = e => {
@@ -344,7 +352,7 @@ class FormComponent extends PureComponent {
     if (!extraComponent) return null;
 
     const {
-      control,
+      input,
       beforeComponent,
       afterComponent,
       options,
@@ -394,12 +402,12 @@ class FormComponent extends PureComponent {
   }
 
   render() {
-    const { classes, inputClassName, name, control } = this.props;
+    const { classes, inputClassName, name, input } = this.props;
     const inputClass = classNames(
       classes.formInput,
       inputClassName && classes[inputClassName],
       `input-${name}`,
-      `form-component-${control || 'default'}`
+      `form-component-${input || 'default'}`
     );
 
     return (
@@ -435,7 +443,7 @@ FormComponent.propTypes = {
   placeholder: PropTypes.string,
   prefilledValue: PropTypes.any,
   options: PropTypes.any,
-  control: PropTypes.any,
+  input: PropTypes.any,
   datatype: PropTypes.any,
   disabled: PropTypes.bool,
   updateCurrentValues: PropTypes.func,

@@ -58,7 +58,9 @@ class FormGroup extends PureComponent {
       errors,
       currentValues,
       deletedValues,
-      formType
+      formType,
+      throwError,
+      addToDeletedValues
     } = this.props;
 
     // if at least one of the fields in the group has an error, the group as a whole has an error
@@ -105,11 +107,15 @@ class FormGroup extends PureComponent {
               <Components.FormComponent
                 key={field.name}
                 {...field}
-                updateCurrentValues={updateCurrentValues}
-                formType={formType}
-                currentValues={currentValues}
-                deletedValues={deletedValues}
                 errors={errors}
+                throwError={throwError}
+                currentValues={currentValues}
+                updateCurrentValues={updateCurrentValues}
+                addToDeletedValues={addToDeletedValues}
+                deletedValues={deletedValues}
+                clearFieldErrors={this.props.clearFieldErrors}
+                formType={formType}
+                
               />
             );
           })}
