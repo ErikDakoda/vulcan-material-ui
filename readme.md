@@ -49,7 +49,7 @@ import './example/SideNavigation',
 ## Theming
 
 For an example theme see `modules/sampleTheme.js`. For a complete list of values you can customize, 
-see the [MUI Default Theme](https://material-ui-next.com/customization/theme-default/). 
+see the [MUI Default Theme](https://material-ui-next.com/customization/default-theme/). 
 
 Register your theme in the Vulcan environment by giving it a name: `registerTheme('MyTheme', theme);`. 
 You can have multiple themes registered and you can specify which one to use in your settings file using the `muiTheme` public setting.
