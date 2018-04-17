@@ -341,9 +341,8 @@ class FormComponent extends PureComponent {
       }
     }
   }
-  //TODO make showClear available for select and time, and make it render in a nice way : currently it's ugly on select, did not test on time
   showClear = () => {
-    return ['datetime', 'radiogroup', 'select'].includes(this.props.input);
+    return ['datetime', 'radiogroup', 'select', 'time'].includes(this.props.input);
   };
 
   clearField = e => {
