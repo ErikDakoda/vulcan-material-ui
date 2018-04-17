@@ -139,8 +139,8 @@ export default {
   },
   
   renderHelp: function () {
-    return (this.props.description && !this.hasErrors() &&
-      <FormHelperText>{this.props.description}</FormHelperText>
+    return (this.props.help && !this.hasErrors() &&
+      <FormHelperText>{this.props.help}</FormHelperText>
     );
   },
   

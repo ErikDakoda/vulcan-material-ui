@@ -4,7 +4,7 @@ import { replaceComponent } from 'meteor/vulcan:core';
 
 
 const TextareaComponent = ({refFunction, inputProperties, ...properties}) =>
-  <FormsyMuiInput ref={refFunction} multiline={true} rows={2} rowsMax={10} {...inputProperties}/>;
+  <FormsyMuiInput ref={refFunction} multiline={true} rows={properties.rows? properties.rows : 2} rowsMax={10} {...inputProperties}/>;
 
 
 replaceComponent('FormComponentTextarea', TextareaComponent);

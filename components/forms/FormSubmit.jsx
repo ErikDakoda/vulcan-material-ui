@@ -41,7 +41,11 @@ const FormSubmit = ({
                     }, {
                       intl,
                       isChanged,
-                    }) => (
+                    }) => {
+  if (typeof isChanged != 'function') {
+    isChanged = () => true;
+  }
+  return(
   <div className={classes.root}>
     
     {
@@ -102,7 +106,7 @@ const FormSubmit = ({
     </Button>
   
   </div>
-);
+);}
 
 
 FormSubmit.propTypes = {

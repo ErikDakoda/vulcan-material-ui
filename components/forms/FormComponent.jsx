@@ -35,6 +35,17 @@ const styles = theme => ({
     top: '0px',
     right: '0px',
   },
+  halfWidthLeft: {
+    display: 'inline-block',
+    width: '48%',
+    verticalAlign: 'top',
+    marginRight: '4%',
+  },
+  halfWidthRight: {
+    display: 'inline-block',
+    width: '48%',
+    verticalAlign: 'top',
+  },
 });
 
 class FormComponent extends PureComponent {
@@ -193,9 +204,10 @@ class FormComponent extends PureComponent {
       options,
       name,
       label,
-      description,
+      help,
       placeholder,
       formType,
+      form,
       throwError,
       classes,
       //errors,
@@ -220,12 +232,13 @@ class FormComponent extends PureComponent {
       name,
       options,
       label,
-      description,
+      help,
       placeholder,
       onChange: this.handleChange,
       value,
       error: hasErrors ? true : false,
       errors: this.getErrors(),
+      ...form,
       ...this.props.inputProperties,
     };
 
@@ -418,7 +431,7 @@ class FormComponent extends PureComponent {
         {this.showCharsRemaining() && (
           <div
             className={
-              this.hasErrors || this.props.description
+              this.hasErrors || this.props.help
                 ? classes.counterWithHelper
                 : classes.counterWithoutHelper
             }>
