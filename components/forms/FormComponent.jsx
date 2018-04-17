@@ -61,27 +61,7 @@ class FormComponent extends PureComponent {
         charsCount: characterCount,
       };
     }
-    // TODO : remove if unnecessary
-    // this.handleBlur = this.handleBlur.bind(this);
-    // this.updateCharacterCount = this.updateCharacterCount.bind(this);
-    //
-    // if (props.limit) {
-    //   this.state = {
-    //     limit: props.value ? props.limit - props.value.length : props.limit
-    //   };
-    // }
   }
-  //TODO remove if unnecessary
-  // componentWillReceiveProps(nextProps) {
-  //   this.updateCharacterCount(nextProps.name, nextProps.value);
-  // }
-  //
-  // handleBlur() {
-  //   if (this.formControl) {
-  //     const value = this.formControl.getValue();
-  //     this.props.updateCurrentValues({ [this.props.name]: value });
-  //   }
-  // }
 
   handleChange = (name, value) => {
     // if value is an empty string, delete the field
@@ -254,20 +234,7 @@ class FormComponent extends PureComponent {
       updateCurrentValues,
       clearFieldErrors,
 
-      //onBlur: this.handleBlur, // TODO remove if unnecessary
-      //refFunction: ref => (this.formControl = ref)
     };
-
-    //TODO remove if unnecessary
-    // for text fields, update character count on change
-    // if (
-    //   !this.props.control ||
-    //   ['number', 'url', 'email', 'textarea', 'text'].includes(
-    //     this.props.control
-    //   )
-    // ) {
-    //   properties.onChange = this.updateCharacterCount;
-    // }
 
     // if input is a React component, use it
     if (typeof input === 'function') {
@@ -401,8 +368,6 @@ class FormComponent extends PureComponent {
       errors: this.getErrors(),
       inputProperties,
 
-      //onBlur: this.handleBlur, // TODO remove if unnecessary
-      //refFunction: ref => (this.formControl = ref)
     };
 
     if (typeof extraComponent === 'string') {
