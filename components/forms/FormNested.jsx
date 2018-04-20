@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Components, replaceComponent } from 'meteor/vulcan:core';
+import { Components, replaceComponent, addStrings } from 'meteor/vulcan:core';
+import { intlShape } from 'meteor/vulcan:i18n';
 
 import withStyles from 'material-ui/styles/withStyles';
 import Grid from 'material-ui/Grid';
@@ -9,6 +10,10 @@ import Typography from 'material-ui/Typography';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
 import { Delete, Plus } from 'mdi-material-ui';
+
+addStrings('en', {
+  "forms.add": "Add",
+});
 
 const styles = theme => ({
   root: {
@@ -20,7 +25,7 @@ const styles = theme => ({
 
 const FormNestedItem = (
   { nestedFields, name, path, removeItem, itemIndex, classes, ...props },
-  { errors }
+  { errors, intl }
 ) => {
   return (
     <Paper className={classes.root} elevation={4}>
@@ -36,7 +41,7 @@ const FormNestedItem = (
         );
       })}
 
-      <Tooltip title="Delete">
+      <Tooltip title={intl.formatMessage({ id: 'forms.delete' })}>
         <IconButton
           onClick={() => {
             removeItem(name);
@@ -50,7 +55,8 @@ const FormNestedItem = (
 };
 
 FormNestedItem.contextTypes = {
-  errors: PropTypes.array
+  errors: PropTypes.array,
+  intl: intlShape,
 };
 
 replaceComponent('FormNestedItem', FormNestedItem, [withStyles, styles]);
@@ -103,7 +109,7 @@ class FormNested extends PureComponent {
                   />
                 )
             )}
-          <Tooltip title="Add">
+          <Tooltip title={this.context.intl.formatMessage({ id: 'forms.add' })}>
             <IconButton onClick={this.addItem} aria-label="Add">
               <Components.IconAdd />
             </IconButton>
@@ -115,7 +121,8 @@ class FormNested extends PureComponent {
 }
 
 FormNested.contextTypes = {
-  deletedValues: PropTypes.array
+  deletedValues: PropTypes.array,
+  intl: intlShape,
 };
 
 replaceComponent('FormNested', FormNested);
