@@ -56,6 +56,9 @@ const styles = theme => ({
     height: '32px',
     marginLeft: '8px',
   },
+  line: {
+    marginBottom: '12px',
+  },
 });
 
 
@@ -112,6 +115,7 @@ const FormsyMuiRadioGroup = createReactClass({
             checked={checked}
             disabled={disabled}
           />}
+          className={this.props.classes.line}
           label={radio.label}
         />
       );
