@@ -246,7 +246,7 @@ class FormComponent extends PureComponent {
       switch (this.getType()) {
         case 'nested':
           const { classes, ...rest } = properties; // remove formInput class
-          return <Components.FormNested {...rest} />;
+          return <Components.FormNested {...rest} errors={this.props.errors} />;
 
         case 'number':
           return <Components.FormComponentNumber {...properties} />;
@@ -280,9 +280,9 @@ class FormComponent extends PureComponent {
           return <Components.FormComponentRadioGroup {...properties} />;
 
         case 'select':
-          properties.options = [
-            { value: '', label: 'None' },
-            ...properties.options,
+          properties.inputProperties.options = [
+            { value: '', label: '', disabled:true },
+            ...properties.inputProperties.options,
           ];
           return <Components.FormComponentSelect {...properties} />;
 
