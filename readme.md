@@ -1,5 +1,5 @@
 
-# erikdakoda:vulcan-material-ui 0.14.4
+# erikdakoda:vulcan-material-ui 0.14.8
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui-next.com/). 
 It's based on the latest [v1-beta branch](https://github.com/callemall/material-ui/tree/v1-beta) of Material-UI.
