@@ -88,12 +88,12 @@ class FormNested extends PureComponent {
 
     return (
       <Grid container>
-        <Grid item sm={3}>
+        <Grid item xs={12} sm={3}>
           <Typography component="label">
             {this.props.label}
           </Typography>
         </Grid>
-        <Grid item sm={9}>
+        <Grid item xs={12} sm={9}>
           {this.props.value &&
             this.props.value.map(
               (subDocument, i) =>
