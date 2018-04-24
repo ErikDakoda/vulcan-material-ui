@@ -14,6 +14,7 @@ const styles = theme => ({
   root: {
     textAlign: 'center',
     marginTop: theme.spacing.unit * 5,
+    marginBottom: theme.spacing.unit * 5,
   },
   button: {
     margin: theme.spacing.unit,
