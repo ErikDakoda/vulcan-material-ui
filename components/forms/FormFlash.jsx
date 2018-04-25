@@ -1,3 +1,5 @@
+//FormFlash has been deprecated and error displaying is now made by FormErrors
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { replaceComponent } from 'meteor/vulcan:core';
@@ -23,11 +25,11 @@ const styles = theme => ({
 
 
 const FormFlash = ({ classes, message, type }) => {
-  
+
   type = type === 'error' ? 'danger' : type; // if type is "error", use "danger" instead
-  
+
   const errorClass = ['warning', 'error', 'danger'].includes(type) && classes[type];
-  
+
   const messageNode = Array.isArray(message)
     ?
     <ul className={classes.list}>
@@ -37,8 +39,8 @@ const FormFlash = ({ classes, message, type }) => {
     </ul>
     :
     <span>{message.content}</span>;
-  
-  
+
+
   return (
     <Snackbar
       open={true}
@@ -55,4 +57,4 @@ FormFlash.propTypes = {
 };
 
 
-replaceComponent('FormFlash', FormFlash, [withStyles, styles]);
+//replaceComponent('FormErrors', FormFlash, [withStyles, styles]);

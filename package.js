@@ -9,16 +9,16 @@ Package.describe({
 
 Package.onUse(function (api) {
   api.versionsFrom('METEOR@1.6');
-  
+
   api.use([
     'ecmascript',
-    'vulcan:accounts@1.3.2',
-    'vulcan:forms@1.3.2',
-    'vulcan:core@1.3.2',
+    'vulcan:accounts@1.9.0',
+    'vulcan:forms@1.9.0',
+    'vulcan:core@1.9.0',
   ]);
-  
+
   api.addFiles('accounts.css', ['client', 'server']);
-  
+
   api.mainModule('client/main.js', 'client');
   api.mainModule('server/main.js', 'server');
 });

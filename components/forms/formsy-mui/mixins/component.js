@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormHelperText } from 'material-ui/Form';
+import { FormattedMessage } from 'meteor/vulcan:i18n';
 
 
 export default {
@@ -152,13 +153,32 @@ export default {
     );
   },*/
   
-  renderErrorMessage: function () {
+  renderErrorMessage: function() {
+    const errors = this.props.errors
     if (!this.hasErrors()) return;
-    
-    const messages = this.props.errors.map((error, index) => `${error.message}${index ? '; ' : ''}`);
-    
-    return <FormHelperText>{messages}</FormHelperText>;
+    return (
+      <FormHelperText
+        error
+        children={
+          errors[0].message || (
+            <FormattedMessage
+              id={errors[0].id}
+              values={{ ...errors[0].data }}
+              defaultMessage={JSON.stringify(errors[0])}
+            />
+          )
+        }
+      />
+    );
   },
+  // 
+  // renderErrorMessage: function () {
+  //   if (!this.hasErrors()) return;
+  // 
+  //   const messages = this.props.errors.map((error, index) => `${error.message}${index ? '; ' : ''}`);
+  // 
+  //   return <FormHelperText>{messages}</FormHelperText>;
+  // },
   
   hasErrors: function () {
     return !!(this.props.errors && this.props.errors.length);

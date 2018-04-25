@@ -3,8 +3,8 @@ import FormsyMuiSwitch from '../formsy-mui/FormsyMuiSwitch';
 import { replaceComponent } from 'meteor/vulcan:core';
 
 
-const CheckboxComponent = ({ refFunction, ...properties }) =>
-  <FormsyMuiSwitch {...properties} ref={refFunction}/>;
+const CheckboxComponent = ({ refFunction, inputProperties, ...properties }) =>
+  <FormsyMuiSwitch {...inputProperties} ref={refFunction}/>;
 
 
 replaceComponent('FormComponentCheckbox', CheckboxComponent);

@@ -37,12 +37,14 @@ const cleanProps = (props) => {
     rowLabel,
     validatePristine,
     validateOnSubmit,
-    
     inputClassName,
     
     // Vulcan
     document,
     updateCurrentValues,
+    classes,
+    errors,
+    description,
     
     ...rest
   } = props;
@@ -54,7 +56,7 @@ const cleanProps = (props) => {
 const cleanSwitchProps = (props) => {
   const {
     value,
-    
+    error,
     ...rest
   } = props;
   
