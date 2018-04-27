@@ -148,9 +148,7 @@ class FormComponent extends PureComponent {
 
   */
   getErrors = () => {
-    const fieldErrors = this.props.errors.filter(
-      error => error.data.name === this.props.path
-    );
+    const fieldErrors = this.props.errors.filter(error => error.path === this.props.path);
     return fieldErrors;
   };
 
