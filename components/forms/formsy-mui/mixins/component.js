@@ -163,7 +163,7 @@ export default {
           errors[0].message || (
             <FormattedMessage
               id={errors[0].id}
-              values={{ ...errors[0].data }}
+              values={{ ...errors[0].properties }}
               defaultMessage={JSON.stringify(errors[0])}
             />
           )
