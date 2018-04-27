@@ -9,6 +9,7 @@ import './bonus/TooltipIconButton';
 import './core/Card';
 import './core/Datatable';
 import './core/EditButton';
+import './core/Loading';
 import './core/ModalTrigger';
 import './core/NewButton';
 import './forms/FormComponent';
