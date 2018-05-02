@@ -104,8 +104,8 @@ export default {
       labelClassName: this.getLabelClassName(),
       elementWrapperClassName: this.getElementWrapperClassName(),
       layout: this.getLayout(),
-      required: this.isRequired(),
-      hasErrors: this.hasErrors()
+      required: this.props.required,
+      hasErrors: this.hasErrors(),
     };
   },
   
@@ -144,41 +144,21 @@ export default {
     );
   },
   
-  /*renderErrorMessage: function () {
-    const errorMessages = this.showErrors() ? this.getErrorMessages() || [] : [];
-    const messages = errorMessages.map((message, index) => `message${index ? '; ' : ''}`);
-    
-    return (!!messages.length &&
-      <FormHelperText>{messages.join('; ')}</FormHelperText>
-    );
-  },*/
-  
-  renderErrorMessage: function() {
-    const errors = this.props.errors
+  renderErrorMessage: function () {
     if (!this.hasErrors()) return;
+    
+    const errors = this.props.errors;
+    const errorMessage = errors[0].message ||
+        <FormattedMessage
+          id={errors[0].id}
+          values={{ ...errors[0].data }}
+          defaultMessage={JSON.stringify(errors[0])}
+        />;
+  
     return (
-      <FormHelperText
-        error
-        children={
-          errors[0].message || (
-            <FormattedMessage
-              id={errors[0].id}
-              values={{ ...errors[0].data }}
-              defaultMessage={JSON.stringify(errors[0])}
-            />
-          )
-        }
-      />
+      <FormHelperText error children={errorMessage}/>
     );
   },
-  // 
-  // renderErrorMessage: function () {
-  //   if (!this.hasErrors()) return;
-  // 
-  //   const messages = this.props.errors.map((error, index) => `${error.message}${index ? '; ' : ''}`);
-  // 
-  //   return <FormHelperText>{messages}</FormHelperText>;
-  // },
   
   hasErrors: function () {
     return !!(this.props.errors && this.props.errors.length);

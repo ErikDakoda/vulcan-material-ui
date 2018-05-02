@@ -45,6 +45,7 @@ const cleanProps = (props) => {
     classes,
     errors,
     description,
+    clearField,
     
     ...rest
   } = props;

@@ -6,6 +6,7 @@ import { InputLabel } from 'material-ui/Input';
 import { FormControl, FormLabel } from 'material-ui/Form';
 
 
+//noinspection JSUnusedGlobalSymbols
 const Row = createReactClass({
   
   propTypes: {

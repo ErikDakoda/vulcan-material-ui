@@ -1,11 +1,11 @@
 import React from 'react';
-import FormsyMuiSuggest from '../formsy-mui/FormsyMuiSuggest';
-import FormsyMuiInput from '../formsy-mui/FormsyMuiInput';
+import MuiSuggest from '../base-controls/MuiSuggest';
+import MuiInput from '../base-controls/MuiInput';
 import { registerComponent } from 'meteor/vulcan:core';
 import { regions } from './countries';
 
 
-const RegionSelect = ({ refFunction, ...properties }) => {
+const RegionSelect = ({ classes, refFunction, ...properties }) => {
   const country = properties.document.country;
   let options;
   if (country && regions[country]) {
@@ -13,9 +13,9 @@ const RegionSelect = ({ refFunction, ...properties }) => {
   }
   
   if (options) {
-    return <FormsyMuiSuggest {...properties} refFunction={refFunction} options={options}/>;
+    return <MuiSuggest {...properties} ref={refFunction} options={options}/>;
   } else {
-    return <FormsyMuiInput {...properties} ref={refFunction}/>;
+    return <MuiInput {...properties} ref={refFunction}/>;
   }
 };
 

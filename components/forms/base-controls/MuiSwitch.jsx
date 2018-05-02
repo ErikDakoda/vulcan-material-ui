@@ -1,16 +1,15 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import Formsy from 'formsy-react';
 import ComponentMixin from './mixins/component';
-import Row from './row';
+import Row from './Row';
 import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
 import propUtilities from './prop-utilities';
 
 
-const FormsyMuiSwitch = createReactClass({
+const MuiSwitch = createReactClass({
   
-  mixins: [Formsy.Mixin, ComponentMixin],
+  mixins: [ComponentMixin],
   
   getDefaultProps: function () {
     return {
@@ -21,10 +20,10 @@ const FormsyMuiSwitch = createReactClass({
   },
   
   changeValue: function (event) {
-    const target = event.currentTarget;
+    const target = event.target;
     const value = target.checked;
     
-    this.setValue(value);
+    //this.setValue(value);
     this.props.onChange(this.props.name, value);
     
     setTimeout(() => {document.activeElement.blur();});
@@ -59,9 +58,9 @@ const FormsyMuiSwitch = createReactClass({
             ref={(c) => this.element = c}
             {...propUtilities.cleanSwitchProps(propUtilities.cleanProps(this.props))}
             id={this.getId()}
-            checked={this.getValue() === true}
+            checked={this.props.value === true}
             onChange={this.changeValue}
-            disabled={this.isFormDisabled() || this.props.disabled}
+            disabled={this.props.disabled}
           />
         }
         label={this.props.label}
@@ -72,4 +71,4 @@ const FormsyMuiSwitch = createReactClass({
 });
 
 
-export default FormsyMuiSwitch;
+export default MuiSwitch;

@@ -41,6 +41,7 @@
       "varsIgnorePattern": "React|PropTypes|Component"
     }],
     "react/prop-types": 0,
+    "react/display-name": 0,
     "meteor/audit-argument-checks": 0,
     "meteor/no-session": 0,
     "no-case-declarations": 0,

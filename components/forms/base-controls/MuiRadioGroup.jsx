@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import Formsy from 'formsy-react';
 import ComponentMixin from './mixins/component';
 import withStyles from 'material-ui/styles/withStyles';
-import Row from './row';
-import { FormGroup, FormControlLabel, } from 'material-ui/Form';
-import Checkbox from 'material-ui/Checkbox';
+import Row from './Row';
+import { FormControlLabel, } from 'material-ui/Form';
+import Radio, { RadioGroup } from 'material-ui/Radio';
 import classNames from 'classnames';
 
 
 const styles = theme => ({
   group: {
     marginTop: '8px',
+  },
+  inline: {
+    flexDirection: 'row',
+    '& > label': {
+      marginRight: theme.spacing.unit * 5,
+    },
   },
   twoColumn: {
     display: 'block',
@@ -45,17 +50,25 @@ const styles = theme => ({
       },
     },
   },
+  radio: {
+    width: '32px',
+    height: '32px',
+    marginLeft: '8px',
+  },
+  line: {
+    marginBottom: '12px',
+  },
 });
 
 
-const FormsyMuiCheckboxGroup = createReactClass({
+const MuiRadioGroup = createReactClass({
   
-  mixins: [Formsy.Mixin, ComponentMixin],
+  mixins: [ComponentMixin],
   
   propTypes: {
     name: PropTypes.string.isRequired,
-    options: PropTypes.array.isRequired,
-    classes: PropTypes.object.isRequired,
+    type: PropTypes.oneOf(['inline', 'stacked']),
+    options: PropTypes.array.isRequired
   },
   
   getInitialState: function () {
@@ -66,19 +79,16 @@ const FormsyMuiCheckboxGroup = createReactClass({
   
   getDefaultProps: function () {
     return {
+      type: 'stacked',
       label: '',
-      help: null
+      help: null,
+      classes: PropTypes.object.isRequired,
     };
   },
   
-  changeCheckbox: function () {
-    const value = [];
-    this.props.options.forEach(function (option, key) {
-      if (this[this.props.name + '-' + option.value].checked) {
-        value.push(option.value);
-      }
-    }.bind(this));
-    this.setValue(value);
+  changeRadio: function (event) {
+    const value = event.target.value;
+    //this.setValue(value);
     this.props.onChange(this.props.name, value);
   },
   
@@ -90,37 +100,42 @@ const FormsyMuiCheckboxGroup = createReactClass({
   },
   
   renderElement: function () {
-    const controls = this.props.options.map((checkbox, key) => {
-      let value = checkbox.value;
-      let checked = (this.getValue().indexOf(value) !== -1);
-      let disabled = this.isFormDisabled() || checkbox.disabled || this.props.disabled;
+    const controls = this.props.options.map((radio, key) => {
+      let checked = (this.props.value === radio.value);
+      let disabled = radio.disabled || this.props.disabled;
       
       return (
         <FormControlLabel
           key={key}
-          control={
-            <Checkbox
-              inputRef={(c) => this[this.props.name + '-' + value] = c}
-              checked={checked}
-              onChange={this.changeCheckbox}
-              value={value}
-              disabled={disabled}
-            />
-          }
-          label={checkbox.label}
+          value={radio.value}
+          control={<Radio
+            className={this.props.classes.radio}
+            inputRef={(c) => this['element-' + key] = c}
+            checked={checked}
+            disabled={disabled}
+          />}
+          className={this.props.classes.line}
+          label={radio.label}
         />
       );
     });
     
     const maxLength = this.props.options.reduce((max, option) =>
       option.label.length > max ? option.label.length : max, 0);
-  
-    const columnClass = maxLength < 20 ? 'threeColumn' : maxLength < 30 ? 'twoColumn' : '';
+    
+    let columnClass = maxLength < 18 ? 'threeColumn' : maxLength < 30 ? 'twoColumn' : '';
+    if (this.props.type === 'inline') columnClass = 'inline';
     
     return (
-      <FormGroup className={classNames(this.props.classes.group, this.props.classes[columnClass])}>
+      <RadioGroup
+        aria-label={this.props.name}
+        name={this.props.name}
+        className={classNames(this.props.classes.group, this.props.classes[columnClass])}
+        value={this.props.value}
+        onChange={this.changeRadio}
+      >
         {controls}
-      </FormGroup>
+      </RadioGroup>
     );
   },
   
@@ -146,4 +161,4 @@ const FormsyMuiCheckboxGroup = createReactClass({
 });
 
 
-export default withStyles(styles)(FormsyMuiCheckboxGroup);
+export default withStyles(styles)(MuiRadioGroup);

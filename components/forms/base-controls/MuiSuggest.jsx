@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import Formsy from 'formsy-react';
 import ComponentMixin from './mixins/component';
-import Row from './row';
+import Row from './Row';
 import withStyles from 'material-ui/styles/withStyles';
-import Input, { InputAdornment } from 'material-ui/Input';
+import Input from 'material-ui/Input';
 import Autosuggest from 'react-autosuggest';
 import Paper from 'material-ui/Paper';
 import { MenuItem } from 'material-ui/Menu';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { registerComponent } from 'meteor/vulcan:core';
+import StartAdornment, { hideStartAdornment } from './StartAdornment';
+import EndAdornment from './EndAdornment';
 import classNames from 'classnames';
 
 
@@ -54,6 +55,10 @@ const styles = theme => ({
     boxSizing: 'content-box',
     background: 'none',
     verticalAlign: 'middle',
+    '&::-webkit-search-decoration, &::-webkit-search-cancel-button, &::after, &:after':
+      { display: 'none' },
+    '&::-webkit-search-results, &::-webkit-search-results-decoration':
+      { display: 'none' },
   },
   readOnly: {
     cursor: 'pointer',
@@ -72,17 +77,28 @@ const styles = theme => ({
   suggestion: {
     display: 'block',
   },
+  suggestionIcon: {
+    marginRight: theme.spacing.unit * 2,
+  },
   suggestionsList: {
     margin: 0,
     padding: 0,
     listStyleType: 'none',
   },
+  inputRoot: {
+    '& .clear-enabled': { opacity: 0 }
+  },
+  inputFocused: {
+    '& .clear-enabled': { opacity: 0.54 }
+  },
 });
 
 
-const FormsyMuiSuggest = createReactClass({
+const MuiSuggest = createReactClass({
   
-  mixins: [Formsy.Mixin, ComponentMixin],
+  element: null,
+  
+  mixins: [ComponentMixin],
   
   propTypes: {
     options: PropTypes.arrayOf(PropTypes.shape({
@@ -92,60 +108,77 @@ const FormsyMuiSuggest = createReactClass({
     })),
     classes: PropTypes.object.isRequired,
     limitToList: PropTypes.bool,
+    disableText: PropTypes.bool,
   },
   
   getInitialState: function () {
     if (this.props.refFunction) {
       this.props.refFunction(this);
     }
-  
+    
+    const selectedOption = this.getSelectedOption(this.props.value);
     return {
-      inputValue: null,
+      inputValue: selectedOption.label,
+      selectedOption: selectedOption,
       suggestions: [],
     };
   },
   
-  getInputValue: function () {
-    if (this.state.inputValue !== null) {
-      return this.state.inputValue;
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.value !== this.state.value) {
+      const selectedOption = this.getSelectedOption(nextProps.value);
+      this.setState({
+        inputValue: selectedOption.label,
+        selectedOption: selectedOption,
+      });
     }
-    const value = this.getValue();
-    if (!value) {
-      return '';
-    }
-    const selectedOption = this.props.options.find((opt) => opt.value === value);
-    
-    return selectedOption ? selectedOption.label : '';
   },
   
-  suggestionSelected: function (event, { suggestion, suggestionValue }) {
+  getSelectedOption: function (value) {
+    const selectedOption = this.props.options.find((opt) => opt.value === value);
+    return selectedOption || { label: '', value: null };
+  },
+  
+  handleBlur: function (event, { highlightedSuggestion: suggestion }) {
+    event.persist();
+    
+    if (suggestion) {
+      this.changeValue(suggestion);
+    } else if (this.props.limitToList) {
+      const selectedOption = this.getSelectedOption(this.props.value);
+      this.setState({
+        inputValue: selectedOption.label,
+      });
+    }
+  },
+  
+  suggestionSelected: function (event, { suggestion }) {
     event.preventDefault();
-    this.setState({
-      inputValue: suggestion.label,
-    });
     
-    this.setValue(suggestionValue);
-    this.props.onChange(this.props.name, suggestionValue);
+    this.changeValue(suggestion);
     
-    if (this.props.limitToList) {
+    if (this.props.disableText) {
       setTimeout(() => {document.activeElement.blur();});
     }
   },
   
-  validate: function () {
-    if (this.props.onBlur) {
-      this.props.onBlur();
+  changeValue: function (suggestion) {
+    if (!suggestion) {
+      suggestion = { label: '', value: null };
     }
-    return true;
+    this.setState({
+      selectedOption: suggestion,
+      inputValue: suggestion.label,
+    });
+    this.props.onChange(this.props.name, suggestion.value);
   },
-
+  
   handleInputChange: function (event) {
-    const value = event.currentTarget.value;
+    const value = event.target.value;
     this.setState({
       inputValue: value,
     });
   },
-  
   
   handleSuggestionsFetchRequested: function ({ value }) {
     this.setState({
@@ -164,27 +197,22 @@ const FormsyMuiSuggest = createReactClass({
   },
   
   render: function () {
-    let startAdornment;
-    let endAdornment;
-  
-    if (this.props.addonBefore || this.props.buttonBefore) {
-      startAdornment =
-        <InputAdornment position="start">
-          {this.props.addonBefore && this.props.addonBefore}
-          {this.props.buttonBefore && this.props.buttonBefore}
-        </InputAdornment>;
-    }
-  
-    if (this.props.addonAfter || this.props.buttonAfter) {
-      endAdornment =
-        <InputAdornment position="end">
-          {this.props.buttonAfter && this.props.buttonAfter}
-          {this.props.addonAfter && this.props.addonAfter}
-        </InputAdornment>;
-    }
-  
-    let element = this.renderElement(startAdornment, endAdornment);
-
+    const value = this.props.value;
+    
+    const startAdornment = hideStartAdornment(this.props) ? null :
+      <StartAdornment {...this.props}
+                      value={value}
+                      classes={null}
+      />;
+    const endAdornment =
+      <EndAdornment {...this.props}
+                    value={value}
+                    classes={null}
+                    changeValue={this.changeValue}
+      />;
+    
+    const element = this.renderElement(startAdornment, endAdornment);
+    
     if (this.getLayout() === 'elementOnly') {
       return element;
     }
@@ -202,18 +230,19 @@ const FormsyMuiSuggest = createReactClass({
   },
   
   renderElement: function (startAdornment, endAdornment) {
-    const { classes, autoFocus } = this.props;
+    const { classes, autoFocus, disableText } = this.props;
     
     return (
       <Autosuggest
         theme={{
           container: classes.container,
-          input: classNames(classes.input, this.props.limitToList && classes.readOnly),
+          input: classNames(classes.input, this.props.disableText && classes.readOnly),
           suggestionsContainer: classes.suggestionsContainer,
           suggestionsContainerOpen: classes.suggestionsContainerOpen,
           suggestion: classes.suggestion,
           suggestionsList: classes.suggestionsList,
         }}
+        highlightFirstSuggestion={!disableText}
         renderInputComponent={this.renderInputComponent}
         suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
@@ -228,9 +257,10 @@ const FormsyMuiSuggest = createReactClass({
           autoComplete: 'off',
           classes,
           onChange: this.handleInputChange,
-          value: this.getInputValue(),
-          readOnly: this.props.limitToList,
-          disabled: this.isFormDisabled() || this.props.disabled,
+          onBlur: this.handleBlur,
+          value: this.state.inputValue,
+          readOnly: this.props.disableText,
+          disabled: this.props.disabled,
           startAdornment,
           endAdornment,
         }}
@@ -239,12 +269,14 @@ const FormsyMuiSuggest = createReactClass({
   },
   
   renderInputComponent: function (inputProps) {
-    const { classes, autoFocus, value, ref, startAdornment, endAdornment, ...rest } = inputProps;
+    const { classes, autoFocus, autoComplete, value, ref, startAdornment, endAdornment, ...rest } = inputProps;
     
     return (
       <Input
         autoFocus={autoFocus}
+        autoComplete={autoComplete}
         className={classes.textField}
+        classes={{ root: classes.inputRoot, focused: classes.inputFocused }}
         value={value}
         inputRef={(c) => {
           ref(c);
@@ -268,7 +300,9 @@ const FormsyMuiSuggest = createReactClass({
       <MenuItem selected={isHighlighted} component="div">
         {
           suggestion.iconComponent &&
-          suggestion.iconComponent
+          <div className={this.props.classes.suggestionIcon}>
+            {suggestion.iconComponent}
+          </div>
         }
         <div>
           {parts.map((part, index) => {
@@ -306,39 +340,39 @@ const FormsyMuiSuggest = createReactClass({
     const inputLength = inputValue.length;
     let count = 0;
     
-    return this.props.limitToList ?
-  
+    return this.props.disableText ?
+      
       this.props.options.filter(suggestion => {
         return true;
       })
-  
+      
       :
-  
+      
       inputLength === 0
-      
-      ?
-      
-      this.props.options.filter(suggestion => {
-        count += 1;
-        return count <= 5;
-      })
-      
-      :
-      
-      this.props.options.filter(suggestion => {
-        const keep =
-          count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
         
-        if (keep) {
+        ?
+        
+        this.props.options.filter(suggestion => {
           count += 1;
-        }
+          return count <= 5;
+        })
         
-        return keep;
-      });
+        :
+        
+        this.props.options.filter(suggestion => {
+          const keep =
+            count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
+          
+          if (keep) {
+            count += 1;
+          }
+          
+          return keep;
+        });
   },
   
 });
 
 
-export default withStyles(styles)(FormsyMuiSuggest);
-registerComponent('FormsyMuiSuggest', FormsyMuiSuggest, [withStyles, styles]);
+export default withStyles(styles)(MuiSuggest);
+registerComponent('MuiSuggest', MuiSuggest, [withStyles, styles]);

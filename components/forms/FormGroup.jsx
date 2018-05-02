@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import {
   Components,
   replaceComponent,
-  withCurrentUser
+  instantiateComponent,
+  withCurrentUser,
+  Utils,
 } from 'meteor/vulcan:core';
 import withStyles from 'material-ui/styles/withStyles';
 import Typography from 'material-ui/Typography';
@@ -25,25 +27,10 @@ const styles = theme => ({
   }
 });
 
+
 class FormGroup extends PureComponent {
-  renderExtraComponent(extraComponent) {
-    if (!extraComponent) return null;
-
-    const { document, updateCurrentValues } = this.props;
-
-    if (typeof extraComponent === 'string') {
-      const ExtraComponent = Components[extraComponent];
-      return (
-        <ExtraComponent
-          document={document}
-          updateCurrentValues={updateCurrentValues}
-        />
-      );
-    } else {
-      return extraComponent;
-    }
-  }
-
+  
+  
   render() {
     const {
       name,
@@ -87,6 +74,7 @@ class FormGroup extends PureComponent {
 
     return (
       <div className={classes.root}>
+        
         <a name={anchorName} />
 
         {name === 'default' ? null : (
@@ -96,13 +84,10 @@ class FormGroup extends PureComponent {
         )}
 
         <Paper className={classes.paper}>
-          {this.renderExtraComponent(startComponent)}
+          
+          {instantiateComponent(startComponent)}
+          
           {fields.map(field => {
-            if (typeof field.getHidden === 'function') {
-              if (field.getHidden.call(field)) {
-                return null;
-              }
-            }
             return (
               <Components.FormComponent
                 key={field.name}
@@ -115,16 +100,21 @@ class FormGroup extends PureComponent {
                 deletedValues={deletedValues}
                 clearFieldErrors={this.props.clearFieldErrors}
                 formType={formType}
-                
               />
             );
           })}
-          {this.renderExtraComponent(endComponent)}
+  
+          {instantiateComponent(endComponent)}
+          
         </Paper>
+        
       </div>
     );
   }
+  
+  
 }
+
 
 FormGroup.propTypes = {
   name: PropTypes.string,
@@ -138,5 +128,6 @@ FormGroup.propTypes = {
   endComponent: PropTypes.node,
   currentUser: PropTypes.object
 };
+
 
 replaceComponent('FormGroup', FormGroup, withCurrentUser, [withStyles, styles]);
