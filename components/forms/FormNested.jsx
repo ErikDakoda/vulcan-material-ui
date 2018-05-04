@@ -9,7 +9,8 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Tooltip from 'material-ui/Tooltip';
 import IconButton from 'material-ui/IconButton';
-import { Delete, Plus } from 'mdi-material-ui';
+import Delete from 'mdi-material-ui/Delete';
+import Plus from 'mdi-material-ui/Plus';
 
 addStrings('en', {
   "forms.add": "Add",
