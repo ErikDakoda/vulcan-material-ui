@@ -1,32 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import classNames from 'classnames/dedupe';
 import { InputLabel } from 'material-ui/Input';
 import { FormControl, FormLabel } from 'material-ui/Form';
 
 
 //noinspection JSUnusedGlobalSymbols
-const Row = createReactClass({
+const MuiFormControl = createReactClass({
   
   propTypes: {
     label: PropTypes.node,
     children: PropTypes.node,
-    rowClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ]),
-    labelClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ]),
-    elementWrapperClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ]),
     required: PropTypes.bool,
     hasErrors: PropTypes.bool,
     fakeLabel: PropTypes.bool,
@@ -38,9 +22,6 @@ const Row = createReactClass({
   getDefaultProps: function () {
     return {
       label: '',
-      rowClassName: '',
-      labelClassName: '',
-      elementWrapperClassName: '',
       required: false,
       hasErrors: false,
       fakeLabel: false,
@@ -58,19 +39,16 @@ const Row = createReactClass({
   },
   
   renderLabel: function () {
-    
     if (this.props.layout === 'elementOnly' || this.props.hideLabel) {
       return null;
     }
     
-    const labelClassNames = [];
-    labelClassNames.push('control-label');
-    
-    labelClassNames.push(this.props.labelClassName);
-    
     if (this.props.fakeLabel) {
       return (
-        <FormLabel component="legend">
+        <FormLabel className="control-label legend"
+                   component="legend"
+                   data-required={this.props.required}
+        >
           {this.props.label}
           {this.renderRequiredSymbol()}
         </FormLabel>
@@ -78,9 +56,10 @@ const Row = createReactClass({
     }
     
     return (
-      <InputLabel className={classNames(labelClassNames)}
+      <InputLabel className="control-label"
                   data-required={this.props.required}
-                  htmlFor={this.props.htmlFor}>
+                  htmlFor={this.props.htmlFor}
+      >
         {this.props.label}
         {this.renderRequiredSymbol()}
       </InputLabel>
@@ -104,4 +83,4 @@ const Row = createReactClass({
 });
 
 
-export default Row;
+export default MuiFormControl;

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ComponentMixin from './mixins/component';
-import Row from './Row';
 import withStyles from 'material-ui/styles/withStyles';
 import Input from 'material-ui/Input';
 import Autosuggest from 'react-autosuggest';
@@ -13,6 +12,9 @@ import parse from 'autosuggest-highlight/parse';
 import { registerComponent } from 'meteor/vulcan:core';
 import StartAdornment, { hideStartAdornment } from './StartAdornment';
 import EndAdornment from './EndAdornment';
+import MuiFormControl from './MuiFormControl';
+import MuiFormHelper from './MuiFormHelper';
+import _isEqual from 'lodash/isEqual';
 import classNames from 'classnames';
 
 
@@ -86,7 +88,8 @@ const styles = theme => ({
     listStyleType: 'none',
   },
   inputRoot: {
-    '& .clear-enabled': { opacity: 0 }
+    '& .clear-enabled': { opacity: 0 },
+    '&:hover .clear-enabled': { opacity: 0.54 },
   },
   inputFocused: {
     '& .clear-enabled': { opacity: 0.54 }
@@ -116,7 +119,7 @@ const MuiSuggest = createReactClass({
       this.props.refFunction(this);
     }
     
-    const selectedOption = this.getSelectedOption(this.props.value);
+    const selectedOption = this.getSelectedOption();
     return {
       inputValue: selectedOption.label,
       selectedOption: selectedOption,
@@ -124,9 +127,10 @@ const MuiSuggest = createReactClass({
     };
   },
   
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.value !== this.state.value) {
-      const selectedOption = this.getSelectedOption(nextProps.value);
+  componentWillReceiveProps: function (nextProps) {
+    if (nextProps.value !== this.state.value ||
+      nextProps.options !== this.props.options) {
+      const selectedOption = this.getSelectedOption(nextProps);
       this.setState({
         inputValue: selectedOption.label,
         selectedOption: selectedOption,
@@ -134,8 +138,14 @@ const MuiSuggest = createReactClass({
     }
   },
   
-  getSelectedOption: function (value) {
-    const selectedOption = this.props.options.find((opt) => opt.value === value);
+  shouldComponentUpdate: function (nextProps, nextState) {
+    return !_isEqual(nextState, this.state) ||
+      nextProps.options !== this.props.options;
+  },
+  
+  getSelectedOption: function (props) {
+    props = props || this.props;
+    const selectedOption = props.options.find((opt) => opt.value === props.value);
     return selectedOption || { label: '', value: null };
   },
   
@@ -145,7 +155,7 @@ const MuiSuggest = createReactClass({
     if (suggestion) {
       this.changeValue(suggestion);
     } else if (this.props.limitToList) {
-      const selectedOption = this.getSelectedOption(this.props.value);
+      const selectedOption = this.getSelectedOption();
       this.setState({
         inputValue: selectedOption.label,
       });
@@ -213,19 +223,15 @@ const MuiSuggest = createReactClass({
     
     const element = this.renderElement(startAdornment, endAdornment);
     
-    if (this.getLayout() === 'elementOnly') {
+    if (this.props.layout === 'elementOnly') {
       return element;
     }
     
     return (
-      <Row
-        {...this.getRowProperties()}
-        htmlFor={this.getId()}
-      >
+      <MuiFormControl{...this.getFormControlProperties()} htmlFor={this.getId()}>
         {element}
-        {this.renderHelp()}
-        {this.renderErrorMessage()}
-      </Row>
+        <MuiFormHelper {...this.getFormHelperProperties()}/>
+      </MuiFormControl>
     );
   },
   

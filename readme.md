@@ -1,14 +1,16 @@
 
-# erikdakoda:vulcan-material-ui 0.14.8
+# erikdakoda:vulcan-material-ui 1.10.0
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui-next.com/). 
 It's based on the latest [v1-beta branch](https://github.com/callemall/material-ui/tree/v1-beta) of Material-UI.
 
-This package is progressing and is now beta quality. Further changes are likely to come and I will likely break out
-the example layout into a separate package. To give me feedback open an issue on GitHub
-or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) channel as erikdakoda.
+Soon this package will be rolled into the VulcanJS main repository. The next version of Vulcan will have no
+dependencies on Bootstrap, and you will be able to choose your ui framework without the added bundle size of Bootstrap.
 
-This version has been tested against Vulcan 1.8.11 and Material UI v1.0.0-beta.35.
+To give me feedback open an issue on GitHub or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) 
+channel as erikdakoda.
+
+This version has been tested against Vulcan 1.10.0 and Material UI v1.0.0-beta.35.
 
 NOTE: Material UI is still in beta and the API is still in flux. 
 If you are experiencing problems, try locking your project to 
@@ -86,6 +88,18 @@ You can use tooltipEnterDelay (or any other variable you define in utils) anywhe
 
 You can use errorMessage (or any other style fragment you define in utils) anywhere you include the withStyles HOC. See `/components/accounts/Form.jsx` for an example.
 
+## Server Side Rendering (SSR)
+
+Material UI and Vulcan support SSR, but this is a complex beast with pitfalls. Sometimes you will see a warning like this:
+
+`Warning: Prop className did not match. Server: "MuiChip-label-131" Client: "MuiChip-label-130"`
+
+Sometimes the React rendered on the server and the client don't match exactly and this causes a problem with [JSS](https://material-ui-next.com/customization/css-in-js/#jss). This is a complicated issue that has multiple causes and I will be working on solving each of the issues causing this over time.
+
+Your pages should still render correctly, but there may be a blink and redraw when the first page after SSR loads in the browser.
+
+IIn your own code, make sure that your components will render the same on the server and the client. This means not referring to client-side object such as `document` or `jQuery`. If you have a misbehaving component, try wrapping it with [react-no-ssr](https://github.com/kadirahq/react-no-ssr). 
+
 ## Form Controls
 
 You can pass a couple of extra options to text inputs from the `form` property of your schema:
@@ -96,16 +110,17 @@ You can pass a couple of extra options to text inputs from the `form` property o
     label: 'User key',
     description: 'The user’s key',
     optional: true,
+    hidden: function ({ document }) {
+      return !document.platformId || !document.usePlatformApp;
+    },
     form: {
-      autoFocus: true,                  // focus this input when the form loads
-      addonBefore: () => <KeyIcon/>,    // adorn the start of the input
-      addonAfter: () => <KeyIcon/>,     // adorn the end of the input
-      inputClassName: 'halfWidthLeft',  // add this class to the input
-      hideLabel: true,                  // hide the label
-      help: 'Enter your key here',      // add help text below the input
-      getHidden: () => function () {    // function that returns true if input
-        return !this.document.useKey;   //   should be temporarily hidden
-      },
+      autoFocus: true,                 // focus this input when the form loads
+      addonBefore: <KeyIcon/>,         // adorn the start of the input
+      addonAfter: <KeyIcon/>,          // adorn the end of the input
+      inputClassName: 'halfWidthLeft', // use 'halfWidthLeft' or 'halfWidthRight'
+                                       //   to display two controls side by side
+      hideLabel: true,                 // hide the label
+      help: 'Enter your key here',     // add help text below the input
     },
     group: platformGroup,
     viewableBy: ['members'],
@@ -113,6 +128,8 @@ You can pass a couple of extra options to text inputs from the `form` property o
     editableBy: ['members'],
   },
 ```
+
+> Note: `form.getHidden` has been deprecated. Now you can just pass a function to `hidden`.
 
 And to textarea inputs:
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import ComponentMixin from './mixins/component';
-import Row from './Row';
 import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
-import propUtilities from './prop-utilities';
+import MuiFormControl from './MuiFormControl';
+import MuiFormHelper from './MuiFormHelper';
 
 
 const MuiSwitch = createReactClass({
@@ -33,20 +33,17 @@ const MuiSwitch = createReactClass({
     
     const element = this.renderElement();
     
-    if (this.getLayout() === 'elementOnly') {
+    if (this.props.layout === 'elementOnly') {
       return element;
     }
     
     return (
-      <Row
-        {...this.getRowProperties()}
-        label={this.props.rowLabel}
+      <MuiFormControl {...this.getFormControlProperties()} label={this.props.rowLabel}
         htmlFor={this.getId()}
       >
         {element}
-        {this.renderHelp()}
-        {this.renderErrorMessage()}
-      </Row>
+        <MuiFormHelper {...this.getFormHelperProperties()}/>
+      </MuiFormControl>
     );
   },
   
@@ -56,7 +53,7 @@ const MuiSwitch = createReactClass({
         control={
           <Switch
             ref={(c) => this.element = c}
-            {...propUtilities.cleanSwitchProps(propUtilities.cleanProps(this.props))}
+            {...this.cleanSwitchProps(this.cleanProps(this.props))}
             id={this.getId()}
             checked={this.props.value === true}
             onChange={this.changeValue}

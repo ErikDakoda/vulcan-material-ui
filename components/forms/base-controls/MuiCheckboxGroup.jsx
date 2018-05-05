@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ComponentMixin from './mixins/component';
 import withStyles from 'material-ui/styles/withStyles';
-import Row from './Row';
 import { FormGroup, FormControlLabel, } from 'material-ui/Form';
+import MuiFormControl from './MuiFormControl';
+import MuiFormHelper from './MuiFormHelper';
 import Checkbox from 'material-ui/Checkbox';
 import classNames from 'classnames';
 
@@ -125,21 +126,17 @@ const MuiCheckboxGroup = createReactClass({
   
   render: function () {
     
-    if (this.getLayout() === 'elementOnly') {
+    if (this.props.layout === 'elementOnly') {
       return (
         <div>{this.renderElement()}</div>
       );
     }
     
     return (
-      <Row
-        {...this.getRowProperties()}
-        fakeLabel={true}
-      >
+      <MuiFormControl{...this.getFormControlProperties()} fakeLabel={true}>
         {this.renderElement()}
-        {this.renderHelp()}
-        {this.renderErrorMessage()}
-      </Row>
+        <MuiFormHelper {...this.getFormHelperProperties()}/>
+      </MuiFormControl>
     );
   }
 });

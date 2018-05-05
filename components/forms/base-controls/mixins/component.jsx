@@ -7,105 +7,32 @@ import { FormattedMessage } from 'meteor/vulcan:i18n';
 export default {
   
   propTypes: {
+    label: PropTypes.string,
+    hideLabel: PropTypes.bool,
     layout: PropTypes.string,
-    validatePristine: PropTypes.bool,
-    validateOnSubmit: PropTypes.bool,
-    rowClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ]),
-    labelClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ]),
-    elementWrapperClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ])
+    required: PropTypes.bool,
+    errors: PropTypes.arrayOf(PropTypes.object),
   },
   
-  contextTypes: {
-    layout: PropTypes.string,
-    validatePristine: PropTypes.bool,
-    validateOnSubmit: PropTypes.bool,
-    rowClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ]),
-    labelClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ]),
-    elementWrapperClassName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-      PropTypes.object
-    ])
-  },
-  
-  getDefaultProps: function () {
-    return {
-      disabled: false,
-      validatePristine: false,
-      validateOnSubmit: false,
-      onChange: function () {},
-      onFocus: function () {},
-      onBlur: function () {}
-    };
-  },
-  
-  /**
-   * Accessors for "special" properties.
-   *
-   * The following methods are used to merge master default properties that
-   * are optionally set on the parent form. This to to allow customising these
-   * properties 'as a whole' for the form, while retaining the ability to
-   * override the properties on a component basis.
-   *
-   * Also see the parent-context mixin.
-   */
-  getLayout: function () {
-    const defaultProperty = this.context.layout || 'horizontal';
-    return this.props.layout ? this.props.layout : defaultProperty;
-  },
-  
-  getValidatePristine: function () {
-    const defaultProperty = this.context.validatePristine || false;
-    return this.props.validatePristine ? this.props.validatePristine : defaultProperty;
-  },
-  
-  getValidateOnSubmit: function () {
-    const defaultProperty = this.context.validateOnSubmit || false;
-    return this.props.validateOnSubmit ? this.props.validateOnSubmit : defaultProperty;
-  },
-  
-  getRowClassName: function () {
-    return [this.context.rowClassName, this.props.rowClassName];
-  },
-  
-  getLabelClassName: function () {
-    return [this.context.labelClassName, this.props.labelClassName];
-  },
-  
-  getElementWrapperClassName: function () {
-    return [this.context.elementWrapperClassName, this.props.elementWrapperClassName];
-  },
-  
-  getRowProperties: function () {
+  getFormControlProperties: function () {
     return {
       label: this.props.label,
       hideLabel: this.props.hideLabel,
-      rowClassName: this.getRowClassName(),
-      labelClassName: this.getLabelClassName(),
-      elementWrapperClassName: this.getElementWrapperClassName(),
-      layout: this.getLayout(),
+      layout: this.props.layout,
       required: this.props.required,
       hasErrors: this.hasErrors(),
+    };
+  },
+  
+  getFormHelperProperties: function () {
+    return {
+      help: this.props.help,
+      errors: this.props.errors,
+      hasErrors: this.hasErrors(),
+      showCharsRemaining: this.props.showCharsRemaining,
+      charsRemaining: this.props.charsRemaining,
+      charsCount: this.props.charsCount,
+      max: this.props.max,
     };
   },
   
@@ -118,8 +45,6 @@ export default {
   },
   
   /**
-   * getId
-   *
    * The ID is used as an attribute on the form control, and is used to allow
    * associating the label element with the form control.
    *
@@ -138,39 +63,58 @@ export default {
     ].join('-');
   },
   
-  renderHelp: function () {
-    return (this.props.help && !this.hasErrors() &&
-      <FormHelperText>{this.props.help}</FormHelperText>
-    );
-  },
-  
-  renderErrorMessage: function () {
-    if (!this.hasErrors()) return;
-    
-    const errors = this.props.errors;
-    const errorMessage = errors[0].message ||
-        <FormattedMessage
-          id={errors[0].id}
-          values={{ ...errors[0].data }}
-          defaultMessage={JSON.stringify(errors[0])}
-        />;
-  
-    return (
-      <FormHelperText error children={errorMessage}/>
-    );
-  },
-  
   hasErrors: function () {
     return !!(this.props.errors && this.props.errors.length);
   },
   
-  showErrors: function () {
-    if (this.isPristine() && !this.getValidatePristine()) {
-      return false;
-    }
-    if (this.getValidateOnSubmit() && !this.isFormSubmitted()) {
-      return false;
-    }
-    return !this.isValid();
-  }
+  cleanProps: function (props) {
+    const {
+      beforeComponent,
+      afterComponent,
+      addonAfter,
+      addonBefore,
+      help,
+      label,
+      hideLabel,
+      options,
+      layout,
+      rowLabel,
+      validatePristine,
+      validateOnSubmit,
+      inputClassName,
+      optional,
+      throwError,
+      currentValues,
+      addToDeletedValues,
+      deletedValues,
+      clearFieldErrors,
+      formType,
+      inputType,
+      showCharsRemaining,
+      charsCount,
+      charsRemaining,
+      handleChange,
+      document,
+      updateCurrentValues,
+      classes,
+      errors,
+      description,
+      clearField,
+      regEx,
+      ...rest
+    } = props;
+    
+    return rest;
+  },
+  
+  cleanSwitchProps: function (props) {
+    const {
+      value,
+      error,
+      ...rest
+    } = props;
+    
+    return rest;
+  },
+  
 };

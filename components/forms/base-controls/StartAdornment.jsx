@@ -9,17 +9,16 @@ import { styles } from './EndAdornment';
 
 
 export const hideStartAdornment = (props) => {
-  return !props.addonBefore && !props.buttonBefore && !props.isUrl;
+  return !props.addonBefore && !props.isUrl;
 };
 
 
 const StartAdornment = (props) => {
-  const { classes, value, type, buttonBefore, addonBefore } = props;
-  const isUrl = type === 'url';
+  const { classes, value, type, addonBefore } = props;
   
   if (hideStartAdornment(props)) return null;
   
-  const urlButton = isUrl &&
+  const urlButton = type === 'url' &&
     <IconButton
       className={classes.urlButton}
       href={value}
@@ -31,7 +30,6 @@ const StartAdornment = (props) => {
   
   return (
     <InputAdornment classes={{ root: classes.inputAdornment }} position="start">
-      {instantiateComponent(buttonBefore)}
       {instantiateComponent(addonBefore)}
       {urlButton}
     </InputAdornment>
@@ -44,7 +42,6 @@ StartAdornment.propTypes = {
   value: PropTypes.any,
   type: PropTypes.string,
   addonBefore: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
-  buttonBefore: PropTypes.node,
 };
 
 

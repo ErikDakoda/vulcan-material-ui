@@ -7,6 +7,7 @@ import Snackbar from 'material-ui/Snackbar';
 import withStyles from 'material-ui/styles/withStyles';
 import classNames from 'classnames';
 
+
 const styles = theme => ({
   root: {
     position: 'relative',
@@ -20,6 +21,7 @@ const styles = theme => ({
   danger: { '& > div': { backgroundColor: theme.palette.error[500] } },
   warning: { '& > div': { backgroundColor: theme.palette.error[500] } }
 });
+
 
 const FormErrors = ({ errors, classes }) => {
   const messageNode = (
@@ -43,31 +45,13 @@ const FormErrors = ({ errors, classes }) => {
       {!!errors.length && (
         <Snackbar
           open={true}
-          className={classNames(classes.root , classes.danger)}
+          className={classNames('flash-message', classes.root , classes.danger)}
           message={messageNode}
         />
       )}
     </div>
-
-    // <div className="form-errors">
-    //   {!!errors.length && (
-    //     <Alert className="flash-message" bsStyle="danger">
-    //       <ul>
-    //         {errors.map((error, index) => (
-    //           <li key={index}>
-    //             {error.message || (
-    //               <FormattedMessage
-    //                 id={error.id}
-    //                 values={{ ...error.data }}
-    //                 defaultMessage={JSON.stringify(error)}
-    //               />
-    //             )}
-    //           </li>
-    //         ))}
-    //       </ul>
-    //     </Alert>
-    //   )}
-    // </div>
   );
 };
+
+
 replaceComponent('FormErrors', FormErrors, [withStyles, styles]);

@@ -13,16 +13,15 @@ import Delete from 'mdi-material-ui/Delete';
 import Plus from 'mdi-material-ui/Plus';
 
 addStrings('en', {
-  "forms.add": "Add",
+  'forms.add': 'Add',
 });
 
 const styles = theme => ({
   root: {
-  padding:'10px',
-  marginBottom:10,
-  }
-  
-})
+    padding: '10px',
+    marginBottom: 10,
+  },
+});
 
 const FormNestedItem = (
   { nestedFields, name, path, removeItem, itemIndex, classes, ...props },
@@ -32,8 +31,7 @@ const FormNestedItem = (
     <Paper className={classes.root} elevation={4}>
       {nestedFields.map((field, i) => {
         return (
-          <Components.FormComponent
-            key={i}
+          <Components.FormComponent key={i}
             {...props}
             {...field}
             path={`${path}.${field.name}`}
@@ -41,14 +39,14 @@ const FormNestedItem = (
           />
         );
       })}
-
+      
       <Tooltip title={intl.formatMessage({ id: 'forms.delete' })}>
         <IconButton
           onClick={() => {
             removeItem(name);
           }}
           aria-label="Delete">
-          <Components.IconRemove />
+          <Components.IconRemove/>
         </IconButton>
       </Tooltip>
     </Paper>
@@ -68,11 +66,11 @@ class FormNested extends PureComponent {
       [`${this.props.path}.${this.props.value.length}`]: {}
     });
   };
-
+  
   removeItem = index => {
     this.props.updateCurrentValues({ [`${this.props.path}.${index}`]: null });
   };
-
+  
   /*
 
   Go through this.context.deletedValues and see if any value matches both the current field
@@ -82,11 +80,11 @@ class FormNested extends PureComponent {
   isDeleted = index => {
     return this.context.deletedValues.includes(`${this.props.path}.${index}`);
   };
-
-  render() {
+  
+  render () {
     // do not pass FormNested's own value, control and inputProperties props down
     const properties = _.omit(this.props, 'value', 'control', 'inputProperties');
-
+    
     return (
       <Grid container>
         <Grid item xs={12} sm={3}>
@@ -96,23 +94,23 @@ class FormNested extends PureComponent {
         </Grid>
         <Grid item xs={12} sm={9}>
           {this.props.value &&
-            this.props.value.map(
-              (subDocument, i) =>
-                !this.isDeleted(i) && (
-                  <Components.FormNestedItem
-                    {...properties}
-                    key={i}
-                    itemIndex={i}
-                    path={`${this.props.path}.${i}`}
-                    removeItem={() => {
-                      this.removeItem(i);
-                    }}
-                  />
-                )
-            )}
+          this.props.value.map(
+            (subDocument, i) =>
+              !this.isDeleted(i) && (
+                <Components.FormNestedItem
+                  {...properties}
+                  key={i}
+                  itemIndex={i}
+                  path={`${this.props.path}.${i}`}
+                  removeItem={() => {
+                    this.removeItem(i);
+                  }}
+                />
+              )
+          )}
           <Tooltip title={this.context.intl.formatMessage({ id: 'forms.add' })}>
             <IconButton onClick={this.addItem} aria-label="Add">
-              <Components.IconAdd />
+              <Components.IconAdd/>
             </IconButton>
           </Tooltip>
         </Grid>
@@ -128,10 +126,10 @@ FormNested.contextTypes = {
 
 replaceComponent('FormNested', FormNested);
 
-const IconRemove = () => <Delete />;
+const IconRemove = () => <Delete/>;
 
 replaceComponent('IconRemove', IconRemove);
 
-const IconAdd = () => <Plus />;
+const IconAdd = () => <Plus/>;
 
 replaceComponent('IconAdd', IconAdd);

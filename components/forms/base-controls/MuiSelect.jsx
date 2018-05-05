@@ -2,8 +2,8 @@ import withStyles from 'material-ui/styles/withStyles';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import ComponentMixin from './mixins/component';
-import Row from './Row';
-import propUtilities from './prop-utilities';
+import MuiFormControl from './MuiFormControl';
+import MuiFormHelper from './MuiFormHelper';
 import Select from 'material-ui/Select';
 import Input from 'material-ui/Input';
 import { MenuItem, MenuList } from 'material-ui/Menu';
@@ -15,7 +15,8 @@ import _isArray from 'lodash/isArray';
 
 export const styles = theme => ({
   inputRoot: {
-    '& .clear-enabled': { opacity: 0 }
+    '& .clear-enabled': { opacity: 0 },
+    '&:hover .clear-enabled': { opacity: 0.54 },
   },
   inputFocused: {
     '& .clear-enabled': { opacity: 0.54 }
@@ -75,19 +76,15 @@ const MuiSelect = createReactClass({
   },
   
   render: function () {
-    if (this.getLayout() === 'elementOnly') {
+    if (this.props.layout === 'elementOnly') {
       return this.renderElement();
     }
     
     return (
-      <Row
-        {...this.getRowProperties()}
-        htmlFor={this.getId()}
-      >
+      <MuiFormControl{...this.getFormControlProperties()} htmlFor={this.getId()}>
         {this.renderElement()}
-        {this.renderHelp()}
-        {this.renderErrorMessage()}
-      </Row>
+        <MuiFormHelper {...this.getFormHelperProperties()}/>
+      </MuiFormControl>
     );
   },
   
@@ -171,7 +168,7 @@ const MuiSelect = createReactClass({
     
     return (
       <Select ref={(c) => this.element = c}
-              {...propUtilities.cleanProps(this.props)}
+              {...this.cleanProps(this.props)}
               value={value}
               onChange={this.handleChange}
               onOpen={this.handleOpen}

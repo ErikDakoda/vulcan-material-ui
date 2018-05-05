@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import withStyles from 'material-ui/styles/withStyles';
 import ComponentMixin from './mixins/component';
-import Row from './Row';
-import propUtilities from './prop-utilities';
+import MuiFormControl from './MuiFormControl';
+import MuiFormHelper from './MuiFormHelper';
 import Input from 'material-ui/Input';
 import StartAdornment, { hideStartAdornment } from './StartAdornment';
 import EndAdornment from './EndAdornment';
@@ -12,7 +12,8 @@ import EndAdornment from './EndAdornment';
 
 export const styles = theme => ({
   inputRoot: {
-    '& .clear-enabled': { opacity: 0 }
+    '& .clear-enabled': { opacity: 0 },
+    '&:hover .clear-enabled': { opacity: 0.54 },
   },
   inputFocused: {
     '& .clear-enabled': { opacity: 0.54 }
@@ -79,16 +80,15 @@ const MuiInput = createReactClass({
     
     let element = this.renderElement(startAdornment, endAdornment);
     
-    if (this.getLayout() === 'elementOnly' || this.props.type === 'hidden') {
+    if (this.props.layout === 'elementOnly' || this.props.type === 'hidden') {
       return element;
     }
     
     return (
-      <Row {...this.getRowProperties()} htmlFor={this.getId()}>
+      <MuiFormControl {...this.getFormControlProperties()} htmlFor={this.getId()}>
         {element}
-        {this.renderHelp()}
-        {this.renderErrorMessage()}
-      </Row>
+        <MuiFormHelper {...this.getFormHelperProperties()}/>
+      </MuiFormControl>
     );
   },
   
@@ -99,7 +99,7 @@ const MuiInput = createReactClass({
     return (
       <Input
         ref={c => (this.element = c)}
-        {...propUtilities.cleanProps(this.props)}
+        {...this.cleanProps(this.props)}
         id={this.getId()}
         value={value}
         onChange={this.handleChange}

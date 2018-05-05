@@ -91,7 +91,7 @@ const FormSubmit = ({
                   disabled={!isChanged()}
                   onClick={(event) => {
                     event.preventDefault();
-                    clearForm({ clearCurrentValues: true, clearDeletedValues: true });
+                    clearForm({ clearErrors: true, clearCurrentValues: true, clearDeletedValues: true });
                     revertCallback(document);
                   }}
           >

@@ -5,7 +5,6 @@ import {
   replaceComponent,
   instantiateComponent,
   withCurrentUser,
-  Utils,
 } from 'meteor/vulcan:core';
 import withStyles from 'material-ui/styles/withStyles';
 import Typography from 'material-ui/Typography';

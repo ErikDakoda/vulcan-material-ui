@@ -56,12 +56,13 @@ export const styles = theme => ({
 
 
 const EndAdornment = (props) => {
-  const { classes, value, changeValue, buttonAfter, addonAfter } = props;
+  const { classes, value, changeValue, addonAfter } = props;
   
-  if (!addonAfter && !buttonAfter && !changeValue) return null;
+  if (!addonAfter && !changeValue) return null;
+  const hasValue = !!value || value === 0;
   
   const clearButton = changeValue &&
-    <IconButton className={classNames('clear-button', classes.clearButton, !!value && 'clear-enabled')}
+    <IconButton className={classNames('clear-button', classes.clearButton, hasValue && 'clear-enabled')}
                 onClick={event => {
                   event.preventDefault();
                   changeValue(null);
@@ -73,7 +74,6 @@ const EndAdornment = (props) => {
   
   return (
     <InputAdornment classes={{ root: classes.inputAdornment }} position="end">
-      {instantiateComponent(buttonAfter)}
       {instantiateComponent(addonAfter)}
       {clearButton}
     </InputAdornment>
@@ -86,7 +86,6 @@ EndAdornment.propTypes = {
   value: PropTypes.any,
   changeValue: PropTypes.func,
   addonAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
-  buttonAfter: PropTypes.node,
 };
 
 
