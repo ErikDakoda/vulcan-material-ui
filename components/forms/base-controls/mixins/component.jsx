@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormHelperText } from 'material-ui/Form';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
+import _omit from 'lodash/omit';
 
 
 export default {
@@ -68,53 +68,52 @@ export default {
   },
   
   cleanProps: function (props) {
-    const {
-      beforeComponent,
-      afterComponent,
-      addonAfter,
-      addonBefore,
-      help,
-      label,
-      hideLabel,
-      options,
-      layout,
-      rowLabel,
-      validatePristine,
-      validateOnSubmit,
-      inputClassName,
-      optional,
-      throwError,
-      currentValues,
-      addToDeletedValues,
-      deletedValues,
-      clearFieldErrors,
-      formType,
-      inputType,
-      showCharsRemaining,
-      charsCount,
-      charsRemaining,
-      handleChange,
-      document,
-      updateCurrentValues,
-      classes,
-      errors,
-      description,
-      clearField,
-      regEx,
-      ...rest
-    } = props;
+    const removedFields = [
+      'beforeComponent',
+      'afterComponent',
+      'addonAfter',
+      'addonBefore',
+      'help',
+      'label',
+      'hideLabel',
+      'options',
+      'layout',
+      'rowLabel',
+      'validatePristine',
+      'validateOnSubmit',
+      'inputClassName',
+      'optional',
+      'throwError',
+      'currentValues',
+      'addToDeletedValues',
+      'deletedValues',
+      'clearFieldErrors',
+      'formType',
+      'inputType',
+      'showCharsRemaining',
+      'charsCount',
+      'charsRemaining',
+      'handleChange',
+      'document',
+      'updateCurrentValues',
+      'classes',
+      'errors',
+      'description',
+      'clearField',
+      'regEx',
+      'mustComplete',
+    ];
     
-    return rest;
+    return _omit(props, removedFields);
   },
   
   cleanSwitchProps: function (props) {
-    const {
-      value,
-      error,
-      ...rest
-    } = props;
-    
-    return rest;
+    const removedFields = [
+      'value',
+      'error',
+    ];
+  
+    return _omit(props, removedFields);
   },
   
 };
