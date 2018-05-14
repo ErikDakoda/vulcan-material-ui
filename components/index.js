@@ -23,6 +23,8 @@ import './forms/FormNested';
 import './forms/controls/Checkbox';
 import './forms/controls/CheckboxGroup';
 import './forms/controls/CountrySelect';
+import './forms/controls/Date';
+import './forms/controls/DateTime';
 import './forms/controls/Default';
 import './forms/controls/Email';
 import './forms/controls/Number';
@@ -30,6 +32,7 @@ import './forms/controls/RadioGroup';
 import './forms/controls/RegionSelect';
 import './forms/controls/Select';
 import './forms/controls/Textarea';
+import './forms/controls/Time';
 import './forms/controls/Url';
 
 import './theme/ThemeStyles';

@@ -334,10 +334,14 @@ const DatatableRow = ({
             
             <EditComponent collection={collection} document={document} refetch={refetch}/>
           }
-          <Components.EditButton collection={collection}
-                                 document={document}
-                                 buttonClasses={{ button: classes.editButton }}
-          />
+          {
+            showEdit &&
+            
+            <Components.EditButton collection={collection}
+                                   document={document}
+                                   buttonClasses={{ button: classes.editButton }}
+            />
+          }
         </TableCell>
       }
     

@@ -24,19 +24,10 @@ const styles = theme => ({
       { display: 'none' },
   },
   root: {
-    textAlign: 'center',
-  },
-  search: {
-    display: 'inline-flex',
-    flexDirection: 'row',
-    alignItems: 'center',
     width: 220,
-    padding: 6,
     backgroundColor: theme.palette.common.faintBlack,
     borderRadius: 20,
-    '&:focus': {
-      backgroundColor: theme.palette.common.darkBlack,
-    }
+    padding: 6,
   },
   clear: {
     transition: theme.transitions.create('opacity', {
@@ -52,7 +43,7 @@ const styles = theme => ({
     },
   },
   dense: {
-    '& $search': {
+    '& $root': {
       width: 200,
       padding: 4,
     },
@@ -127,31 +118,29 @@ class SearchInput extends PureComponent {
       dense
     } = this.props;
     
+    const searchIcon = <SearchIcon className={classes.icon} onClick={this.focusInput}/>;
+    
+    const clearButton = <IconButton
+      className={classNames('clear-button', classes.clear, !this.state.value &&
+        classes.clearDisabled)}
+      onClick={this.clearSearch}
+      disabled={!this.state.value}
+    >
+      <ClearIcon/>
+    </IconButton>;
+    
     return (
-      <div className={classNames('search-input', classes.root, className, dense && classes.dense)}>
-        <FormControl className={classes.search}>
-          
-          <SearchIcon className={classes.icon} onClick={this.focusInput}/>
-          
-          <Input classes={{ input: classes.input }}
-                 id="search-input"
-                 inputRef={(input) => this.input = input}
-                 value={this.state.value}
-                 type="search"
-                 onChange={this.updateSearch}
-                 disableUnderline={true}
-          />
-          
-          <IconButton
-            className={classNames('clear-button', classes.clear, !this.state.value && classes.clearDisabled)}
-            onClick={this.clearSearch}
-            disabled={!this.state.value}
-          >
-            <ClearIcon/>
-          </IconButton>
-        
-        </FormControl>
-      </div>
+        <Input className={classNames('search-input', classes.root, className, dense && classes.dense)}
+               classes={{ input: classes.input }}
+               id="search-input"
+               inputRef={(input) => this.input = input}
+               value={this.state.value}
+               type="search"
+               onChange={this.updateSearch}
+               disableUnderline={true}
+               startAdornment={searchIcon}
+               endAdornment={clearButton}
+        />
     );
   }
   

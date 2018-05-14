@@ -8,8 +8,6 @@ import MuiSwitch from './base-controls/MuiSwitch';
 import MuiCheckboxGroup from './base-controls/MuiCheckboxGroup';
 import MuiRadioGroup from './base-controls/MuiRadioGroup';
 import MuiSelect from './base-controls/MuiSelect';
-import DateTime from './base-controls/DateTime';
-import Time from './base-controls/Time';
 import _omit from 'lodash/omit';
 import classNames from 'classnames';
 
@@ -47,102 +45,6 @@ class FormComponentInner extends PureComponent {
     return _omit(this.props, 'classes');
   };
   
-  renderExtraComponent = (extraComponent) => {
-    if (!extraComponent) return null;
-    
-    const properties = this.getProperties();
-    
-    return instantiateComponent(extraComponent, properties);
-  };
-  
-  renderComponent = () => {
-    const { input, inputType, formType } = this.props;
-    const properties = this.getProperties();
-    
-    // if input is a React component, use it
-    if (typeof input === 'function') {
-      const InputComponent = input;
-      return <InputComponent {...properties} />;
-    } else {
-      // else pick a predefined component
-      
-      switch (inputType) {
-        case 'text':
-          return <MuiInput {...properties}/>;
-  
-        case 'nested':
-          return <Components.FormNested {...properties} />;
-        
-        case 'number':
-          return <MuiInput {...properties} type="number"/>;
-        
-        case 'url':
-          return <MuiInput {...properties} type="url"/>;
-        
-        case 'email':
-          return <MuiInput {...properties} type="email"/>;
-        
-        case 'textarea':
-          return <MuiInput {...properties}
-                           multiline={true}
-                           rows={properties.rows ? properties.rows : 2}
-                           rowsMax={10}
-          />;
-        
-        case 'checkbox':
-          properties.value = !!properties.value;
-          return <MuiSwitch {...properties}/>;
-        
-        case 'checkboxgroup':
-          if (!Array.isArray(properties.value)) {
-            properties.value = [properties.value];
-          }
-          // in case of checkbox groups, check "checked" option to populate value if this is a "new
-          // document" form
-          const checkedValues = _.where(properties.options, { checked: true })
-          .map(option => option.value);
-          if (checkedValues.length && !properties.value && formType === 'new') {
-            properties.value = checkedValues;
-          }
-          return <MuiCheckboxGroup {...properties}/>;
-        
-        case 'radiogroup':
-          return <MuiRadioGroup {...properties}/>;
-        
-        case 'select':
-          const noneOption = {
-            label: '',
-            value: '',
-            disabled: true,
-          };
-          properties.options = [noneOption, ...properties.options];
-          
-          return <MuiSelect {...properties}/>;
-        
-        case 'selectmultiple':
-          properties.multiple = true;
-          return <MuiSelect {...properties}/>;
-        
-        case 'datetime':
-          return <DateTime {...properties}/>;
-        
-        case 'date':
-          return <Date {...properties}/>;
-        
-        case 'time':
-          return <Time {...properties}/>;
-        
-        default:
-          const CustomComponent = Components[input];
-          return CustomComponent ? (
-            <CustomComponent {...properties} />
-          ) : (
-            <MuiInput {...properties}/>
-          );
-      }
-    }
-  };
-  
   render () {
     const {
       classes,
@@ -152,7 +54,7 @@ class FormComponentInner extends PureComponent {
       hidden,
       beforeComponent,
       afterComponent,
-      errors,
+      renderComponent,
     } = this.props;
     
     const inputClass = classNames(
@@ -163,11 +65,13 @@ class FormComponentInner extends PureComponent {
       `form-component-${input || 'default'}`
     );
     
+    const properties = this.getProperties();
+    
     return (
       <div className={inputClass}>
-        {this.renderExtraComponent(beforeComponent)}
-        {this.renderComponent()}
-        {this.renderExtraComponent(afterComponent)}
+        {instantiateComponent(beforeComponent, properties)}
+        {renderComponent(properties)}
+        {instantiateComponent(afterComponent, properties)}
       </div>
     );
   }
@@ -193,6 +97,7 @@ FormComponentInner.propTypes = {
   charsRemaining: PropTypes.number,
   charsCount: PropTypes.number,
   max: PropTypes.number,
+  renderComponent: PropTypes.func.isRequired,
 };
 
 

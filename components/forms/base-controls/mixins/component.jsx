@@ -102,6 +102,7 @@ export default {
       'clearField',
       'regEx',
       'mustComplete',
+      'renderComponent',
     ];
     
     return _omit(props, removedFields);

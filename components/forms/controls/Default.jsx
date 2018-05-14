@@ -3,8 +3,8 @@ import MuiInput from '../base-controls/MuiInput';
 import { replaceComponent } from 'meteor/vulcan:core';
 
 
-const Default = ({ inputProperties, refFunction }) =>
-  <MuiInput {...inputProperties} ref={refFunction}/>;
+const Default = ({ refFunction, ...properties }) =>
+  <MuiInput {...properties} ref={refFunction}/>;
 
 
 replaceComponent('FormComponentDefault', Default);

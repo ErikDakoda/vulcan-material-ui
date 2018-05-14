@@ -3,8 +3,8 @@ import MuiInput from '../base-controls/MuiInput';
 import { replaceComponent } from 'meteor/vulcan:core';
 
 
-const EmailComponent = ({ inputProperties, refFunction }) =>
-  <MuiInput {...inputProperties} ref={refFunction} type="email" />;
+const EmailComponent = ({ refFunction, ...properties }) =>
+  <MuiInput {...properties} ref={refFunction} type="email" />;
 
 
 replaceComponent('FormComponentEmail', EmailComponent);
