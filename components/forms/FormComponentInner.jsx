@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'meteor/vulcan:i18n';
-import { Components, registerComponent, instantiateComponent } from 'meteor/vulcan:core';
+import { Components, registerComponent } from 'meteor/vulcan:core';
+import { instantiateComponent } from 'meteor/vulcan:lib';
 import withStyles from 'material-ui/styles/withStyles';
 import MuiInput from './base-controls/MuiInput';
 import MuiSwitch from './base-controls/MuiSwitch';
