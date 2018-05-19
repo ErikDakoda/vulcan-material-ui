@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Components, registerComponent } from 'meteor/vulcan:core';
-import { withTheme } from 'material-ui/styles';
-import withStyles from 'material-ui/styles/withStyles';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import { getContrastRatio } from 'material-ui/styles/colorManipulator';
+import { withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { getContrastRatio } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
 
 
@@ -23,31 +23,31 @@ const altPalette = ['A100', 'A200', 'A400', 'A700'];
 
 function getColorBlock(theme, classes, colorName, colorValue, colorTitle) {
   const bgColor = theme.palette[colorName][colorValue];
-  
+
   let fgColor = theme.palette.common.black;
   if (getContrastRatio(bgColor, fgColor) < 7) {
     fgColor = theme.palette.common.white;
   }
-  
+
   let blockTitle;
   if (colorTitle) {
     blockTitle = <div className={classes.name}>{colorName}</div>;
   }
-  
+
   let rowStyle = {
     backgroundColor: bgColor,
     color: fgColor,
     listStyle: 'none',
     padding: 15,
   };
-  
+
   if (colorValue.toString().indexOf('A1') === 0) {
     rowStyle = {
       ...rowStyle,
       marginTop: 4,
     };
   }
-  
+
   return (
     <li style={rowStyle} key={colorValue}>
       {blockTitle}
@@ -64,13 +64,13 @@ function getColorGroup(options) {
   const cssColor = color.replace(' ', '').replace(color.charAt(0), color.charAt(0).toLowerCase());
   let colorsList = [];
   colorsList = mainPalette.map(mainValue => getColorBlock(theme, classes, cssColor, mainValue));
-  
+
   if (showAltPalette) {
     altPalette.forEach(altValue => {
       colorsList.push(getColorBlock(theme, classes, cssColor, altValue));
     });
   }
-  
+
   return (
     <ul className={classes.colorGroup} key={cssColor}>
       {getColorBlock(theme, classes, cssColor, 500, true)}
@@ -123,7 +123,7 @@ const latin = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitu
 const ThemeStyles = ({ theme, classes }) => {
   return (
     <Grid container className={classNames('theme-styles', classes.root)}>
-      
+
       <Grid item xs={12}>
         <Typography variant="display4">
           Display 4: {describeTypography(theme, 'display4')}
@@ -138,7 +138,7 @@ const ThemeStyles = ({ theme, classes }) => {
           Display 1: {describeTypography(theme, 'display1')}
         </Typography>
       </Grid>
-      
+
       <Grid item xs={12}>
         <Paper className={classes.paper}>
           <Typography variant="headline" gutterBottom>
@@ -173,7 +173,7 @@ const ThemeStyles = ({ theme, classes }) => {
           </Typography>
         </Paper>
       </Grid>
-      
+
       <Grid item xs={12} sm={6} md={3}>
         {
           getColorGroup({
@@ -184,7 +184,7 @@ const ThemeStyles = ({ theme, classes }) => {
           })
         }
       </Grid>
-  
+
       <Grid item xs={12} sm={6} md={3}>
         {
           getColorGroup({
@@ -195,7 +195,7 @@ const ThemeStyles = ({ theme, classes }) => {
           })
         }
       </Grid>
-  
+
       <Grid item xs={12} sm={6} md={3}>
         {
           getColorGroup({
@@ -206,7 +206,7 @@ const ThemeStyles = ({ theme, classes }) => {
           })
         }
       </Grid>
-  
+
       <Grid item xs={12} sm={6} md={3}>
         {
           getColorGroup({

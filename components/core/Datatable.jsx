@@ -2,12 +2,15 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Components, replaceComponent, withCurrentUser, withList } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
-import withStyles from 'material-ui/styles/withStyles';
-import Table, { TableBody, TableHead, TableRow, TableCell } from 'material-ui/Table';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 import { getFieldValue } from './Card';
 import _assign from 'lodash/assign';
 import classNames from 'classnames';
-
 
 /*
 
@@ -40,30 +43,30 @@ const baseStyles = theme => ({
 
 
 class Datatable extends PureComponent {
-  
+
   constructor (props) {
     super(props);
-    
+
     this.updateQuery = this.updateQuery.bind(this);
-    
+
     this.state = {
       query: '',
     };
   }
-  
+
   updateQuery (value) {
     this.setState({
       query: value,
     });
   }
-  
+
   render () {
     if (this.props.data) {
-      
+
       return <Components.DatatableContents {...this.props} results={this.props.data}/>;
-      
+
     } else {
-      
+
       const {
         className,
         collection,
@@ -73,21 +76,21 @@ class Datatable extends PureComponent {
         currentUser,
         classes,
       } = this.props;
-      
+
       const listOptions = {
         collection: collection,
         ...options,
       };
-      
+
       const DatatableWithList = withList(listOptions)(Components.DatatableContents);
-      
+
       return (
         <div className={classNames('datatable', `datatable-${collection._name}`, classes.root,
           className)}>
-          
+
           {
             showSearch &&
-            
+
             <Components.SearchInput value={this.state.query}
                                     updateQuery={this.updateQuery}
                                     className={classes.search}
@@ -95,20 +98,20 @@ class Datatable extends PureComponent {
           }
           {
             showNew &&
-            
+
             <Components.NewButton collection={collection}
                                   variant="fab"
                                   color="primary"
                                   className={classes.addButton}
             />
           }
-          
-          
+
+
           <DatatableWithList {...this.props}
                              terms={{ query: this.state.query }}
                              currentUser={currentUser}
           />
-        
+
         </div>
       );
     }
@@ -175,19 +178,19 @@ const DatatableContents = ({
                              classes,
                              dense,
                            }) => {
-  
+
   if (loading) {
     return <Components.Loading/>;
   } else if (!results.length) {
     return emptyState || null;
   }
-  
+
   const denseClass = dense && classes[dense + 'Table'];
-  
+
   return (
     <div className="datatable-list">
       <Table className={classNames(classes.table, denseClass)}>
-        
+
         <TableHead className={classes.tableHead}>
           <TableRow className={classes.tableRow}>
             {
@@ -201,15 +204,15 @@ const DatatableContents = ({
             }
             {
               (showEdit || editComponent) &&
-              
+
               <TableCell className={classes.tableCell}/>
             }
           </TableRow>
         </TableHead>
-        
+
         {
           results &&
-          
+
           <TableBody className={classes.tableBody}>
             {
               results.map(
@@ -227,9 +230,9 @@ const DatatableContents = ({
             }
           </TableBody>
         }
-      
+
       </Table>
-      
+
       <Components.LoadMore className={classes.loadMore}
                            count={count}
                            totalCount={totalCount}
@@ -253,7 +256,7 @@ const DatatableHeader = ({ collection, column, classes }, { intl }) => {
   const columnName = typeof column === 'string' ? column : column.name;
   if (collection) {
     const schema = collection.simpleSchema()._schema;
-    
+
     /*
     use either:
 
@@ -267,7 +270,7 @@ const DatatableHeader = ({ collection, column, classes }, { intl }) => {
         defaultMessage: schema[columnName] ? schema[columnName].label : columnName
       }) :
       '';
-    
+
     return <TableCell className={classes.tableCell}>{formattedLabel}</TableCell>;
   } else {
     const formattedLabel = intl.formatMessage({ id: columnName, defaultMessage: columnName });
@@ -308,12 +311,12 @@ const DatatableRow = ({
                         currentUser,
                         classes
                       }, { intl }) => {
-  
+
   const EditComponent = editComponent;
-  
+
   return (
     <TableRow className={classNames('datatable-item', classes.tableRow)} hover>
-      
+
       {
         _.sortBy(columns, column => column.order).map(
           (column, index) =>
@@ -324,19 +327,19 @@ const DatatableRow = ({
                                       classes={classes}
             />)
       }
-      
+
       {
         (showEdit || editComponent) &&
-        
+
         <TableCell className={classes.editCell}>
           {
             EditComponent &&
-            
+
             <EditComponent collection={collection} document={document} refetch={refetch}/>
           }
           {
             showEdit &&
-            
+
             <Components.EditButton collection={collection}
                                    document={document}
                                    buttonClasses={{ button: classes.editButton }}
@@ -344,7 +347,7 @@ const DatatableRow = ({
           }
         </TableCell>
       }
-    
+
     </TableRow>
   );
 };
@@ -367,12 +370,12 @@ const DatatableCell = ({ column, document, currentUser, classes }) => {
   const Component = column.component ||
     Components[column.componentName] ||
     Components.DatatableDefaultCell;
-  
+
   const columnName = typeof column === 'string' ? column : column.name;
   const className = typeof columnName === 'string' ?
     `datatable-item-${columnName.toLowerCase()}` :
     '';
-  
+
   return (
     <TableCell className={classNames(classes.tableCell, className)}>
       <Component column={column}

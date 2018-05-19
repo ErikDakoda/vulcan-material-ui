@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Components, replaceComponent, addStrings } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 
-import withStyles from 'material-ui/styles/withStyles';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Tooltip from 'material-ui/Tooltip';
-import IconButton from 'material-ui/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 import Delete from 'mdi-material-ui/Delete';
 import Plus from 'mdi-material-ui/Plus';
 
@@ -39,7 +39,7 @@ const FormNestedItem = (
           />
         );
       })}
-      
+
       <Tooltip title={intl.formatMessage({ id: 'forms.delete' })}>
         <IconButton
           onClick={() => {
@@ -66,11 +66,11 @@ class FormNested extends PureComponent {
       [`${this.props.path}.${this.props.value.length}`]: {}
     });
   };
-  
+
   removeItem = index => {
     this.props.updateCurrentValues({ [`${this.props.path}.${index}`]: null });
   };
-  
+
   /*
 
   Go through this.context.deletedValues and see if any value matches both the current field
@@ -80,11 +80,11 @@ class FormNested extends PureComponent {
   isDeleted = index => {
     return this.context.deletedValues.includes(`${this.props.path}.${index}`);
   };
-  
+
   render () {
     // do not pass FormNested's own value, control and inputProperties props down
     const properties = _.omit(this.props, 'value', 'control', 'inputProperties');
-    
+
     return (
       <Grid container>
         <Grid item xs={12} sm={3}>

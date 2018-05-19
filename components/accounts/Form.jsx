@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Components, registerComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
 
 
 const styles = theme => ({
@@ -11,8 +11,8 @@ const styles = theme => ({
 
 
 export class AccountsForm extends Component {
-  
-  
+
+
   componentDidMount () {
     let form = this.form;
     if (form) {
@@ -21,8 +21,8 @@ export class AccountsForm extends Component {
       });
     }
   }
-  
-  
+
+
   render () {
     const {
       oauthServices,
@@ -33,7 +33,7 @@ export class AccountsForm extends Component {
       className,
       classes,
     } = this.props;
-  
+
     return (
       <form ref={(ref) => this.form = ref}
             className={classNames(className, 'accounts-ui', { 'ready': ready, })}
@@ -47,8 +47,8 @@ export class AccountsForm extends Component {
       </form>
     );
   }
-  
-  
+
+
 }
 
 

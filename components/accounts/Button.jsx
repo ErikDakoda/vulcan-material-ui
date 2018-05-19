@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import { replaceComponent, Utils } from 'meteor/vulcan:core';
 import classNames from 'classnames';
 
 
 export class AccountsButton extends Component {
   render () {
-    
+
     const {
       label,
       type,
@@ -15,7 +15,7 @@ export class AccountsButton extends Component {
       className,
       onClick
     } = this.props;
-    
+
     return (
       <Button
         variant={type === 'link' ? 'flat' : 'raised'}
