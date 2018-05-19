@@ -4,8 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
-import IconButton from 'material-ui/IconButton';
-import Checkbox from 'material-ui/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import Checkbox from '@material-ui/core/Checkbox';
 import EditIcon from 'mdi-material-ui/Pencil';
 
 
@@ -53,34 +53,34 @@ const LimitedString = ({ string }) =>
 
 
 export const getFieldValue = (value, typeName) => {
-  
+
   if (typeof value === 'undefined' || value === null) {
     return '';
   }
-  
+
   if (Array.isArray(value)) {
     typeName = 'Array';
   }
-  
+
   if (typeof typeName === 'undefined') {
     typeName = typeof value;
   }
-  
+
   switch (typeName) {
-    
+
     case 'Boolean':
     case 'boolean':
       return <Checkbox checked={value} disabled style={{ width: '32px', height: '32px' }}/>;
-    
+
     case 'Number':
     case 'number':
     case 'SimpleSchema.Integer':
       return <code>{value.toString()}</code>;
-    
+
     case 'Array':
       return <ol>{value.map(
         (item, index) => <li key={index}>{getFieldValue(item, typeof item)}</li>)}</ol>;
-    
+
     case 'Object':
     case 'object':
       return (
@@ -95,10 +95,10 @@ export const getFieldValue = (value, typeName) => {
           </tbody>
         </table>
       );
-    
+
     case 'Date':
       return moment(new Date(value)).format('dddd, MMMM Do YYYY, h:mm:ss');
-    
+
     default:
       return parseImageUrl(value);
   }
@@ -145,10 +145,10 @@ const CardEditForm = ({ collection, document, closeModal }) =>
 
 
 const Card = ({ className, collection, document, currentUser, fields }, { intl }) => {
-  
+
   const fieldNames = fields ? fields : _.without(_.keys(document), '__typename');
   const canEdit = currentUser && collection.options.mutations.edit.check(currentUser, document);
-  
+
   return (
     <div className={classNames(className, 'datacard', `datacard-${collection._name}`)}>
       <table className="table table-bordered" style={{ maxWidth: '100%' }}>

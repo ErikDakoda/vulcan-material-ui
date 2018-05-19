@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { instantiateComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
-import { InputAdornment } from 'material-ui/Input';
-import IconButton from 'material-ui/IconButton';
+import { instantiateComponent } from 'meteor/vulcan:lib';
+import { withStyles } from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from 'mdi-material-ui/CloseCircle';
 import classNames from 'classnames';
 
@@ -57,10 +57,10 @@ export const styles = theme => ({
 
 const EndAdornment = (props) => {
   const { classes, value, changeValue, addonAfter } = props;
-  
+
   if (!addonAfter && !changeValue) return null;
   const hasValue = !!value || value === 0;
-  
+
   const clearButton = changeValue &&
     <IconButton className={classNames('clear-button', classes.clearButton, hasValue && 'clear-enabled')}
                 onClick={event => {
@@ -71,7 +71,7 @@ const EndAdornment = (props) => {
     >
       <CloseIcon/>
     </IconButton>;
-  
+
   return (
     <InputAdornment classes={{ root: classes.inputAdornment }} position="end">
       {instantiateComponent(addonAfter)}

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ComponentMixin from './mixins/component';
-import withStyles from 'material-ui/styles/withStyles';
-import Input from 'material-ui/Input';
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
 import Autosuggest from 'react-autosuggest';
-import Paper from 'material-ui/Paper';
-import { MenuItem } from 'material-ui/Menu';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { registerComponent } from 'meteor/vulcan:core';
@@ -98,11 +98,11 @@ const styles = theme => ({
 
 
 const MuiSuggest = createReactClass({
-  
+
   element: null,
-  
+
   mixins: [ComponentMixin],
-  
+
   propTypes: {
     options: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,
@@ -113,12 +113,12 @@ const MuiSuggest = createReactClass({
     limitToList: PropTypes.bool,
     disableText: PropTypes.bool,
   },
-  
+
   getInitialState: function () {
     if (this.props.refFunction) {
       this.props.refFunction(this);
     }
-    
+
     const selectedOption = this.getSelectedOption();
     return {
       inputValue: selectedOption.label,
@@ -126,7 +126,7 @@ const MuiSuggest = createReactClass({
       suggestions: [],
     };
   },
-  
+
   componentWillReceiveProps: function (nextProps) {
     if (nextProps.value !== this.state.value ||
       nextProps.options !== this.props.options) {
@@ -137,21 +137,21 @@ const MuiSuggest = createReactClass({
       });
     }
   },
-  
+
   shouldComponentUpdate: function (nextProps, nextState) {
     return !_isEqual(nextState, this.state) ||
       nextProps.options !== this.props.options;
   },
-  
+
   getSelectedOption: function (props) {
     props = props || this.props;
     const selectedOption = props.options.find((opt) => opt.value === props.value);
     return selectedOption || { label: '', value: null };
   },
-  
+
   handleBlur: function (event, { highlightedSuggestion: suggestion }) {
     event.persist();
-    
+
     if (suggestion) {
       this.changeValue(suggestion);
     } else if (this.props.limitToList) {
@@ -161,17 +161,17 @@ const MuiSuggest = createReactClass({
       });
     }
   },
-  
+
   suggestionSelected: function (event, { suggestion }) {
     event.preventDefault();
-    
+
     this.changeValue(suggestion);
-    
+
     if (this.props.disableText) {
       setTimeout(() => {document.activeElement.blur();});
     }
   },
-  
+
   changeValue: function (suggestion) {
     if (!suggestion) {
       suggestion = { label: '', value: null };
@@ -182,33 +182,33 @@ const MuiSuggest = createReactClass({
     });
     this.props.onChange(this.props.name, suggestion.value);
   },
-  
+
   handleInputChange: function (event) {
     const value = event.target.value;
     this.setState({
       inputValue: value,
     });
   },
-  
+
   handleSuggestionsFetchRequested: function ({ value }) {
     this.setState({
       suggestions: this.getSuggestions(value),
     });
   },
-  
+
   handleSuggestionsClearRequested: function () {
     this.setState({
       suggestions: [],
     });
   },
-  
+
   shouldRenderSuggestions: function (value) {
     return true;
   },
-  
+
   render: function () {
     const value = this.props.value;
-    
+
     const startAdornment = hideStartAdornment(this.props) ? null :
       <StartAdornment {...this.props}
                       value={value}
@@ -220,13 +220,13 @@ const MuiSuggest = createReactClass({
                     classes={null}
                     changeValue={this.changeValue}
       />;
-    
+
     const element = this.renderElement(startAdornment, endAdornment);
-    
+
     if (this.props.layout === 'elementOnly') {
       return element;
     }
-    
+
     return (
       <MuiFormControl{...this.getFormControlProperties()} htmlFor={this.getId()}>
         {element}
@@ -234,10 +234,10 @@ const MuiSuggest = createReactClass({
       </MuiFormControl>
     );
   },
-  
+
   renderElement: function (startAdornment, endAdornment) {
     const { classes, autoFocus, disableText } = this.props;
-    
+
     return (
       <Autosuggest
         theme={{
@@ -273,10 +273,10 @@ const MuiSuggest = createReactClass({
       />
     );
   },
-  
+
   renderInputComponent: function (inputProps) {
     const { classes, autoFocus, autoComplete, value, ref, startAdornment, endAdornment, ...rest } = inputProps;
-    
+
     return (
       <Input
         autoFocus={autoFocus}
@@ -297,11 +297,11 @@ const MuiSuggest = createReactClass({
       />
     );
   },
-  
+
   renderSuggestion: function (suggestion, { query, isHighlighted }) {
     const matches = match(suggestion.label, query);
     const parts = parse(suggestion.label, matches);
-    
+
     return (
       <MenuItem selected={isHighlighted} component="div">
         {
@@ -326,57 +326,57 @@ const MuiSuggest = createReactClass({
       </MenuItem>
     );
   },
-  
+
   renderSuggestionsContainer: function (options) {
     const { containerProps, children } = options;
-    
+
     return (
       <Paper {...containerProps} square>
         {children}
       </Paper>
     );
   },
-  
+
   getSuggestionValue: function (suggestion) {
     return suggestion.value;
   },
-  
+
   getSuggestions: function (value) {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
-    
+
     return this.props.disableText ?
-      
+
       this.props.options.filter(suggestion => {
         return true;
       })
-      
+
       :
-      
+
       inputLength === 0
-        
+
         ?
-        
+
         this.props.options.filter(suggestion => {
           count += 1;
           return count <= 5;
         })
-        
+
         :
-        
+
         this.props.options.filter(suggestion => {
           const keep =
             count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
-          
+
           if (keep) {
             count += 1;
           }
-          
+
           return keep;
         });
   },
-  
+
 });
 
 

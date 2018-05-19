@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Components, replaceComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
-import Collapse from 'material-ui/transitions/Collapse';
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Collapse from '@material-ui/core/Collapse';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import ExpandLessIcon from 'mdi-material-ui/ChevronUp';
 import ExpandMoreIcon from 'mdi-material-ui/ChevronDown';
 
@@ -46,32 +46,32 @@ const styles = theme => ({
 
 
 class FormGroup extends PureComponent {
-  
+
   constructor (props) {
     super(props);
-    
+
     this.toggle = this.toggle.bind(this);
     this.renderHeading = this.renderHeading.bind(this);
-    
+
     this.state = {
       collapsed: props.startCollapsed || false
     };
   }
-  
+
   toggle () {
     this.setState({
       collapsed: !this.state.collapsed
     });
   }
-  
+
   renderHeading () {
     const { classes } = this.props;
-    
+
     return (
       <div className={classes.head} onClick={this.toggle}>
-        
+
         <Divider className={classes.divider}/>
-        
+
         <Typography className={classes.typography} variant="subheading" gutterBottom>
           <div>
             {this.props.label}
@@ -86,20 +86,20 @@ class FormGroup extends PureComponent {
             }
           </div>
         </Typography>
-      
+
       </div>
     );
   }
-  
+
   render () {
     const { classes, fields } = this.props;
-    
+
     const hasErrors = _.some(fields, field => field.errors && field.errors.length);
     const collapseIn = !this.state.collapsed || hasErrors;
-    
+
     return (
       <div className={classes.root}>
-        
+
         {
           this.props.name === 'default'
             ?
@@ -107,7 +107,7 @@ class FormGroup extends PureComponent {
             :
             this.renderHeading()
         }
-  
+
         <Collapse classes={{entered: classes.entered}} in={collapseIn}>
           {
             this.props.fields.map(field =>
@@ -117,7 +117,7 @@ class FormGroup extends PureComponent {
               />)
           }
         </Collapse>
-      
+
       </div>
     );
   }
