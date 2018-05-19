@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Components, registerComponent, getComponent } from 'meteor/vulcan:lib';
 import Dropzone from 'react-dropzone';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
-import { FormControl, FormLabel, FormHelperText } from 'material-ui/Form';
-
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 /*
 
@@ -15,15 +16,15 @@ Material UI GUI for Cloudinary Image Upload component
 
 
 const styles = theme => ({
-  
+
   root: {},
-  
+
   label: {},
-  
+
   uploadField: {
     marginTop: theme.spacing.unit,
   },
-  
+
   dropzoneBase: {
     borderWidth: 3,
     borderStyle: 'dashed',
@@ -42,19 +43,19 @@ const styles = theme => ({
       borderColor: theme.palette.background['A200'],
     }
   },
-  
+
   dropzoneActive: {
     borderStyle: 'solid',
     borderColor: theme.palette.status.info,
   },
-  
+
   dropzoneReject: {
     borderStyle: 'solid',
     borderColor: theme.palette.status.danger,
   },
-  
+
   uploadState: {},
-  
+
   uploadImages: {
     border: `1px solid ${theme.palette.background[500]}`,
     backgroundColor: theme.palette.background[100],
@@ -85,18 +86,18 @@ const UploadInner = (props) => {
     clearImage,
     classes
   } = props;
-  
+
   const UploadImage = getComponent(options.uploadImageComponentName || 'UploadImage');
-  
+
   return (
     <FormControl component="fieldset" fullWidth={true} className={classes.root}>
-      
+
       <FormLabel component="legend" className={classes.label}>
         {label}
       </FormLabel>
       {
         help &&
-        
+
         <FormHelperText>{help}</FormHelperText>
       }
       <div className={classes.uploadField}>
@@ -128,7 +129,7 @@ const UploadInner = (props) => {
               )}
             </Dropzone>
         }
-        
+
         {!!images.length && (
           <div className={classes.uploadState}>
             <div className={classes.uploadImages}>
@@ -151,7 +152,7 @@ const UploadInner = (props) => {
           </div>
         )}
       </div>
-    
+
     </FormControl>
   );
 };

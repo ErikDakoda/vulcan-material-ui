@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape } from 'meteor/vulcan:i18n';
 import { Components, registerComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import ArrowDownIcon from 'mdi-material-ui/ArrowDown';
 import MoreIcon from 'mdi-material-ui/More';
 import ScrollTrigger from './ScrollTrigger';
@@ -43,46 +43,46 @@ const LoadMore = ({
                     className,
                     infiniteScroll,
                   }, { intl }) => {
-  
+
   const isLoadingMore = networkStatus === 2;
   const loadMoreText = intl.formatMessage({ id: 'common.load_more' });
   const title = `${loadMoreText} (${count}/${totalCount})`;
-  
+
   return (
     <div className={classNames('load-more', classes.root, className)}>
       {
         isLoadingMore
-          
+
           ?
-          
+
           <Components.Loading/>
-          
+
           :
-          
+
           totalCount > count
-            
+
             ?
-            
+
             infiniteScroll
-              
+
               ?
-              
+
               <ScrollTrigger onEnter={() => loadMore()}>
                 <MoreIcon/>
               </ScrollTrigger>
-              
+
               :
-              
+
               useTextButton
-                
+
                 ?
-                
+
                 <Button className={classes.textButton} onClick={() => loadMore()}>
                   {title}
                 </Button>
-                
+
                 :
-                
+
                 <Tooltip id="tooltip-more"
                          classes={{ tooltip: classes.tooltip }}
                          title={title}
@@ -92,11 +92,11 @@ const LoadMore = ({
                     <ArrowDownIcon/>
                   </IconButton>
                 </Tooltip>
-            
+
             :
-            
+
             showNoMore &&
-            
+
             <Typography variant="caption" className={classes.caption}>
               <FormattedMessage
                 id="common.no_more"

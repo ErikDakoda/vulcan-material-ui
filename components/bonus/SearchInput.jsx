@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { registerComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from 'mdi-material-ui/Magnify';
 import ClearIcon from 'mdi-material-ui/CloseCircle';
-import Input from 'material-ui/Input';
-import IconButton from 'material-ui/IconButton';
-import { FormControl } from 'material-ui/Form';
+import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
 import classNames from 'classnames';
 
 
@@ -71,55 +70,55 @@ const styles = theme => ({
 
 
 class SearchInput extends PureComponent {
-  
+
   constructor (props) {
     super(props);
-    
+
     this.state = {
       value: '',
     };
-    
+
     this.focusInput = this.focusInput.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.updateQuery = _.debounce(this.updateQuery, 500);
   }
-  
+
   focusInput () {
     this.input.focus();
   }
-  
+
   clearSearch () {
     this.setState({
       value: '',
     });
     this.updateQuery('');
   }
-  
+
   updateSearch (event) {
     //event.preventDefault();
-    
+
     const value = event.target.value;
     this.setState({
       value: value
     });
     this.updateQuery(value);
   }
-  
+
   updateQuery (value) {
     this.props.updateQuery(value);
   }
-  
+
   render () {
     const {
       classes,
       className,
       dense
     } = this.props;
-    
+
     const searchIcon = <SearchIcon className={classes.icon} onClick={this.focusInput}/>;
-    
+
     const clearButton = <IconButton
       className={classNames('clear-button', classes.clear, !this.state.value &&
         classes.clearDisabled)}
@@ -128,7 +127,7 @@ class SearchInput extends PureComponent {
     >
       <ClearIcon/>
     </IconButton>;
-    
+
     return (
         <Input className={classNames('search-input', classes.root, className, dense && classes.dense)}
                classes={{ input: classes.input }}
@@ -143,7 +142,7 @@ class SearchInput extends PureComponent {
         />
     );
   }
-  
+
 }
 
 

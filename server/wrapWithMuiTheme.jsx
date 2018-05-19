@@ -1,7 +1,7 @@
 import React from 'react';
 import { addCallback } from 'meteor/vulcan:core';
 import JssProvider from 'react-jss/lib/JssProvider';
-import { MuiThemeProvider, createGenerateClassName } from 'material-ui/styles';
+import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
 //import createGenerateClassName from './createGenerateClassName';
 import { getCurrentTheme } from '../modules/themes';
 import { SheetsRegistry } from 'react-jss/lib/jss';

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import {
   Components,
   replaceComponent,
-  instantiateComponent,
   withCurrentUser,
 } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
-import Collapse from 'material-ui/transitions/Collapse';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
+import { instantiateComponent } from 'meteor/vulcan:lib';
+import { withStyles } from '@material-ui/core/styles';
+import Collapse from '@material-ui/core/Collapse';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import ExpandLessIcon from 'mdi-material-ui/ChevronUp';
 import ExpandMoreIcon from 'mdi-material-ui/ChevronDown';
 import Users from 'meteor/vulcan:users';
@@ -52,28 +52,28 @@ const styles = theme => ({
 
 
 class FormGroup extends PureComponent {
-  
-  
+
+
   constructor (props) {
     super(props);
-    
+
     this.toggle = this.toggle.bind(this);
-    
+
     this.isAdmin = props.name === 'admin';
-    
+
     this.state = {
       collapsed: props.startCollapsed || this.isAdmin,
     };
   }
-  
-  
+
+
   toggle () {
     this.setState({
       collapsed: !this.state.collapsed
     });
   }
-  
-  
+
+
   render () {
     const {
       name,
@@ -92,46 +92,46 @@ class FormGroup extends PureComponent {
       throwError,
       addToDeletedValues
     } = this.props;
-    
+
     if (this.isAdmin && !Users.isAdmin(currentUser)) {
       return null;
     }
-    
+
     if (typeof hidden === 'function' ? hidden({ ...this.props }) : hidden) {
       return null;
     }
-    
+
     //do not display if no fields, no startComponent and no endComponent
     if (!startComponent && !endComponent && !fields.length) {
       return null;
     }
-  
+
     // if at least one of the fields in the group has an error, the group as a whole has an error
     const hasErrors = fields.find(field => {
       return !!errors.filter(
         error => error.properties && error.properties.name && error.properties.name === field.path
       ).length;
     });
-  
+
     const collapsible = this.props.collapsible || this.isAdmin;
     const anchorName = name.split('.').length > 1 ? name.split('.')[1] : name;
     const collapseIn = !this.state.collapsed || hasErrors;
-    
+
     return (
       <div className={classes.root}>
-        
+
         <a name={anchorName}/>
-        
+
         {name === 'default' ? null : (
           <Typography className={classes.head} variant="subheading" onClick={this.toggle}>
-            
+
             <div className={classes.label}>
               {label}
             </div>
-            
+
             {
               collapsible &&
-              
+
               <div className={classes.toggle}>
                 {
                   this.state.collapsed
@@ -142,15 +142,15 @@ class FormGroup extends PureComponent {
                 }
               </div>
             }
-          
+
           </Typography>
         )}
-        
+
         <Collapse classes={{ container: classes.container, entered: classes.entered }} in={collapseIn}>
           <Paper className={classes.paper}>
-            
+
             {instantiateComponent(startComponent)}
-            
+
             {fields.map(field => {
               return (
                 <Components.FormComponent
@@ -167,17 +167,17 @@ class FormGroup extends PureComponent {
                 />
               );
             })}
-            
+
             {instantiateComponent(endComponent)}
-          
+
           </Paper>
         </Collapse>
-      
+
       </div>
     );
   }
-  
-  
+
+
 }
 
 

@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Components, replaceComponent } from 'meteor/vulcan:lib';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
-import { withStyles } from 'material-ui/styles';
-import IconButton from 'material-ui/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from 'mdi-material-ui/Delete';
 import classNames from 'classnames';
 
@@ -11,24 +11,24 @@ import classNames from 'classnames';
  * Used by UploadInner to display a single image
  */
 const styles = theme => ({
-  
+
   uploadImage: {
     textAlign: 'center',
     marginBottom: theme.spacing.unit * -1,
     marginLeft: theme.spacing.unit * 0.5,
     marginRight: theme.spacing.unit * 0.5,
   },
-  
+
   uploadImageContents: {
     position: 'relative',
   },
-  
+
   uploadImageImg: {
     display: 'block',
     maxWidth: 150,
     maxHeight: 150,
   },
-  
+
   uploadLoading: {
     position: 'absolute',
     top: 0,
@@ -44,56 +44,56 @@ const styles = theme => ({
       fontSize: '1.5rem',
     }
   },
-  
+
   deleteButton: {
   }
-  
+
 });
 
 
 class UploadImage extends PureComponent {
-  
+
   constructor (props) {
     super(props);
     this.handleClear = this.handleClear.bind(this);
   }
-  
+
   handleClear (event) {
     event.preventDefault();
     this.props.clearImage(this.props.index);
   }
-  
+
   // Get the URL of an image or the first in an array of images
   getImageUrl (imageOrImageArray) {
     // if image is actually an array of formats, use first format
     const image = Array.isArray(imageOrImageArray) ? imageOrImageArray[0] : imageOrImageArray;
-    
+
     // if image is an object, return secure_url; else return image itself
     return typeof image === 'string' ? image : image.secure_url;
   }
-  
+
   render () {
     const { loading, error, image, style, classes } = this.props;
-    
+
     return (
       <div className={classes.uploadImage}>
-        
+
         <div className={classes.uploadImageContents}>
-          
+
           <img className={classes.uploadImageImg} src={this.getImageUrl(image)} style={style}/>
           {
             loading &&
-            
+
             <div className={classes.uploadLoading}>
               <Components.Loading/>
             </div>
           }
         </div>
-        
+
         <IconButton className={classes.deleteButton} onClick={this.handleClear}>
           <DeleteIcon/>
         </IconButton>
-      
+
       </div>
     );
   }
@@ -114,4 +114,4 @@ UploadImage.propTypes = {
 UploadImage.displayName = 'UploadImageMui';
 
 
-replaceComponent('UploadImage', UploadImage, [withStyles, styles]);
+replaceComponent('Upload', UploadImage, [withStyles, styles]);
