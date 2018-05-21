@@ -1,5 +1,5 @@
 
-# erikdakoda:vulcan-material-ui 1.10.0
+# erikdakoda:vulcan-material-ui 1.10.1_2
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui-next.com/). 
 It's based on the latest [v1-beta branch](https://github.com/callemall/material-ui/tree/v1-beta) of Material-UI.
@@ -10,14 +10,14 @@ dependencies on Bootstrap, and you will be able to choose your ui framework with
 To give me feedback open an issue on GitHub or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) 
 channel as erikdakoda.
 
-This version has been tested against Vulcan 1.10.0 and Material UI v1.0.0-beta.35.
+This version has been tested against Vulcan 1.10.0 and Material UI 1.0.0-beta.47. Support for the final v1.0.0 is just around the corner.
 
 NOTE: Material UI is still in beta and the API is still in flux. 
 If you are experiencing problems, try locking your project to 
-v1.0.0-beta.35 by removing the ^ before the version number in your package.json.
+1.0.0-beta.47 by removing the ^ before the version number in your package.json.
 
 ``` json
-    "material-ui": "1.0.0-beta.35",
+    "material-ui": "1.0.0-beta.47",
 ```
 
 There are some nice bonus features like a CountrySelect with autocomplete and theming.
