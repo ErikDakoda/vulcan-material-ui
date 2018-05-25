@@ -17,7 +17,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * -3,
     marginRight: theme.spacing.unit * -3,
   },
-  head: {
+  subheading: {
     marginTop: theme.spacing.unit * 5,
     position: 'relative',
     cursor: 'pointer',
@@ -68,7 +68,7 @@ class FormGroup extends PureComponent {
     const { classes } = this.props;
     
     return (
-      <div className={classes.head} onClick={this.toggle}>
+      <div className={classes.subheading} onClick={this.toggle}>
         
         <Divider className={classes.divider}/>
         

@@ -103,6 +103,7 @@ export default {
       'regEx',
       'mustComplete',
       'renderComponent',
+      'formInput',
     ];
     
     return _omit(props, removedFields);

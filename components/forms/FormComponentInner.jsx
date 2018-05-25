@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 import { intlShape } from 'meteor/vulcan:i18n';
 import { Components, registerComponent, instantiateComponent } from 'meteor/vulcan:core';
 import withStyles from 'material-ui/styles/withStyles';
-import MuiInput from './base-controls/MuiInput';
-import MuiSwitch from './base-controls/MuiSwitch';
-import MuiCheckboxGroup from './base-controls/MuiCheckboxGroup';
-import MuiRadioGroup from './base-controls/MuiRadioGroup';
-import MuiSelect from './base-controls/MuiSelect';
 import _omit from 'lodash/omit';
 import classNames from 'classnames';
 
@@ -54,7 +49,9 @@ class FormComponentInner extends PureComponent {
       hidden,
       beforeComponent,
       afterComponent,
-      renderComponent,
+      formInput,
+      intlInput,
+      nestedInput,
     } = this.props;
     
     const inputClass = classNames(
@@ -66,14 +63,23 @@ class FormComponentInner extends PureComponent {
     );
     
     const properties = this.getProperties();
+  
+    const FormInput = formInput;
+  
+    if (intlInput) {
+      return <Components.FormIntl {...properties} />;
+    } else if (nestedInput){
+      return <Components.FormNested {...properties} />;
+    } else {
+      return (
+        <div className={inputClass}>
+          {instantiateComponent(beforeComponent, properties)}
+          <FormInput {...properties}/>
+          {instantiateComponent(afterComponent, properties)}
+        </div>
+      );
+    }
     
-    return (
-      <div className={inputClass}>
-        {instantiateComponent(beforeComponent, properties)}
-        {renderComponent(properties)}
-        {instantiateComponent(afterComponent, properties)}
-      </div>
-    );
   }
 }
 
@@ -97,7 +103,7 @@ FormComponentInner.propTypes = {
   charsRemaining: PropTypes.number,
   charsCount: PropTypes.number,
   max: PropTypes.number,
-  renderComponent: PropTypes.func.isRequired,
+  formInput: PropTypes.func.isRequired,
 };
 
 

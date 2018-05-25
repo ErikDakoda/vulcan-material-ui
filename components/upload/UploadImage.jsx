@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Components, replaceComponent } from 'meteor/vulcan:lib';
+import { Components, registerComponent } from 'meteor/vulcan:lib';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
@@ -114,4 +114,4 @@ UploadImage.propTypes = {
 UploadImage.displayName = 'UploadImageMui';
 
 
-replaceComponent('UploadImage', UploadImage, [withStyles, styles]);
+registerComponent('UploadImage', UploadImage, [withStyles, styles]);

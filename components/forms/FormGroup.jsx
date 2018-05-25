@@ -21,7 +21,7 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 3
   },
-  head: {
+  subheading: {
     display: 'flex',
     alignItems: 'center',
     paddingLeft: theme.spacing.unit / 2,
@@ -123,7 +123,7 @@ class FormGroup extends PureComponent {
         <a name={anchorName}/>
         
         {name === 'default' ? null : (
-          <Typography className={classes.head} variant="subheading" onClick={this.toggle}>
+          <Typography className={classes.subheading} variant="subheading" onClick={this.toggle}>
             
             <div className={classes.label}>
               {label}
