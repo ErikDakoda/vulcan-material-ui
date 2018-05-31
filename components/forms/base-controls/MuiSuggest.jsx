@@ -16,6 +16,10 @@ import MuiFormControl from './MuiFormControl';
 import MuiFormHelper from './MuiFormHelper';
 import _isEqual from 'lodash/isEqual';
 import classNames from 'classnames';
+import IsolatedScroll from 'react-isolated-scroll';
+
+
+const maxSuggestions = 100;
 
 
 /*{
@@ -72,15 +76,23 @@ const styles = theme => ({
     right: 0,
     zIndex: theme.zIndex.modal,
     marginBottom: theme.spacing.unit * 3,
+    maxHeight: 48 * 8,
   },
   suggestionsContainerOpen: {
-    display: 'block',
+    display: 'flex',
+  },
+  scroller: {
+    flexGrow: 1,
+    overflowY: 'auto',
   },
   suggestion: {
     display: 'block',
   },
   suggestionIcon: {
     marginRight: theme.spacing.unit * 2,
+  },
+  selected: {
+    backgroundColor: theme.palette.secondary.light,
   },
   suggestionsList: {
     margin: 0,
@@ -112,13 +124,14 @@ const MuiSuggest = createReactClass({
     classes: PropTypes.object.isRequired,
     limitToList: PropTypes.bool,
     disableText: PropTypes.bool,
+    showAllOptions: PropTypes.bool,
   },
   
   getInitialState: function () {
     if (this.props.refFunction) {
       this.props.refFunction(this);
     }
-    
+  
     const selectedOption = this.getSelectedOption();
     return {
       inputValue: selectedOption.label,
@@ -167,7 +180,7 @@ const MuiSuggest = createReactClass({
     
     this.changeValue(suggestion);
     
-    if (this.props.disableText) {
+    if (this.props.showAllOptions) {
       setTimeout(() => {document.activeElement.blur();});
     }
   },
@@ -180,7 +193,7 @@ const MuiSuggest = createReactClass({
       selectedOption: suggestion,
       inputValue: suggestion.label,
     });
-    this.props.onChange(this.props.name, suggestion.value);
+    this.props.onChange(this.props.name, suggestion.value, suggestion.label);
   },
   
   handleInputChange: function (event) {
@@ -301,9 +314,11 @@ const MuiSuggest = createReactClass({
   renderSuggestion: function (suggestion, { query, isHighlighted }) {
     const matches = match(suggestion.label, query);
     const parts = parse(suggestion.label, matches);
+    const isSelected = suggestion.value === this.props.value;
+    const className = isSelected ? this.props.classes.selected : null;
     
     return (
-      <MenuItem selected={isHighlighted} component="div">
+      <MenuItem selected={isHighlighted} component="div" className={className}>
         {
           suggestion.iconComponent &&
           <div className={this.props.classes.suggestionIcon}>
@@ -327,12 +342,14 @@ const MuiSuggest = createReactClass({
     );
   },
   
-  renderSuggestionsContainer: function (options) {
-    const { containerProps, children } = options;
+  renderSuggestionsContainer: function ({ containerProps, children }) {
+    const { classes } = this.props;
     
     return (
       <Paper {...containerProps} square>
-        {children}
+        <IsolatedScroll className={classes.scroller}>
+          {children}
+        </IsolatedScroll>
       </Paper>
     );
   },
@@ -345,8 +362,9 @@ const MuiSuggest = createReactClass({
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
+    const inputMatchesSelection = value === this.state.selectedOption.label;
     
-    return this.props.disableText ?
+    return (this.props.disableText || this.props.showAllOptions) && inputMatchesSelection ?
       
       this.props.options.filter(suggestion => {
         return true;
@@ -360,14 +378,15 @@ const MuiSuggest = createReactClass({
         
         this.props.options.filter(suggestion => {
           count += 1;
-          return count <= 5;
+          return count <= maxSuggestions;
         })
         
         :
         
         this.props.options.filter(suggestion => {
           const keep =
-            count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
+            count < maxSuggestions && suggestion.label.toLowerCase().slice(0, inputLength) ===
+            inputValue;
           
           if (keep) {
             count += 1;

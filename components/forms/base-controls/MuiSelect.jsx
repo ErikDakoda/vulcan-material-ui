@@ -50,10 +50,6 @@ const MuiSelect = createReactClass({
     });
   },
   
-  shouldComponentUpdate (nextProps, nextState) {
-    return nextProps.value !== this.props.value || nextState.isOpen !== this.state.isOpen;
-  },
-  
   handleChange: function (event) {
     const target = event.target;
     let value;
