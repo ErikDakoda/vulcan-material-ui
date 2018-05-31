@@ -8,6 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'mdi-material-ui/Delete';
 import Tooltip from 'material-ui/Tooltip';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
+import classNames from 'classnames';
 
 
 const styles = theme => ({
@@ -56,7 +57,7 @@ const FormSubmit = ({
         deleteDocument
           ?
           <Tooltip id={`tooltip-delete-${collectionName}`}
-                   className={classes.delete}
+                   className={classNames('delete-button', classes.delete)}
                    classes={{ tooltip: classes.tooltip }}
                    title={intl.formatMessage({ id: 'forms.delete' })}
                    placement="bottom">
@@ -72,7 +73,7 @@ const FormSubmit = ({
         cancelCallback
           ?
           <Button variant="raised"
-                  className={classes.button}
+                  className={classNames('cancel-button', classes.button)}
                   onClick={(event) => {
                     event.preventDefault();
                     cancelCallback(document);
@@ -87,7 +88,7 @@ const FormSubmit = ({
         revertCallback
           ?
           <Button variant="raised"
-                  className={classes.button}
+                  className={classNames('revert-button', classes.button)}
                   disabled={!isChanged()}
                   onClick={(event) => {
                     event.preventDefault();
@@ -104,7 +105,7 @@ const FormSubmit = ({
       <Button variant="raised"
               type="submit"
               color="secondary"
-              className={classes.button}
+              className={classNames('submit-button', classes.button)}
               disabled={!isChanged()}
       >
         {submitLabel ? submitLabel : <FormattedMessage id="forms.submit"/>}
