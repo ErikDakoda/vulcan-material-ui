@@ -45,14 +45,14 @@ const FormSubmit = ({
                       isChanged,
                       clearForm,
                     }) => {
-  
+
   if (typeof isChanged !== 'function') {
     isChanged = () => true;
   }
-  
+
   return (
     <div className={classes.root}>
-      
+
       {
         deleteDocument
           ?
@@ -68,7 +68,7 @@ const FormSubmit = ({
           :
           null
       }
-      
+
       {
         cancelCallback
           ?
@@ -83,7 +83,7 @@ const FormSubmit = ({
           :
           null
       }
-      
+
       {
         revertCallback
           ?
@@ -101,7 +101,7 @@ const FormSubmit = ({
           :
           null
       }
-      
+
       <Button variant="raised"
               type="submit"
               color="secondary"
@@ -110,7 +110,7 @@ const FormSubmit = ({
       >
         {submitLabel ? submitLabel : <FormattedMessage id="forms.submit"/>}
       </Button>
-    
+
     </div>
   );
 };
