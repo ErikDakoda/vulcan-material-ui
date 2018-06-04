@@ -8,19 +8,36 @@ import Select from 'material-ui/Select';
 import Input from 'material-ui/Input';
 import { MenuItem, MenuList } from 'material-ui/Menu';
 import ListSubheader from 'material-ui/List/ListSubheader';
-import StartAdornment from './StartAdornment';
+import StartAdornment, { hideStartAdornment } from './StartAdornment';
 import EndAdornment from './EndAdornment';
 import _isArray from 'lodash/isArray';
 
 
 export const styles = theme => ({
+  
   inputRoot: {
     '& .clear-enabled': { opacity: 0 },
     '&:hover .clear-enabled': { opacity: 0.54 },
   },
+  
   inputFocused: {
     '& .clear-enabled': { opacity: 0.54 }
   },
+  
+  menuItem: {
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 9,
+    fontFamily: theme.typography.fontFamily,
+    color: theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.87)' : theme.palette.common.white,
+    fontSize: theme.typography.pxToRem(16),
+    lineHeight: '1.1875em',
+  },
+  
+  input: {
+    paddingLeft: 8,
+  },
+  
 });
 
 
@@ -92,7 +109,7 @@ const MuiSelect = createReactClass({
         ?
         <option key={key} {...rest}>{label}</option>
         :
-        <MenuItem key={key} {...rest}>{label}</MenuItem>;
+        <MenuItem key={key} {...rest} className={classes.menuItem}>{label}</MenuItem>;
     };
     
     const renderGroup = (label, key, nodes) => {
@@ -152,15 +169,16 @@ const MuiSelect = createReactClass({
       value = value.length ? value[0] : '';
     }
     
-    const startAdornment = <StartAdornment {...this.props}
-                                           value={value}
-                                           classes={null}
-    />;
-    const endAdornment = <EndAdornment {...this.props}
-                                       value={value}
-                                       changeValue={this.changeValue}
-                                       classes={null}
-    />;
+    const startAdornment = hideStartAdornment(this.props) ? null :
+      <StartAdornment {...this.props}
+                      value={value}
+                      classes={null}
+      />;
+    const endAdornment =
+      <EndAdornment {...this.props}
+                    value={value}
+                    classes={null}
+      />;
     
     return (
       <Select ref={(c) => this.element = c}
@@ -173,7 +191,11 @@ const MuiSelect = createReactClass({
               input={<Input id={this.getId()}
                             startAdornment={startAdornment}
                             endAdornment={endAdornment}
-                            classes={{ root: classes.inputRoot, focused: classes.inputFocused }}
+                            classes={{
+                              root: classes.inputRoot,
+                              focused: classes.inputFocused,
+                              input: classes.input,
+                            }}
               />}
       >
         {optionNodes}

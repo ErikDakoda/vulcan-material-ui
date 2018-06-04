@@ -2,7 +2,7 @@ import React from 'react';
 import MuiSuggest from '../base-controls/MuiSuggest';
 import MuiInput from '../base-controls/MuiInput';
 import { registerComponent } from 'meteor/vulcan:core';
-import { regions } from './countries';
+import { regions } from 'meteor/qeebi:addresses';
 
 
 const RegionSelect = ({ classes, refFunction, ...properties }) => {

@@ -37,15 +37,6 @@ export const styles = theme => ({
       duration: theme.transitions.duration.short,
     }),
   },
-  /*clearEnabled: {
-    opacity: 0.54,
-    '&:hover': {
-      opacity: 0.92,
-      '& > span:first-child': {
-        backgroundColor: 'transparent',
-      }
-    },
-  },*/
   urlButton: {
     verticalAlign: 'bottom',
     width: 24,

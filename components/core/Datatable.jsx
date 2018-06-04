@@ -130,6 +130,7 @@ Datatable.propTypes = {
   classes: PropTypes.object,
   data: PropTypes.array,
   dense: PropTypes.string,
+  queryDataRef: PropTypes.func,
 };
 
 
@@ -174,6 +175,7 @@ const DatatableContents = ({
                              currentUser,
                              classes,
                              dense,
+                             queryDataRef,
                            }) => {
   
   if (loading) {
@@ -182,10 +184,12 @@ const DatatableContents = ({
     return emptyState || null;
   }
   
+  if (queryDataRef) queryDataRef(this.props);
+  
   const denseClass = dense && classes[dense + 'Table'];
   
   return (
-    <div className="datatable-list">
+    <React.Fragment>
       <Table className={classNames(classes.table, denseClass)}>
         
         <TableHead className={classes.tableHead}>
@@ -236,7 +240,7 @@ const DatatableContents = ({
                            loadMore={loadMore}
                            networkStatus={networkStatus}
       />
-    </div>
+    </React.Fragment>
   );
 };
 

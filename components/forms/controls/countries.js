@@ -1,6 +1,6 @@
 export const countries = [
   { value: 'AF', label: 'Afghanistan' },
-  { value: 'AX', label: 'Aland Islands' },
+  { value: 'AX', label: 'Åland Islands' },
   { value: 'AL', label: 'Albania' },
   { value: 'DZ', label: 'Algeria' },
   { value: 'AS', label: 'American Samoa' },
@@ -36,10 +36,10 @@ export const countries = [
   { value: 'BG', label: 'Bulgaria' },
   { value: 'BF', label: 'Burkina Faso' },
   { value: 'BI', label: 'Burundi' },
+  { value: 'CV', label: 'Cabo Verde' },
   { value: 'KH', label: 'Cambodia' },
   { value: 'CM', label: 'Cameroon' },
   { value: 'CA', label: 'Canada' },
-  { value: 'CV', label: 'Cape Verde' },
   { value: 'KY', label: 'Cayman Islands' },
   { value: 'CF', label: 'Central African Republic' },
   { value: 'TD', label: 'Chad' },
@@ -50,15 +50,15 @@ export const countries = [
   { value: 'CO', label: 'Colombia' },
   { value: 'KM', label: 'Comoros' },
   { value: 'CG', label: 'Congo' },
-  { value: 'CD', label: 'Congo-Kinshasa' },
+  { value: 'CD', label: 'Congo (Democratic Republic of the)' },
   { value: 'CK', label: 'Cook Islands' },
   { value: 'CR', label: 'Costa Rica' },
+  { value: 'CI', label: 'Côte d’Ivoire' },
   { value: 'HR', label: 'Croatia' },
   { value: 'CU', label: 'Cuba' },
-  { value: 'CW', label: 'Curacao' },
+  { value: 'CW', label: 'Curaçao' },
   { value: 'CY', label: 'Cyprus' },
-  { value: 'CZ', label: 'Czech Republic' },
-  { value: 'CI', label: 'Côte d’Ivoire' },
+  { value: 'CZ', label: 'Czechia' },
   { value: 'DK', label: 'Denmark' },
   { value: 'DJ', label: 'Djibouti' },
   { value: 'DM', label: 'Dominica' },
@@ -96,6 +96,7 @@ export const countries = [
   { value: 'GY', label: 'Guyana' },
   { value: 'HT', label: 'Haiti' },
   { value: 'HM', label: 'Heard Island, Mcdonald Islands' },
+  { value: 'VA', label: 'Vatican City State' },
   { value: 'HN', label: 'Honduras' },
   { value: 'HK', label: 'Hong Kong' },
   { value: 'HU', label: 'Hungary' },
@@ -105,7 +106,7 @@ export const countries = [
   { value: 'IR', label: 'Iran' },
   { value: 'IQ', label: 'Iraq' },
   { value: 'IE', label: 'Ireland' },
-  { value: 'IM', label: 'Isle Of Man' },
+  { value: 'IM', label: 'Isle of Man' },
   { value: 'IL', label: 'Israel' },
   { value: 'IT', label: 'Italy' },
   { value: 'JM', label: 'Jamaica' },
@@ -166,7 +167,7 @@ export const countries = [
   { value: 'OM', label: 'Oman' },
   { value: 'PK', label: 'Pakistan' },
   { value: 'PW', label: 'Palau' },
-  { value: 'PS', label: 'Palestinian Territory' },
+  { value: 'PS', label: 'Palestine' },
   { value: 'PA', label: 'Panama' },
   { value: 'PG', label: 'Papua New Guinea' },
   { value: 'PY', label: 'Paraguay' },
@@ -177,12 +178,12 @@ export const countries = [
   { value: 'PT', label: 'Portugal' },
   { value: 'PR', label: 'Puerto Rico' },
   { value: 'QA', label: 'Qatar' },
+  { value: 'RE', label: 'Réunion' },
   { value: 'RO', label: 'Romania' },
   { value: 'RU', label: 'Russian Federation' },
   { value: 'RW', label: 'Rwanda' },
-  { value: 'RE', label: 'Réunion' },
   { value: 'BL', label: 'Saint Barthélemy' },
-  { value: 'SH', label: 'Saint Helena, Ascension Island, Tristan Da Cunha' },
+  { value: 'SH', label: 'Saint Helena, Ascension, Tristan Da Cunha' },
   { value: 'KN', label: 'Saint Kitts and Nevis' },
   { value: 'LC', label: 'Saint Lucia' },
   { value: 'MF', label: 'Saint Martin (French Portion)' },
@@ -238,7 +239,6 @@ export const countries = [
   { value: 'UY', label: 'Uruguay' },
   { value: 'UZ', label: 'Uzbekistan' },
   { value: 'VU', label: 'Vanuatu' },
-  { value: 'VA', label: 'Vatican City State' },
   { value: 'VE', label: 'Venezuela' },
   { value: 'VN', label: 'Viet Nam' },
   { value: 'VG', label: 'Virgin Islands, British' },
@@ -265,4 +265,10 @@ export const regions = {
 export const getCountryLabel = (countryValue) => {
   const country = countries.find(country => country.value === countryValue);
   return country ? country.label : '';
+};
+
+
+export const getCountryContinent = (countryValue) => {
+  const country = countries.find(country => country.value === countryValue);
+  return country ? country.continent : '';
 };

@@ -15,6 +15,7 @@ Package.onUse(function (api) {
     'vulcan:accounts@1.9.1',
     'vulcan:forms@1.9.1',
     'vulcan:core@1.9.1',
+    'qeebi:addresses',
   ]);
 
   api.addFiles('accounts.css', ['client', 'server']);

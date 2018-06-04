@@ -8,6 +8,7 @@ import Input from 'material-ui/Input';
 import IconButton from 'material-ui/IconButton';
 import { FormControl } from 'material-ui/Form';
 import classNames from 'classnames';
+import _debounce from 'lodash/debounce';
 
 
 const styles = theme => ({
@@ -76,14 +77,14 @@ class SearchInput extends PureComponent {
     super(props);
     
     this.state = {
-      value: '',
+      value: props.defaultValue || '',
     };
     
     this.focusInput = this.focusInput.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
-    this.updateQuery = _.debounce(this.updateQuery, 500);
+    this.updateQuery = _debounce(this.updateQuery, 500);
   }
   
   focusInput () {
