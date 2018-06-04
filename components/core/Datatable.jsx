@@ -34,6 +34,7 @@ const baseStyles = theme => ({
   tableBody: {},
   tableRow: {},
   tableCell: {},
+  clickRow: {},
   editCell: {},
   editButton: {}
 });
@@ -131,6 +132,7 @@ Datatable.propTypes = {
   data: PropTypes.array,
   dense: PropTypes.string,
   queryDataRef: PropTypes.func,
+  handleRowClick: PropTypes.func,
 };
 
 
@@ -176,6 +178,7 @@ const DatatableContents = ({
                              classes,
                              dense,
                              queryDataRef,
+                             handleRowClick,
                            }) => {
   
   if (loading) {
@@ -227,6 +230,7 @@ const DatatableContents = ({
                                            editComponent={editComponent}
                                            currentUser={currentUser}
                                            classes={classes}
+                                           handleRowClick={handleRowClick}
                   />)
             }
           </TableBody>
@@ -294,6 +298,9 @@ DatatableRow Component
 
 */
 const datatableRowStyles = theme => (_assign({}, baseStyles(theme), {
+  clickRow: {
+    cursor: 'pointer',
+  },
   editCell: {
     paddingTop: '0 !important',
     paddingBottom: '0 !important',
@@ -310,13 +317,17 @@ const DatatableRow = ({
                         showEdit,
                         editComponent,
                         currentUser,
-                        classes
+                        handleRowClick,
+                        classes,
                       }, { intl }) => {
   
   const EditComponent = editComponent;
   
   return (
-    <TableRow className={classNames('datatable-item', classes.tableRow)} hover>
+    <TableRow className={classNames('datatable-item', classes.tableRow, handleRowClick && classes.clickRow)}
+              onClick={handleRowClick && (event => handleRowClick(event, document))}
+              hover
+    >
       
       {
         _.sortBy(columns, column => column.order).map(
