@@ -6,6 +6,7 @@ import './accounts/Form';
 
 import './bonus/LoadMore';
 import './bonus/SearchInput';
+import './bonus/TooltipIntl';
 import './bonus/TooltipIconButton';
 
 import './core/Card';
