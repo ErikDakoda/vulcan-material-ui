@@ -13,6 +13,11 @@ export const hideStartAdornment = (props) => {
 };
 
 
+export const fixUrl = (url) => {
+  return url.indexOf('http://') === -1 && url.indexOf('https://') ? 'http://' + url : url;
+};
+
+
 const StartAdornment = (props) => {
   const { classes, value, type, addonBefore } = props;
   
@@ -21,9 +26,10 @@ const StartAdornment = (props) => {
   const urlButton = type === 'url' &&
     <IconButton
       className={classes.urlButton}
-      href={value}
+      href={fixUrl(value)}
       target="_blank"
-      disabled={!value}>
+      disabled={!value}
+    >
       <OpenInNewIcon/>
     </IconButton>;
   

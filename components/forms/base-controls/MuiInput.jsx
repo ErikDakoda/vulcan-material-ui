@@ -6,7 +6,7 @@ import ComponentMixin from './mixins/component';
 import MuiFormControl from './MuiFormControl';
 import MuiFormHelper from './MuiFormHelper';
 import Input from 'material-ui/Input';
-import StartAdornment, { hideStartAdornment } from './StartAdornment';
+import StartAdornment, { hideStartAdornment, fixUrl } from './StartAdornment';
 import EndAdornment from './EndAdornment';
 
 
@@ -67,10 +67,19 @@ const MuiInput = createReactClass({
     this.props.onChange(this.props.name, value);
   },
   
+  handleBlur: function (event) {
+    const { type, value } = this.props;
+    
+    if (type === 'url' && !!value && value !== fixUrl(value)) {
+        this.changeValue(fixUrl(value))
+    }
+  },
+  
   render: function () {
     const startAdornment = hideStartAdornment(this.props) ? null :
       <StartAdornment {...this.props}
                       classes={null}
+                      changeValue={this.changeValue}
       />;
     const endAdornment =
       <EndAdornment {...this.props}
@@ -103,6 +112,7 @@ const MuiInput = createReactClass({
         id={this.getId()}
         value={value}
         onChange={this.handleChange}
+        onBlur={this.handleBlur}
         disabled={disabled}
         rows={options.rows || this.props.rows}
         autoFocus={options.autoFocus || autoFocus}

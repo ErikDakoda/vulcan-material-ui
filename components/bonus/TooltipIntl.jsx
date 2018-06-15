@@ -11,7 +11,9 @@ import classNames from 'classnames';
 
 
 const styles = theme => ({
-  root: {},
+  root: {
+    display: 'inline-block',
+  },
   tooltip: {
     margin: '4px !important',
   },
@@ -43,61 +45,63 @@ const TooltipIntl = (props, { intl }) => {
   const slug = Utils.slugify(titleId);
   
   return (
-    <Tooltip className={className}
-             classes={{ tooltip: classes.tooltip }}
-             id={`tooltip-${slug}`}
-             title={titleText}
-             placement={placement}
-             enterDelay={theme.utils.tooltipEnterDelay}
-    >
-      <span className={classes.buttonWrap}>
-        {
-          variant === 'fab' && !!icon
-            
-            ?
-            
-            <Button className={classNames(classes.button, slug)}
-                    variant="fab"
-                    aria-label={title}
-                    ref={buttonRef}
-                    {...properties}
-            >
-              {icon}
-            </Button>
-            
-            :
-            
-            !!icon
-              
+    <span className={classes.root}>
+      <Tooltip className={className}
+               classes={{ tooltip: classes.tooltip }}
+               id={`tooltip-${slug}`}
+               title={titleText}
+               placement={placement}
+               enterDelay={theme.utils.tooltipEnterDelay}
+      >
+        <span className={classes.buttonWrap}>
+          {
+            variant === 'fab' && !!icon
+      
               ?
-              
-              <IconButton className={classNames(classes.button, slug)}
+      
+              <Button className={classNames(classes.button, slug)}
+                      variant="fab"
+                      aria-label={title}
+                      ref={buttonRef}
+                      {...properties}
+              >
+                {icon}
+              </Button>
+      
+              :
+      
+              !!icon
+        
+                ?
+        
+                <IconButton className={classNames(classes.button, slug)}
+                            aria-label={title}
+                            ref={buttonRef}
+                            {...properties}
+                >
+                  {icon}
+                </IconButton>
+        
+                :
+        
+                variant === 'button'
+          
+                  ?
+                  <Button className={classNames(classes.button, slug)}
                           aria-label={title}
                           ref={buttonRef}
                           {...properties}
-              >
-                {icon}
-              </IconButton>
-              
-              :
-              
-              variant === 'button'
-                
-                ?
-                <Button className={classNames(classes.button, slug)}
-                        aria-label={title}
-                        ref={buttonRef}
-                        {...properties}
-                >
-                  {children}
-                </Button>
-                
-                :
-                
-                children
-        }
-      </span>
-    </Tooltip>
+                  >
+                    {children}
+                  </Button>
+          
+                  :
+          
+                  children
+          }
+        </span>
+      </Tooltip>
+    </span>
   );
   
 };
