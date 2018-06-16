@@ -7,6 +7,7 @@ import { FormGroup, FormControlLabel, } from 'material-ui/Form';
 import MuiFormControl from './MuiFormControl';
 import MuiFormHelper from './MuiFormHelper';
 import Checkbox from 'material-ui/Checkbox';
+import Switch from 'material-ui/Switch';
 import classNames from 'classnames';
 
 
@@ -56,6 +57,7 @@ const MuiCheckboxGroup = createReactClass({
     name: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
+    variant: PropTypes.oneOf(['checkbox', 'switch']),
   },
   
   componentDidMount: function () {
@@ -67,7 +69,8 @@ const MuiCheckboxGroup = createReactClass({
   getDefaultProps: function () {
     return {
       label: '',
-      help: null
+      help: null,
+      variant: 'checkbox',
     };
   },
   
@@ -94,12 +97,13 @@ const MuiCheckboxGroup = createReactClass({
       let value = checkbox.value;
       let checked = (this.props.value.indexOf(value) !== -1);
       let disabled = checkbox.disabled || this.props.disabled;
+      const Component = this.props.variant === 'switch' ? Switch : Checkbox;
       
       return (
         <FormControlLabel
           key={key}
           control={
-            <Checkbox
+            <Component
               inputRef={(c) => this[this.props.name + '-' + value] = c}
               checked={checked}
               onChange={this.changeCheckbox}

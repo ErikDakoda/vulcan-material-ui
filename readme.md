@@ -121,7 +121,8 @@ You can pass a couple of extra options to text inputs from the `form` property o
                                        //   to display two controls side by side
       hideLabel: true,                 // hide the label
       help: 'Enter your key here',     // add help text below the input
-    },
+      variant: 'switch',               // checkboxgroup can be set to either 
+    },                                 //   'checkbox' (default) or 'switch'
     group: platformGroup,
     viewableBy: ['members'],
     insertableBy: ['members'],
