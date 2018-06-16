@@ -1,6 +1,6 @@
 Package.describe({
   name: 'erikdakoda:vulcan-material-ui',
-  version: '1.10.1_4',
+  version: '1.10.1_5',
   summary: 'Replacement for Vulcan (http://vulcanjs.org/) components using material-ui',
   git: 'https://github.com/ErikDakoda/vulcan-material-ui',
   documentation: 'README.md'
@@ -15,7 +15,6 @@ Package.onUse(function (api) {
     'vulcan:accounts@1.9.1',
     'vulcan:forms@1.9.1',
     'vulcan:core@1.9.1',
-    'qeebi:addresses',
   ]);
 
   api.addFiles('accounts.css', ['client', 'server']);
