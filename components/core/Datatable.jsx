@@ -133,6 +133,7 @@ Datatable.propTypes = {
   dense: PropTypes.string,
   queryDataRef: PropTypes.func,
   handleRowClick: PropTypes.func,
+  intlNamespace: PropTypes.string,
 };
 
 
@@ -179,6 +180,7 @@ const DatatableContents = ({
                              dense,
                              queryDataRef,
                              handleRowClick,
+                             intlNamespace,
                            }) => {
   
   if (loading) {
@@ -202,6 +204,7 @@ const DatatableContents = ({
                 (column, index) =>
                   <Components.DatatableHeader key={index}
                                               collection={collection}
+                                              intlNamespace={intlNamespace}
                                               column={column}
                                               classes={classes}
                   />)
@@ -257,11 +260,13 @@ replaceComponent('DatatableContents', DatatableContents, [withStyles, datatableC
 DatatableHeader Component
 
 */
-const DatatableHeader = ({ collection, column, classes }, { intl }) => {
+const DatatableHeader = ({ collection, intlNamespace, column, classes }, { intl }) => {
   const columnName = typeof column === 'string' ? column : column.name;
+  let formattedLabel = '';
+  
   if (collection) {
     const schema = collection.simpleSchema()._schema;
-    
+  
     /*
     use either:
 
@@ -269,18 +274,24 @@ const DatatableHeader = ({ collection, column, classes }, { intl }) => {
     2. the column name label in the schema (if the column name matches a schema field)
     3. the raw column name.
     */
-    const formattedLabel = typeof columnName === 'string' ?
+    formattedLabel = typeof columnName === 'string' ?
       intl.formatMessage({
         id: `${collection._name}.${columnName}`,
         defaultMessage: schema[columnName] ? schema[columnName].label : columnName
       }) :
       '';
-    
-    return <TableCell className={classes.tableCell}>{formattedLabel}</TableCell>;
+  } else if (intlNamespace) {
+    formattedLabel = typeof columnName === 'string' ?
+      intl.formatMessage({
+        id: `${intlNamespace}.${columnName}`,
+        defaultMessage: columnName
+      }) :
+      '';
   } else {
-    const formattedLabel = intl.formatMessage({ id: columnName, defaultMessage: columnName });
-    return <TableCell className={classes.tableCell}>{formattedLabel}</TableCell>;
+    formattedLabel = intl.formatMessage({ id: columnName, defaultMessage: columnName });
   }
+  
+  return <TableCell className={classes.tableCell}>{formattedLabel}</TableCell>;
 };
 
 
