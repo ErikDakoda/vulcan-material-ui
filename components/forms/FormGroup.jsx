@@ -13,6 +13,8 @@ import Paper from 'material-ui/Paper';
 import ExpandLessIcon from 'mdi-material-ui/ChevronUp';
 import ExpandMoreIcon from 'mdi-material-ui/ChevronDown';
 import Users from 'meteor/vulcan:users';
+import classNames from 'classnames';
+
 
 const styles = theme => ({
   root: {
@@ -28,10 +30,11 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 5,
     marginBottom: theme.spacing.unit,
     color: theme.palette.primary[500],
+  },
+  collapsible: {
     cursor: 'pointer',
   },
-  label: {
-  },
+  label: {},
   toggle: {
     '& svg': {
       width: 21,
@@ -68,6 +71,9 @@ class FormGroup extends PureComponent {
   
   
   toggle () {
+    const collapsible = this.props.collapsible || this.isAdmin;
+    if (!collapsible) return;
+    
     this.setState({
       collapsed: !this.state.collapsed
     });
@@ -105,14 +111,14 @@ class FormGroup extends PureComponent {
     if (!startComponent && !endComponent && !fields.length) {
       return null;
     }
-  
+    
     // if at least one of the fields in the group has an error, the group as a whole has an error
     const hasErrors = fields.find(field => {
       return !!errors.filter(
         error => error.properties && error.properties.name && error.properties.name === field.path
       ).length;
     });
-  
+    
     const collapsible = this.props.collapsible || this.isAdmin;
     const anchorName = name.split('.').length > 1 ? name.split('.')[1] : name;
     const collapseIn = !this.state.collapsed || hasErrors;
@@ -123,7 +129,10 @@ class FormGroup extends PureComponent {
         <a name={anchorName}/>
         
         {name === 'default' ? null : (
-          <Typography className={classes.subheading} variant="subheading" onClick={this.toggle}>
+          <Typography className={classNames(classes.subheading, collapsible && classes.collapsible)}
+                      variant="subheading"
+                      onClick={this.toggle}
+          >
             
             <div className={classes.label}>
               {label}
