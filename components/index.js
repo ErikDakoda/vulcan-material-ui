@@ -19,6 +19,7 @@ import './core/NewButton';
 import './forms/FormComponentInner';
 import './forms/FormErrors';
 import './forms/FormGroup';
+import './forms/FormGroupNone';
 import './forms/FormSubmit';
 import './forms/FormNested';
 import './forms/controls/Checkbox';

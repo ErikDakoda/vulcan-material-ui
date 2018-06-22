@@ -201,7 +201,8 @@ FormGroup.propTypes = {
   updateCurrentValues: PropTypes.func,
   startComponent: PropTypes.node,
   endComponent: PropTypes.node,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  formGroupComponent: PropTypes.string,
 };
 
 
