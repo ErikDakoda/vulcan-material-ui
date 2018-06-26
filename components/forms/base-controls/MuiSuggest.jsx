@@ -125,6 +125,11 @@ const MuiSuggest = createReactClass({
     limitToList: PropTypes.bool,
     disableText: PropTypes.bool,
     showAllOptions: PropTypes.bool,
+    className: PropTypes.string,
+  },
+  
+  getOptionLabel: function (option) {
+    return option.label || option.value || '';
   },
   
   getInitialState: function () {
@@ -134,7 +139,7 @@ const MuiSuggest = createReactClass({
   
     const selectedOption = this.getSelectedOption();
     return {
-      inputValue: selectedOption.label,
+      inputValue: this.getOptionLabel(selectedOption),
       selectedOption: selectedOption,
       suggestions: [],
     };
@@ -145,7 +150,7 @@ const MuiSuggest = createReactClass({
       nextProps.options !== this.props.options) {
       const selectedOption = this.getSelectedOption(nextProps);
       this.setState({
-        inputValue: selectedOption.label,
+        inputValue: this.getOptionLabel(selectedOption),
         selectedOption: selectedOption,
       });
     }
@@ -170,7 +175,7 @@ const MuiSuggest = createReactClass({
     } else if (this.props.limitToList) {
       const selectedOption = this.getSelectedOption();
       this.setState({
-        inputValue: selectedOption.label,
+        inputValue: this.getOptionLabel(selectedOption),
       });
     }
   },
@@ -191,9 +196,9 @@ const MuiSuggest = createReactClass({
     }
     this.setState({
       selectedOption: suggestion,
-      inputValue: suggestion.label,
+      inputValue: this.getOptionLabel(suggestion),
     });
-    this.props.onChange(this.props.name, suggestion.value, suggestion.label);
+    this.props.onChange(this.props.name, suggestion.value, this.getOptionLabel(suggestion));
   },
   
   handleInputChange: function (event) {
@@ -312,8 +317,9 @@ const MuiSuggest = createReactClass({
   },
   
   renderSuggestion: function (suggestion, { query, isHighlighted }) {
-    const matches = match(suggestion.label, query);
-    const parts = parse(suggestion.label, matches);
+    const label = this.getOptionLabel(suggestion);
+    const matches = match(label, query);
+    const parts = parse(label, matches);
     const isSelected = suggestion.value === this.props.value;
     const className = isSelected ? this.props.classes.selected : null;
     
@@ -362,7 +368,7 @@ const MuiSuggest = createReactClass({
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
-    const inputMatchesSelection = value === this.state.selectedOption.label;
+    const inputMatchesSelection = value === this.getOptionLabel(this.state.selectedOption);
     
     return (this.props.disableText || this.props.showAllOptions) && inputMatchesSelection ?
       
@@ -384,8 +390,9 @@ const MuiSuggest = createReactClass({
         :
         
         this.props.options.filter(suggestion => {
+          const label = this.getOptionLabel(suggestion);
           const keep =
-            count < maxSuggestions && suggestion.label.toLowerCase().slice(0, inputLength) ===
+            count < maxSuggestions && label.toLowerCase().slice(0, inputLength) ===
             inputValue;
           
           if (keep) {

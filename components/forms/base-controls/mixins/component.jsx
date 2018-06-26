@@ -7,7 +7,7 @@ import _omit from 'lodash/omit';
 export default {
   
   propTypes: {
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     hideLabel: PropTypes.bool,
     layout: PropTypes.string,
     required: PropTypes.bool,
@@ -21,6 +21,7 @@ export default {
       layout: this.props.layout,
       required: this.props.required,
       hasErrors: this.hasErrors(),
+      className: this.props.className,
     };
   },
   
