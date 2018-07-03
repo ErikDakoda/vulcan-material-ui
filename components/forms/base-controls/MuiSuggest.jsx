@@ -158,6 +158,7 @@ const MuiSuggest = createReactClass({
   
   shouldComponentUpdate: function (nextProps, nextState) {
     return !_isEqual(nextState, this.state) ||
+      nextProps.help !== this.props.help ||
       nextProps.options !== this.props.options;
   },
   
@@ -285,6 +286,7 @@ const MuiSuggest = createReactClass({
           value: this.state.inputValue,
           readOnly: this.props.disableText,
           disabled: this.props.disabled,
+          ...this.props.inputProps,
           startAdornment,
           endAdornment,
         }}
