@@ -7,14 +7,15 @@ export class AccountsFields extends Component {
   render () {
     const {
       fields = {},
-      className = 'fields'
+      className = 'fields',
+      messages,
     } = this.props;
     
     return (
       <CardContent className={className}>
         {
           Object.keys(fields).map((id, i) =>
-            <Components.AccountsField {...fields[id]} autoFocus={i === 0} key={i}/>
+            <Components.AccountsField {...fields[id]} messages={messages} autoFocus={i === 0} key={i}/>
           )
         }
       </CardContent>

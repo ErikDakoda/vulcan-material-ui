@@ -67,15 +67,16 @@ const MuiFormControl = createReactClass({
   },
   
   render: function () {
+    const { layout, className, children, hasErrors } = this.props;
     
-    if (this.props.layout === 'elementOnly') {
-      return <span>{this.props.children}</span>;
+    if (layout === 'elementOnly') {
+      return <span>{children}</span>;
     }
     
     return (
-      <FormControl component="fieldset" error={this.props.hasErrors} fullWidth={true}>
+      <FormControl component="fieldset" error={hasErrors} fullWidth={true} className={className}>
         {this.renderLabel()}
-        {this.props.children}
+        {children}
       </FormControl>
     );
   }

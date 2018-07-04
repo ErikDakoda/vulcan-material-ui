@@ -105,6 +105,7 @@ export default {
       'mustComplete',
       'renderComponent',
       'formInput',
+      'className',
     ];
     
     return _omit(props, removedFields);

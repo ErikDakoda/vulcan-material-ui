@@ -39,7 +39,7 @@ export class AccountsForm extends Component {
             className={classNames(className, 'accounts-ui', { 'ready': ready, })}
             noValidate
       >
-        <Components.AccountsFields fields={fields}/>
+        <Components.AccountsFields fields={fields} messages={messages}/>
         <Components.AccountsButtons buttons={{...buttons}}/>
         <Components.AccountsPasswordOrService oauthServices={oauthServices}/>
         <Components.AccountsSocialButtons oauthServices={oauthServices}/>

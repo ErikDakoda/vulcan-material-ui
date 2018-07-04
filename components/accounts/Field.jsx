@@ -60,8 +60,9 @@ export class AccountsField extends PureComponent {
       className = 'field',
       defaultValue = '',
       autoFocus,
-      message,
+      messages,
     } = this.props;
+    let { message } = this.props;
     const { mount = true } = this.state;
     
     if (type === 'notice') {
@@ -69,6 +70,16 @@ export class AccountsField extends PureComponent {
     }
   
     const autoComplete = autocompleteValues[id];
+    
+    if (messages && messages.find && typeof id === 'string') {
+      const foundMessage = messages.find(element => {
+        if (typeof element.field !== 'string') return false;
+        return id.toLowerCase().indexOf(element.field.toLowerCase()) > -1;
+      });
+      if (foundMessage) {
+        message = foundMessage;
+      }
+    }
   
     return (
       mount &&

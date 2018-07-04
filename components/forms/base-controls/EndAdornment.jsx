@@ -47,12 +47,12 @@ export const styles = theme => ({
 
 
 const EndAdornment = (props) => {
-  const { classes, value, changeValue, addonAfter } = props;
+  const { classes, value, changeValue, addonAfter, disabled } = props;
   
-  if (!addonAfter && !changeValue) return null;
+  if (!addonAfter && (!changeValue || disabled)) return null;
   const hasValue = !!value || value === 0;
   
-  const clearButton = changeValue &&
+  const clearButton = changeValue && !disabled &&
     <IconButton className={classNames('clear-button', classes.clearButton, hasValue && 'clear-enabled')}
                 onClick={event => {
                   event.preventDefault();
