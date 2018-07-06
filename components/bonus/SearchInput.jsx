@@ -62,7 +62,8 @@ const styles = theme => ({
   },
   input: {
     lineHeight: 1,
-    padding: 0,
+    paddingTop: 2,
+    paddingBottom: 2,
     marginBottom: 1,
   },
   clearDisabled: {
