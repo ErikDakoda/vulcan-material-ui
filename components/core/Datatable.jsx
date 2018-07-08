@@ -291,7 +291,7 @@ const DatatableHeader = ({ collection, intlNamespace, column, classes }, { intl 
     formattedLabel = intl.formatMessage({ id: columnName, defaultMessage: columnName });
   }
   
-  return <TableCell className={classes.tableCell}>{formattedLabel}</TableCell>;
+  return <TableCell className={classNames(classes.tableCell, column.headerClass)}>{formattedLabel}</TableCell>;
 };
 
 
