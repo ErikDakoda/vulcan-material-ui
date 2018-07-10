@@ -132,6 +132,7 @@ Datatable.propTypes = {
   data: PropTypes.array,
   dense: PropTypes.string,
   queryDataRef: PropTypes.func,
+  rowClass: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   handleRowClick: PropTypes.func,
   intlNamespace: PropTypes.string,
 };
@@ -179,6 +180,7 @@ const DatatableContents = ({
                              classes,
                              dense,
                              queryDataRef,
+                             rowClass,
                              handleRowClick,
                              intlNamespace,
                            }) => {
@@ -233,6 +235,7 @@ const DatatableContents = ({
                                            editComponent={editComponent}
                                            currentUser={currentUser}
                                            classes={classes}
+                                           rowClass={rowClass}
                                            handleRowClick={handleRowClick}
                   />)
             }
@@ -328,14 +331,19 @@ const DatatableRow = ({
                         showEdit,
                         editComponent,
                         currentUser,
+                        rowClass,
                         handleRowClick,
                         classes,
                       }, { intl }) => {
   
   const EditComponent = editComponent;
   
+  if (typeof rowClass === 'function') {
+    rowClass = rowClass(document);
+  }
+  
   return (
-    <TableRow className={classNames('datatable-item', classes.tableRow, handleRowClick && classes.clickRow)}
+    <TableRow className={classNames('datatable-item', classes.tableRow, rowClass, handleRowClick && classes.clickRow)}
               onClick={handleRowClick && (event => handleRowClick(event, document))}
               hover
     >
