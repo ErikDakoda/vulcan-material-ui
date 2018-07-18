@@ -45,9 +45,8 @@ const TooltipIntl = (props, { intl }) => {
   const slug = Utils.slugify(titleId);
   
   return (
-    <span className={classes.root}>
-      <Tooltip className={className}
-               classes={{ tooltip: classes.tooltip }}
+    <span className={classNames('tooltip-intl', classes.root, className)}>
+      <Tooltip classes={{ tooltip: classes.tooltip }}
                id={`tooltip-${slug}`}
                title={titleText}
                placement={placement}

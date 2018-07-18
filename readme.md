@@ -160,13 +160,13 @@ You can pass the DataTable component an `editComponent` property in addition to 
 
 ``` javascript
 const AgendaJobActions = ({ collection, document }) => {
-  const executeAgent = () => {
-    Meteor.call('executeAgent', document.agentId);
+  const scheduleAgent = () => {
+    Meteor.call('scheduleAgent', document.agentId);
   };
   
   return <Components.TooltipIconButton titleId="executions.execute"
                                        icon={<Components.ExecutionsIcon/>}
-                                       onClick={executeAgent}/>;
+                                       onClick={scheduleAgent}/>;
 };
 
 AgendaJobActionsInner.propTypes = {
