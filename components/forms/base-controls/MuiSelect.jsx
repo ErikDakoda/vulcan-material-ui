@@ -14,16 +14,16 @@ import _isArray from 'lodash/isArray';
 
 
 export const styles = theme => ({
-  
+
   inputRoot: {
     '& .clear-enabled': { opacity: 0 },
     '&:hover .clear-enabled': { opacity: 0.54 },
   },
-  
+
   inputFocused: {
     '& .clear-enabled': { opacity: 0.54 }
   },
-  
+
   menuItem: {
     paddingTop: 4,
     paddingBottom: 4,
@@ -33,40 +33,40 @@ export const styles = theme => ({
     fontSize: theme.typography.pxToRem(16),
     lineHeight: '1.1875em',
   },
-  
+
   input: {
     paddingLeft: 8,
   },
-  
+
 });
 
 
 const MuiSelect = createReactClass({
-  
+
   element: null,
-  
+
   mixins: [ComponentMixin],
-  
+
   getInitialState: function () {
     return {
       isOpen: false,
     };
   },
-  
+
   handleOpen: function () {
     // this doesn't work
     this.setState({
       isOpen: true,
     });
   },
-  
+
   handleClose: function () {
     // this doesn't work
     this.setState({
       isOpen: false,
     });
   },
-  
+
   handleChange: function (event) {
     const target = event.target;
     let value;
@@ -83,16 +83,16 @@ const MuiSelect = createReactClass({
     }
     this.changeValue(value);
   },
-  
+
   changeValue: function (value) {
     this.props.onChange(this.props.name, value);
   },
-  
+
   render: function () {
     if (this.props.layout === 'elementOnly') {
       return this.renderElement();
     }
-    
+
     return (
       <MuiFormControl{...this.getFormControlProperties()} htmlFor={this.getId()}>
         {this.renderElement()}
@@ -100,7 +100,7 @@ const MuiSelect = createReactClass({
       </MuiFormControl>
     );
   },
-  
+
   renderElement: function () {
     const renderOption = (item, key) => {
       //eslint-disable-next-line no-unused-vars
@@ -111,7 +111,7 @@ const MuiSelect = createReactClass({
         :
         <MenuItem key={key} {...rest} className={classes.menuItem}>{label}</MenuItem>;
     };
-    
+
     const renderGroup = (label, key, nodes) => {
       return this.props.native
         ?
@@ -123,9 +123,9 @@ const MuiSelect = createReactClass({
           {nodes}
         </MenuList>;
     };
-    
+
     const { options, classes } = this.props;
-    
+
     let groups = options.filter(function (item) {
       return item.group;
     }).map(function (item) {
@@ -133,9 +133,9 @@ const MuiSelect = createReactClass({
     });
     // Get the unique items in group.
     groups = [...new Set(groups)];
-    
+
     let optionNodes = [];
-    
+
     if (groups.length === 0) {
       optionNodes = options.map(function (item, index) {
         return renderOption(item, index);
@@ -145,30 +145,30 @@ const MuiSelect = createReactClass({
       const itemsWithoutGroup = options.filter(function (item) {
         return !item.group;
       });
-      
+
       itemsWithoutGroup.forEach(function (item, index) {
         optionNodes.push(renderOption(item, 'no-group-' + index));
       });
-      
+
       groups.forEach(function (group, groupIndex) {
-        
+
         const groupItems = options.filter(function (item) {
           return item.group === group;
         });
-        
+
         const groupOptionNodes = groupItems.map(function (item, index) {
           return renderOption(item, groupIndex + '-' + index);
         });
-        
+
         optionNodes.push(renderGroup(group, groupIndex, groupOptionNodes));
       });
     }
-    
+
     let value = this.props.value;
     if (!this.props.multiple && _isArray(value)) {
       value = value.length ? value[0] : '';
     }
-    
+
     const startAdornment = hideStartAdornment(this.props) ? null :
       <StartAdornment {...this.props}
                       value={value}
@@ -179,9 +179,10 @@ const MuiSelect = createReactClass({
                     value={value}
                     classes={null}
       />;
-    
+
     return (
-      <Select ref={(c) => this.element = c}
+      <Select className="select"
+              ref={(c) => this.element = c}
               {...this.cleanProps(this.props)}
               value={value}
               onChange={this.handleChange}
