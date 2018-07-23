@@ -35,12 +35,14 @@ const TooltipIntl = (props, { intl }) => {
     className,
     classes,
     theme,
+    enterDelay,
     buttonRef,
     variant,
     children,
     ...properties
   } = props;
   
+  const tooltipEnterDelay = typeof enterDelay === 'number' ? enterDelay : theme.utils.tooltipEnterDelay;
   const titleText = props.title || intl.formatMessage({ id: titleId }, titleValues);
   const slug = Utils.slugify(titleId);
   
@@ -50,7 +52,7 @@ const TooltipIntl = (props, { intl }) => {
                id={`tooltip-${slug}`}
                title={titleText}
                placement={placement}
-               enterDelay={theme.utils.tooltipEnterDelay}
+               enterDelay={tooltipEnterDelay}
       >
         <span className={classes.buttonWrap}>
           {
@@ -117,6 +119,7 @@ TooltipIntl.propTypes = {
   buttonRef: PropTypes.func,
   variant: PropTypes.string,
   theme: PropTypes.object,
+  enterDelay: PropTypes.number,
   children: PropTypes.node,
 };
 

@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Components, replaceComponent, withCurrentUser, withList } from 'meteor/vulcan:core';
+import { Components, registerComponent, replaceComponent, withCurrentUser, withList } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 import withStyles from 'material-ui/styles/withStyles';
-import Table, { TableBody, TableHead, TableRow, TableCell } from 'material-ui/Table';
+import Table, { TableBody, TableHead, TableRow, TableCell, TableFooter } from 'material-ui/Table';
 import { getFieldValue } from './Card';
 import _assign from 'lodash/assign';
 import classNames from 'classnames';
@@ -32,6 +32,7 @@ const baseStyles = theme => ({
   flatTable: {},
   tableHead: {},
   tableBody: {},
+  tableFooter: {},
   tableRow: {},
   tableCell: {},
   clickRow: {},
@@ -130,6 +131,7 @@ Datatable.propTypes = {
   currentUser: PropTypes.object,
   classes: PropTypes.object,
   data: PropTypes.array,
+  footerData: PropTypes.array,
   dense: PropTypes.string,
   queryDataRef: PropTypes.func,
   rowClass: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
@@ -178,6 +180,7 @@ const DatatableContents = ({
                              emptyState,
                              currentUser,
                              classes,
+                             footerData,
                              dense,
                              queryDataRef,
                              rowClass,
@@ -209,7 +212,8 @@ const DatatableContents = ({
                                               intlNamespace={intlNamespace}
                                               column={column}
                                               classes={classes}
-                  />)
+                  />
+              )
             }
             {
               (showEdit || editComponent) &&
@@ -241,6 +245,29 @@ const DatatableContents = ({
             }
           </TableBody>
         }
+        
+        {
+          footerData &&
+          
+          <TableFooter className={classes.tableFooter}>
+            <TableRow className={classes.tableRow}>
+              {
+                _.sortBy(columns, column => column.order).map(
+                  (column, index) =>
+                    <TableCell key={index} className={classNames(classes.tableCell, column.footerClass)}>
+                      {footerData[index]}
+                    </TableCell>
+                )
+              }
+              {
+                (showEdit || editComponent) &&
+                
+                <TableCell className={classes.tableCell}/>
+              }
+            </TableRow>
+          </TableFooter>
+          
+        }
       
       </Table>
       
@@ -269,7 +296,7 @@ const DatatableHeader = ({ collection, intlNamespace, column, classes }, { intl 
   
   if (collection) {
     const schema = collection.simpleSchema()._schema;
-  
+    
     /*
     use either:
 
@@ -343,9 +370,10 @@ const DatatableRow = ({
   }
   
   return (
-    <TableRow className={classNames('datatable-item', classes.tableRow, rowClass, handleRowClick && classes.clickRow)}
-              onClick={handleRowClick && (event => handleRowClick(event, document))}
-              hover
+    <TableRow
+      className={classNames('datatable-item', classes.tableRow, rowClass, handleRowClick && classes.clickRow)}
+      onClick={handleRowClick && (event => handleRowClick(event, document))}
+      hover
     >
       
       {
