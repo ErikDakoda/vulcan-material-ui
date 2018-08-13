@@ -159,6 +159,8 @@ const MuiSuggest = createReactClass({
   shouldComponentUpdate: function (nextProps, nextState) {
     return !_isEqual(nextState, this.state) ||
       nextProps.help !== this.props.help ||
+      nextProps.charsCount !== this.props.charsCount ||
+      !_isEqual(nextProps.errors, this.props.errors) ||
       nextProps.options !== this.props.options;
   },
   

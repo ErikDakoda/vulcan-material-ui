@@ -23,7 +23,7 @@ export const styles = theme => ({
 });
 
 
-const EndAdornment = (props) => {
+const MuiFormHelper = (props) => {
   const {
     classes,
     help,
@@ -69,7 +69,7 @@ const EndAdornment = (props) => {
 };
 
 
-EndAdornment.propTypes = {
+MuiFormHelper.propTypes = {
   classes: PropTypes.object.isRequired,
   value: PropTypes.any,
   changeValue: PropTypes.func,
@@ -77,4 +77,4 @@ EndAdornment.propTypes = {
 };
 
 
-export default withStyles(styles)(EndAdornment);
+export default withStyles(styles)(MuiFormHelper);

@@ -106,6 +106,10 @@ export default {
       'renderComponent',
       'formInput',
       'className',
+      'formatValue',
+      'scrubValue',
+      'custom',
+      'hideClear',
     ];
     
     return _omit(props, removedFields);

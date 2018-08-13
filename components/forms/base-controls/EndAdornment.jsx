@@ -47,12 +47,12 @@ export const styles = theme => ({
 
 
 const EndAdornment = (props) => {
-  const { classes, value, changeValue, addonAfter, disabled } = props;
+  const { classes, value, addonAfter, changeValue, hideClear, disabled } = props;
   
-  if (!addonAfter && (!changeValue || disabled)) return null;
+  if (!addonAfter && (!changeValue || hideClear || disabled)) return null;
   const hasValue = !!value || value === 0;
   
-  const clearButton = changeValue && !disabled &&
+  const clearButton = changeValue && !hideClear && !disabled &&
     <IconButton className={classNames('clear-button', classes.clearButton, hasValue && 'clear-enabled')}
                 onClick={event => {
                   event.preventDefault();
@@ -76,6 +76,7 @@ EndAdornment.propTypes = {
   classes: PropTypes.object.isRequired,
   value: PropTypes.any,
   changeValue: PropTypes.func,
+  hideClear: PropTypes.bool,
   addonAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.func]),
 };
 

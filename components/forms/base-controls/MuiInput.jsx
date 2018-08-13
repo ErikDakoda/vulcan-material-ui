@@ -50,6 +50,9 @@ const MuiInput = createReactClass({
     ]),
     errors: PropTypes.array,
     placeholder: PropTypes.string,
+    formatValue: PropTypes.func,
+    scrubValue: PropTypes.func,
+    hideClear: PropTypes.bool,
   },
   
   getDefaultProps: function () {
@@ -59,7 +62,10 @@ const MuiInput = createReactClass({
   },
   
   handleChange: function (event) {
-    const value = event.target.value;
+    let value = event.target.value;
+    if (this.props.scrubValue) {
+      value = this.props.scrubValue(value);
+    }
     this.changeValue(value);
   },
   
@@ -102,7 +108,8 @@ const MuiInput = createReactClass({
   },
   
   renderElement: function (startAdornment, endAdornment) {
-    const { classes, disabled, autoFocus, value } = this.props;
+    const { classes, disabled, autoFocus, formatValue } = this.props;
+    const value = formatValue ? formatValue(this.props.value) : this.props.value;
     const options = this.props.options || {};
     
     return (
