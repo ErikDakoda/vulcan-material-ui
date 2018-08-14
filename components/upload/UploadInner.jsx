@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Components, registerComponent, getComponent } from 'meteor/vulcan:lib';
 import Dropzone from 'react-dropzone';
-import { withStyles } from 'material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
-import { FormControl, FormLabel, FormHelperText } from 'material-ui/Form';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 
 /*

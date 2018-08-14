@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { InputLabel } from 'material-ui/Input';
-import { FormControl, FormLabel } from 'material-ui/Form';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 
 //noinspection JSUnusedGlobalSymbols

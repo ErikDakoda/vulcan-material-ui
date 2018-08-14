@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Components, replaceComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
-import Collapse from 'material-ui/transitions/Collapse';
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Collapse from '@material-ui/core/Collapse';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import ExpandLessIcon from 'mdi-material-ui/ChevronUp';
 import ExpandMoreIcon from 'mdi-material-ui/ChevronDown';
 

@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ComponentMixin from './mixins/component';
-import withStyles from 'material-ui/styles/withStyles';
-import { FormGroup, FormControlLabel, } from 'material-ui/Form';
+import withStyles from '@material-ui/core/styles/withStyles';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MuiFormControl from './MuiFormControl';
 import MuiFormHelper from './MuiFormHelper';
-import Checkbox from 'material-ui/Checkbox';
-import Switch from 'material-ui/Switch';
+import Checkbox from '@material-ui/core/Checkbox';
+import Switch from '@material-ui/core/Switch';
 import classNames from 'classnames';
 
 

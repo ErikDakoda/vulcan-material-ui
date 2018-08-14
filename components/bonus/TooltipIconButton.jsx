@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Components, registerComponent, Utils } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
-import withStyles from 'material-ui/styles/withStyles';
-import withTheme from 'material-ui/styles/withTheme';
-import Tooltip from 'material-ui/Tooltip';
-import IconButton from 'material-ui/IconButton';
-import Button from 'material-ui/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
+import withTheme from '@material-ui/core/styles/withTheme';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import classNames from 'classnames';
 
 
@@ -41,8 +41,7 @@ const TooltipIconButton = (props, { intl }) => {
   const slug = Utils.slugify(titleId);
   
   return (
-    <Tooltip className={className}
-             classes={{ tooltip: classes.tooltip }}
+    <Tooltip classes={{ tooltip: classNames('tooltip-icon-button', classes.tooltip, className) }}
              id={`tooltip-${slug}`}
              title={titleText}
              placement={placement}

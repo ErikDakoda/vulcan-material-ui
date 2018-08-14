@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { instantiateComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
-import { FormHelperText } from 'material-ui/Form';
+import withStyles from '@material-ui/core/styles/withStyles';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
 import classNames from 'classnames';
 

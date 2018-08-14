@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { replaceComponent } from 'meteor/vulcan:core';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 
 
 const autocompleteValues = {

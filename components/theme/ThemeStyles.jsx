@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Components, registerComponent } from 'meteor/vulcan:core';
-import { withTheme } from 'material-ui/styles';
-import withStyles from 'material-ui/styles/withStyles';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import { getContrastRatio } from 'material-ui/styles/colorManipulator';
+import withTheme from '@material-ui/core/styles/withTheme';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { getContrastRatio } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'classnames';
 
 

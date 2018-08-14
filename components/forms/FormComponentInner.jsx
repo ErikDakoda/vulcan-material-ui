@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'meteor/vulcan:i18n';
 import { Components, registerComponent, instantiateComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import _omit from 'lodash/omit';
 import classNames from 'classnames';
 

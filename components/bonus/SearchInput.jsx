@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { registerComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import SearchIcon from 'mdi-material-ui/Magnify';
 import ClearIcon from 'mdi-material-ui/CloseCircle';
-import Input from 'material-ui/Input';
-import IconButton from 'material-ui/IconButton';
-import { FormControl } from 'material-ui/Form';
+import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
 import classNames from 'classnames';
 import _debounce from 'lodash/debounce';
 

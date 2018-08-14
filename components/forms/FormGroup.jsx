@@ -6,10 +6,10 @@ import {
   instantiateComponent,
   withCurrentUser,
 } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
-import Collapse from 'material-ui/transitions/Collapse';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Collapse from '@material-ui/core/Collapse';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import ExpandLessIcon from 'mdi-material-ui/ChevronUp';
 import ExpandMoreIcon from 'mdi-material-ui/ChevronDown';
 import Users from 'meteor/vulcan:users';

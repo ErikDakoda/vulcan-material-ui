@@ -1,8 +1,8 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import ComponentMixin from './mixins/component';
-import { FormControlLabel } from 'material-ui/Form';
-import Switch from 'material-ui/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import MuiFormControl from './MuiFormControl';
 import MuiFormHelper from './MuiFormHelper';
 

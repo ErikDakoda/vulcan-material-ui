@@ -1,6 +1,6 @@
 import React from 'react';
 import { addCallback } from 'meteor/vulcan:core';
-import { MuiThemeProvider } from 'material-ui/styles';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { getCurrentTheme } from '../modules/themes';
 import JssCleanup from '../components/theme/JssCleanup';
 

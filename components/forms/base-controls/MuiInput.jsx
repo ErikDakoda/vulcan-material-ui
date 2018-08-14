@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import withStyles from 'material-ui/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import ComponentMixin from './mixins/component';
 import MuiFormControl from './MuiFormControl';
 import MuiFormHelper from './MuiFormHelper';
-import Input from 'material-ui/Input';
+import Input from '@material-ui/core/Input';
 import StartAdornment, { hideStartAdornment, fixUrl } from './StartAdornment';
 import EndAdornment from './EndAdornment';
 

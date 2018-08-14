@@ -210,7 +210,7 @@ There is an additional component, an autosuggest-based country select.
 Countries are stored as their 2-letter country codes. I have included a helper function for displaying the country name:
 
 ``` javascript
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import { getCountryLabel } from 'meteor/erikdakoda:vulcan-material-ui';
 
 <Typography variant="subheading">

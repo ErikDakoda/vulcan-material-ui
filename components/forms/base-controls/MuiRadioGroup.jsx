@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ComponentMixin from './mixins/component';
-import withStyles from 'material-ui/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import MuiFormControl from './MuiFormControl';
 import MuiFormHelper from './MuiFormHelper';
-import { FormControlLabel, } from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import classNames from 'classnames';
 
 

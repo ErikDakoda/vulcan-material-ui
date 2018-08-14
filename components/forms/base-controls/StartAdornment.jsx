@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { instantiateComponent } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
-import { InputAdornment } from 'material-ui/Input';
-import IconButton from 'material-ui/IconButton';
+import withStyles from '@material-ui/core/styles/withStyles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 import OpenInNewIcon from 'mdi-material-ui/OpenInNew';
 import { styles } from './EndAdornment';
 

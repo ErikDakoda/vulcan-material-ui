@@ -6,7 +6,7 @@ import {
   instantiateComponent,
   withCurrentUser,
 } from 'meteor/vulcan:core';
-import withStyles from 'material-ui/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Users from 'meteor/vulcan:users';
 import classNames from 'classnames';
 

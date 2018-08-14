@@ -1,7 +1,7 @@
 import { registerTheme } from './themes';
-import indigo from 'material-ui/colors/indigo';
-import blue from 'material-ui/colors/blue';
-import red from 'material-ui/colors/red';
+import indigo from '@material-ui/core/colors/indigo';
+import blue from '@material-ui/core/colors/blue';
+import red from '@material-ui/core/colors/red';
 
 
 /** @ignore */

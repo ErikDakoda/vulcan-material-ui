@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { replaceComponent } from 'meteor/vulcan:core';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
 
-import Snackbar from 'material-ui/Snackbar';
-import withStyles from 'material-ui/styles/withStyles';
+import Snackbar from '@material-ui/core/Snackbar';
+import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 
 
