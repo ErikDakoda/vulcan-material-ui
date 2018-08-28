@@ -110,6 +110,7 @@ export default {
       'scrubValue',
       'custom',
       'hideClear',
+      'inputProperties',
     ];
     
     return _omit(props, removedFields);

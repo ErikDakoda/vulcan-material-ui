@@ -6,7 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 
 const styles = theme => ({
-  messages: theme.utils.errorMessage,
+  messages: theme.utils.errorMessages,
 });
 
 

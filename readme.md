@@ -1,24 +1,11 @@
 
-# erikdakoda:vulcan-material-ui 1.10.1_2
+# erikdakoda:vulcan-material-ui 1.11.2
 
-Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui-next.com/). 
-It's based on the latest [v1-beta branch](https://github.com/callemall/material-ui/tree/v1-beta) of Material-UI.
-
-Soon this package will be rolled into the VulcanJS main repository. The next version of Vulcan will have no
-dependencies on Bootstrap, and you will be able to choose your ui framework without the added bundle size of Bootstrap.
+Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui.com/). 
+This version has been tested against Vulcan 1.11.2 and Material-UI 1.5.0.
 
 To give me feedback open an issue on GitHub or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) 
 channel as erikdakoda.
-
-This version has been tested against Vulcan 1.10.0 and Material UI 1.0.0-beta.47. Support for the final v1.0.0 is just around the corner.
-
-NOTE: Material UI is still in beta and the API is still in flux. 
-If you are experiencing problems, try locking your project to 
-1.0.0-beta.47 by removing the ^ before the version number in your package.json.
-
-``` json
-    "material-ui": "1.0.0-beta.47",
-```
 
 There are some nice bonus features like a CountrySelect with autocomplete and theming.
 
@@ -32,7 +19,7 @@ To add vulcan-material-ui to an existing Vulcan project, enter the following:
 ``` sh
 $ meteor add erikdakoda:vulcan-material-ui
 
-$ meteor npm install --save material-ui@next
+$ meteor npm install --save @material-ui/core
 $ meteor npm install --save mdi-material-ui
 $ meteor npm install --save react-autosuggest
 $ meteor npm install --save autosuggest-highlight
@@ -98,11 +85,11 @@ Sometimes the React rendered on the server and the client don't match exactly an
 
 Your pages should still render correctly, but there may be a blink and redraw when the first page after SSR loads in the browser.
 
-IIn your own code, make sure that your components will render the same on the server and the client. This means not referring to client-side object such as `document` or `jQuery`. If you have a misbehaving component, try wrapping it with [react-no-ssr](https://github.com/kadirahq/react-no-ssr). 
+In your own code, make sure that your components will render the same on the server and the client. This means not referring to client-side object such as `document` or `jQuery`. If you have a misbehaving component, try wrapping it with [react-no-ssr](https://github.com/kadirahq/react-no-ssr). 
 
 ## Form Controls
 
-You can pass a couple of extra options to text inputs from the `form` property of your schema:
+You can pass a couple of extra options to inputs from the `form` property of your schema:
 
 ``` javascript
   userKey: {
@@ -113,15 +100,15 @@ You can pass a couple of extra options to text inputs from the `form` property o
     hidden: function ({ document }) {
       return !document.platformId || !document.usePlatformApp;
     },
-    form: {
+    inputProperties: {
       autoFocus: true,                 // focus this input when the form loads
       addonBefore: <KeyIcon/>,         // adorn the start of the input
       addonAfter: <KeyIcon/>,          // adorn the end of the input
       inputClassName: 'halfWidthLeft', // use 'halfWidthLeft' or 'halfWidthRight'
                                        //   to display two controls side by side
       hideLabel: true,                 // hide the label
-      help: 'Enter your key here',     // add help text below the input
-      variant: 'switch',               // checkboxgroup can be set to either 
+      rows: 10,                        // for textareas you can specify the rows
+      variant: 'switch',               // for checkboxgroups you can use either 
     },                                 //   'checkbox' (default) or 'switch'
     group: platformGroup,
     viewableBy: ['members'],
@@ -132,14 +119,6 @@ You can pass a couple of extra options to text inputs from the `form` property o
 
 > Note: `form.getHidden` has been deprecated. Now you can just pass a function to `hidden`.
 
-And to textarea inputs:
-
-``` javascript
-    form: {
-      rows: 10,
-    },
-```
-
 ## Form Groups
 
 You can pass a couple of extra options form groups as well:
@@ -149,9 +128,8 @@ You can pass a couple of extra options form groups as well:
     name: 'shops.platform',
     order: 4,
     startComponent: 'ShopsPlatformTitle', // component to put at the top of the form group
-    endComponent: 'ShopsConnectButtons', // component to put at the bottom of the form group
+    endComponent: 'ShopsConnectButtons',  // component to put at the bottom of the form group
   },
-
 ```
 
 ## DataTable
