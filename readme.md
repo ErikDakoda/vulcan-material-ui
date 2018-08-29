@@ -23,6 +23,7 @@ meteor npm install --save @material-ui/core
 meteor npm install --save mdi-material-ui
 meteor npm install --save react-autosuggest
 meteor npm install --save autosuggest-highlight
+meteor npm install --save react-isolated-scroll
 ```
 
 > IMPORTANT: Please note that I have abandoned material-ui-icons in favor of mdi-material-ui because it has a much larger [selection of icons](https://materialdesignicons.com/).
