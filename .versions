@@ -15,14 +15,14 @@ ddp-common@1.4.0
 ddp-rate-limiter@1.0.7
 ddp-server@2.2.0
 diff-sequence@1.1.0
-dynamic-import@0.4.0
+dynamic-import@0.4.2
 ecmascript@0.11.1
 ecmascript-runtime@0.7.0
 ecmascript-runtime-client@0.7.1
 ecmascript-runtime-server@0.7.0
 ejson@1.1.0
 email@1.2.3
-erikdakoda:vulcan-material-ui@1.10.1_9
+erikdakoda:vulcan-material-ui@1.11.2
 es5-shim@4.8.0
 fourseven:scss@4.5.4
 geojson-utils@1.0.10
