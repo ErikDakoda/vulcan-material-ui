@@ -29,7 +29,7 @@ meteor npm install --save react-isolated-scroll
 
 > IMPORTANT: Please note that I have abandoned material-ui-icons in favor of mdi-material-ui because it has a much larger [selection of icons](https://materialdesignicons.com/).
 
-The package depends from the `vulcan:ui-boostrap` package, which handles the first registeration of many Vulcan core components. This dependency will dispappear when Vulcan 1.11.3 is published.
+The package depends from the `vulcan:ui-boostrap` package, which handles the first registeration of many Vulcan core components. This dependency will dispappear whith Vulcan 1.12 version.
 
 To activate the example layout copy the three components to your project and import them:
 
