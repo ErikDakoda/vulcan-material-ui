@@ -17,6 +17,7 @@ have been implemented except for Icon and DateTime (but they will still work).
 To add vulcan-material-ui to an existing Vulcan project, enter the following:
 
 ``` sh
+meteor add vulcan:ui-bootstrap
 meteor add erikdakoda:vulcan-material-ui
 
 meteor npm install --save @material-ui/core@1.5.0
@@ -27,6 +28,8 @@ meteor npm install --save react-isolated-scroll
 ```
 
 > IMPORTANT: Please note that I have abandoned material-ui-icons in favor of mdi-material-ui because it has a much larger [selection of icons](https://materialdesignicons.com/).
+
+The package depends from the `vulcan:ui-boostrap` package, which handles the first registeration of many Vulcan core components. This dependency will dispappear whith Vulcan 1.12 version.
 
 To activate the example layout copy the three components to your project and import them:
 
