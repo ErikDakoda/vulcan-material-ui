@@ -144,11 +144,14 @@ const CardEditForm = ({ collection, document, closeModal }) =>
   />;
 
 
-const Card = ({ className, collection, document, currentUser, fields }, { intl }) => {
+const Card = ({ className, collection, document, currentUser, fields, canEdit: forceCanEdit }, { intl }) => {
   
   const fieldNames = fields ? fields : _.without(_.keys(document), '__typename');
-  const canEdit = currentUser && collection.options.mutations.edit.check(currentUser, document);
-  
+  const canEdit =
+    typeof forceCanEdit !== "undefined"
+      ? forceCanEdit
+      : currentUser &&
+        collection.options.mutations.edit.check(currentUser, document);  
   return (
     <div className={classNames(className, 'datacard', `datacard-${collection._name}`)}>
       <table className="table table-bordered" style={{ maxWidth: '100%' }}>
