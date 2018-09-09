@@ -182,7 +182,7 @@ There is an additional component, an autosuggest-based country select.
   country: {
     type: String,
     label: 'Country',
-    control: 'CountrySelect',
+    input: 'CountrySelect',
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],

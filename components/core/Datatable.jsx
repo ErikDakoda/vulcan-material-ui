@@ -22,6 +22,9 @@ Datatable Component
 const baseStyles = theme => ({
   root: {
     position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   addButton: {
     position: 'absolute',
