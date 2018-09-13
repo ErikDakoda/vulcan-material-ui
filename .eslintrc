@@ -13,19 +13,22 @@
   },
   "rules": {
     "babel/generator-star-spacing": 0,
-    "babel/new-cap": [1, {
-      "capIsNewExceptions": [
-        "Optional",
-        "OneOf",
-        "Maybe",
-        "MailChimpAPI",
-        "Juice",
-        "Run",
-        "AppComposer",
-        "Query",
-        "InArray"
-      ]
-    }],
+    "babel/new-cap": [
+      1,
+      {
+        "capIsNewExceptions": [
+          "Optional",
+          "OneOf",
+          "Maybe",
+          "MailChimpAPI",
+          "Juice",
+          "Run",
+          "AppComposer",
+          "Query",
+          "InArray"
+        ]
+      }
+    ],
     "babel/array-bracket-spacing": 0,
     "babel/object-curly-spacing": 0,
     "babel/object-shorthand": 0,
@@ -35,17 +38,24 @@
     "key-spacing": 0,
     "no-extra-boolean-cast": 0,
     "no-undef": 1,
-    "no-unused-vars": [1, {
-      "vars": "all",
-      "args": "none",
-      "varsIgnorePattern": "React|PropTypes|Component"
-    }],
+    "no-unused-vars": [
+      1,
+      {
+        "vars": "all",
+        "args": "none",
+        "varsIgnorePattern": "React|PropTypes|Component"
+      }
+    ],
     "react/prop-types": 0,
     "react/display-name": 0,
     "meteor/audit-argument-checks": 0,
     "meteor/no-session": 0,
     "no-case-declarations": 0,
     "no-console": 0,
+    "quotes": [
+      1,
+      "single"
+    ],
     "semi": "error"
   },
   "env": {

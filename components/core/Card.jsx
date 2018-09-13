@@ -38,8 +38,8 @@ const parseImageUrl = value => {
   const isImage = ['.png', '.jpg', '.gif'].indexOf(value.substr(-4)) !== -1 ||
     ['.webp', '.jpeg'].indexOf(value.substr(-5)) !== -1;
   return isImage ?
-    <img style={{ width: '100%', maxWidth: 200 }} src={value} alt={value}/> :
-    <LimitedString string={value}/>;
+    <img style={{ width: '100%', maxWidth: 200 }} src={value} alt={value} /> :
+    <LimitedString string={value} />;
 };
 
 
@@ -53,52 +53,52 @@ const LimitedString = ({ string }) =>
 
 
 export const getFieldValue = (value, typeName) => {
-  
+
   if (typeof value === 'undefined' || value === null) {
     return '';
   }
-  
+
   if (Array.isArray(value)) {
     typeName = 'Array';
   }
-  
+
   if (typeof typeName === 'undefined') {
     typeName = typeof value;
   }
-  
+
   switch (typeName) {
-    
+
     case 'Boolean':
     case 'boolean':
-      return <Checkbox checked={value} disabled style={{ width: '32px', height: '32px' }}/>;
-    
+      return <Checkbox checked={value} disabled style={{ width: '32px', height: '32px' }} />;
+
     case 'Number':
     case 'number':
     case 'SimpleSchema.Integer':
       return <code>{value.toString()}</code>;
-    
+
     case 'Array':
       return <ol>{value.map(
         (item, index) => <li key={index}>{getFieldValue(item, typeof item)}</li>)}</ol>;
-    
+
     case 'Object':
     case 'object':
       return (
         <table className="table">
           <tbody>
-          {_.map(value, (value, key) =>
-            <tr key={key}>
-              <td><strong>{key}</strong></td>
-              <td>{getFieldValue(value, typeof value)}</td>
-            </tr>
-          )}
+            {_.map(value, (value, key) =>
+              <tr key={key}>
+                <td><strong>{key}</strong></td>
+                <td>{getFieldValue(value, typeof value)}</td>
+              </tr>
+            )}
           </tbody>
         </table>
       );
-    
+
     case 'Date':
       return moment(new Date(value)).format('dddd, MMMM Do YYYY, h:mm:ss');
-    
+
     default:
       return parseImageUrl(value);
   }
@@ -118,9 +118,9 @@ const CardEdit = (props, context) => {
     <tr>
       <td colSpan="2">
         <Components.ModalTrigger label={editTitle}
-                                 component={<IconButton aria-label={editTitle}>
-                                   <EditIcon/>
-                                 </IconButton>}
+          component={<IconButton aria-label={editTitle}>
+            <EditIcon />
+          </IconButton>}
         >
           <CardEditForm {...props} />
         </Components.ModalTrigger>
@@ -143,22 +143,36 @@ const CardEditForm = ({ collection, document, closeModal }) =>
     }}
   />;
 
+const Card = (
+  {
+    className,
+    collection,
+    document,
+    currentUser,
+    fields,
+    canEdit: forceCanEdit
+  },
+  { intl }
+) => {
+  const fieldNames = fields
+    ? fields
+    : _.without(_.keys(document), "__typename");
+  const canEdit =
+    typeof forceCanEdit !== "undefined"
+      ? forceCanEdit
+      : currentUser &&
+      collection.options.mutations.edit.check(currentUser, document);
 
-const Card = ({ className, collection, document, currentUser, fields }, { intl }) => {
-  
-  const fieldNames = fields ? fields : _.without(_.keys(document), '__typename');
-  const canEdit = currentUser && collection.options.mutations.edit.check(currentUser, document);
-  
   return (
     <div className={classNames(className, 'datacard', `datacard-${collection._name}`)}>
       <table className="table table-bordered" style={{ maxWidth: '100%' }}>
         <tbody>
-        {canEdit ? <CardEdit collection={collection} document={document}/> : null}
-        {fieldNames.map((fieldName, index) =>
-          <CardItem key={index} value={document[fieldName]}
-                    typeName={getTypeName(document[fieldName], fieldName, collection)}
-                    label={getLabel(document[fieldName], fieldName, collection, intl)}/>
-        )}
+          {canEdit ? <CardEdit collection={collection} document={document} /> : null}
+          {fieldNames.map((fieldName, index) =>
+            <CardItem key={index} value={document[fieldName]}
+              typeName={getTypeName(document[fieldName], fieldName, collection)}
+              label={getLabel(document[fieldName], fieldName, collection, intl)} />
+          )}
         </tbody>
       </table>
     </div>
