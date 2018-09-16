@@ -1,8 +1,8 @@
 
-# erikdakoda:vulcan-material-ui 1.12.5
+# erikdakoda:vulcan-material-ui 1.12.6
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui.com/). 
-This version has been tested against Vulcan 1.12.5 and Material-UI 1.5.0.
+This version has been tested against Vulcan 1.12.6 and Material-UI 3.0.3.
 
 To give me feedback open an issue on GitHub or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) 
 channel as erikdakoda.
