@@ -11,12 +11,16 @@ import JssCleanup from '../components/theme/JssCleanup';
 function wrapWithMuiTheme (app, { req, res, store, apolloClient }) {
   const sheetsRegistry = new SheetsRegistry();
   req.sheetsRegistry = sheetsRegistry;
-  const generateClassName = createGenerateClassName();
+  
+  const sheetsManager = new Map();
+
   const theme = getCurrentTheme();
+  
+  const generateClassName = createGenerateClassName({ seed: '0' });
   
   return (
     <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-      <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+      <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
         <JssCleanup>
           {app}
         </JssCleanup>
