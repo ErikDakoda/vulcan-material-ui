@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Components, registerComponent, replaceComponent, withCurrentUser, withList } from 'meteor/vulcan:core';
+import { Components, registerComponent, replaceComponent, withCurrentUser, withMulti } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Table from '@material-ui/core/Table';
@@ -89,7 +89,7 @@ class Datatable extends PureComponent {
         ...options,
       };
       
-      const DatatableWithList = withList(listOptions)(Components.DatatableContents);
+      const DatatableWithList = withMulti(listOptions)(Components.DatatableContents);
       
       return (
         <div className={classNames('datatable', `datatable-${collection._name}`, classes.root,

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import DateTimePicker from 'react-datetime';
-import { replaceComponent } from 'meteor/vulcan:core';
+import { registerComponent } from 'meteor/vulcan:core';
 
 
 class DateTime extends PureComponent {
@@ -58,4 +58,4 @@ DateTime.contextTypes = {
 
 export default DateTime;
 
-replaceComponent('FormComponentDateTime', DateTime);
+registerComponent('FormComponentDateTime', DateTime);

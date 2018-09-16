@@ -119,13 +119,19 @@ const MuiSuggest = createReactClass({
     options: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      formatted: PropTypes.node,
       iconComponent: PropTypes.node,
+      onClick: PropTypes.func,
     })),
     classes: PropTypes.object.isRequired,
     limitToList: PropTypes.bool,
     disableText: PropTypes.bool,
     showAllOptions: PropTypes.bool,
     className: PropTypes.string,
+  },
+  
+  getOptionFormatted: function (option) {
+    return option.formatted || option.label || option.value || '';
   },
   
   getOptionLabel: function (option) {
@@ -136,7 +142,7 @@ const MuiSuggest = createReactClass({
     if (this.props.refFunction) {
       this.props.refFunction(this);
     }
-  
+    
     const selectedOption = this.getSelectedOption();
     return {
       inputValue: this.getOptionLabel(selectedOption),
@@ -189,13 +195,20 @@ const MuiSuggest = createReactClass({
     this.changeValue(suggestion);
     
     if (this.props.showAllOptions) {
-      setTimeout(() => {document.activeElement.blur();});
+      this.closeSuggestions();
     }
+  },
+  
+  closeSuggestions: function () {
+    setTimeout(() => {document.activeElement.blur();});
   },
   
   changeValue: function (suggestion) {
     if (!suggestion) {
       suggestion = { label: '', value: null };
+    }
+    if (suggestion.onClick) {
+      return;
     }
     this.setState({
       selectedOption: suggestion,
@@ -321,14 +334,14 @@ const MuiSuggest = createReactClass({
   },
   
   renderSuggestion: function (suggestion, { query, isHighlighted }) {
-    const label = this.getOptionLabel(suggestion);
+    const label = this.getOptionFormatted(suggestion);
     const matches = match(label, query);
     const parts = parse(label, matches);
     const isSelected = suggestion.value === this.props.value;
     const className = isSelected ? this.props.classes.selected : null;
     
     return (
-      <MenuItem selected={isHighlighted} component="div" className={className}>
+      <MenuItem selected={isHighlighted} component="div" className={className} onClick={suggestion.onClick}>
         {
           suggestion.iconComponent &&
           <div className={this.props.classes.suggestionIcon}>

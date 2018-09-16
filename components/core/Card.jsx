@@ -147,13 +147,13 @@ const CardEditForm = ({ collection, document, closeModal }) =>
 const Card = ({ className, collection, document, currentUser, fields }, { intl }) => {
   
   const fieldNames = fields ? fields : _.without(_.keys(document), '__typename');
-  const canEdit = currentUser && collection.options.mutations.edit.check(currentUser, document);
+  const canUpdate = currentUser && collection.options.mutations.update.check(currentUser, document);
   
   return (
     <div className={classNames(className, 'datacard', `datacard-${collection._name}`)}>
       <table className="table table-bordered" style={{ maxWidth: '100%' }}>
         <tbody>
-        {canEdit ? <CardEdit collection={collection} document={document}/> : null}
+        {canUpdate ? <CardEdit collection={collection} document={document}/> : null}
         {fieldNames.map((fieldName, index) =>
           <CardItem key={index} value={document[fieldName]}
                     typeName={getTypeName(document[fieldName], fieldName, collection)}

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape } from 'meteor/vulcan:i18n';
-import { replaceComponent } from 'meteor/vulcan:core';
+import { registerComponent } from 'meteor/vulcan:core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -120,4 +120,4 @@ ModalTrigger.contextTypes = {
 };
 
 
-replaceComponent('ModalTrigger', ModalTrigger, [withStyles, styles]);
+registerComponent('ModalTrigger', ModalTrigger, [withStyles, styles]);

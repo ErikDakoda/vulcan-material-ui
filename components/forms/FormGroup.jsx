@@ -1,18 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Components,
-  replaceComponent,
-  instantiateComponent,
-  withCurrentUser,
-} from 'meteor/vulcan:core';
+import { Components, replaceComponent, instantiateComponent, } from 'meteor/vulcan:core';
+import Users from 'meteor/vulcan:users';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import ExpandLessIcon from 'mdi-material-ui/ChevronUp';
 import ExpandMoreIcon from 'mdi-material-ui/ChevronDown';
-import Users from 'meteor/vulcan:users';
 import classNames from 'classnames';
 
 
@@ -60,8 +55,6 @@ class FormGroup extends PureComponent {
   constructor (props) {
     super(props);
     
-    this.toggle = this.toggle.bind(this);
-    
     this.isAdmin = props.name === 'admin';
     
     this.state = {
@@ -70,33 +63,61 @@ class FormGroup extends PureComponent {
   }
   
   
-  toggle () {
+  toggle = () => {
     const collapsible = this.props.collapsible || this.isAdmin;
     if (!collapsible) return;
     
     this.setState({
       collapsed: !this.state.collapsed
     });
-  }
+  };
+  
+  
+  renderHeading = () => {
+    const { classes, label } = this.props;
+    const collapsible = this.props.collapsible || this.isAdmin;
+    
+    return (
+      <Typography className={classNames(classes.subheading, collapsible && classes.collapsible)}
+                  variant="subheading"
+                  onClick={this.toggle}
+      >
+    
+        <div className={classes.label}>
+          {label}
+        </div>
+    
+        {
+          collapsible &&
+      
+          <div className={classes.toggle}>
+            {
+              this.state.collapsed
+                ?
+                <ExpandMoreIcon/>
+                :
+                <ExpandLessIcon/>
+            }
+          </div>
+        }
+  
+      </Typography>
+    );
+  };
+  
+  
+  // if at least one of the fields in the group has an error, the group as a whole has an error
+  hasErrors = () => _.some(this.props.fields, field => {
+    return !!this.props.errors.filter(error => error.path === field.path).length;
+  });
   
   
   render () {
     const {
       name,
-      label,
       hidden,
       classes,
       currentUser,
-      fields,
-      updateCurrentValues,
-      startComponent,
-      endComponent,
-      errors,
-      currentValues,
-      deletedValues,
-      formType,
-      throwError,
-      addToDeletedValues
     } = this.props;
     
     if (this.isAdmin && !Users.isAdmin(currentUser)) {
@@ -108,76 +129,49 @@ class FormGroup extends PureComponent {
     }
     
     //do not display if no fields, no startComponent and no endComponent
-    if (!startComponent && !endComponent && !fields.length) {
+    if (!this.props.startComponent && !this.props.endComponent && !this.props.fields.length) {
       return null;
     }
     
-    // if at least one of the fields in the group has an error, the group as a whole has an error
-    const hasErrors = fields.find(field => {
-      return !!errors.filter(
-        error => error.properties && error.properties.name && error.properties.name === field.path
-      ).length;
-    });
-    
-    const collapsible = this.props.collapsible || this.isAdmin;
     const anchorName = name.split('.').length > 1 ? name.split('.')[1] : name;
-    const collapseIn = !this.state.collapsed || hasErrors;
+    const collapseIn = !this.state.collapsed || this.hasErrors();
     
     return (
       <div className={classes.root}>
         
         <a name={anchorName}/>
         
-        {name === 'default' ? null : (
-          <Typography className={classNames(classes.subheading, collapsible && classes.collapsible)}
-                      variant="subheading"
-                      onClick={this.toggle}
-          >
-            
-            <div className={classes.label}>
-              {label}
-            </div>
-            
-            {
-              collapsible &&
-              
-              <div className={classes.toggle}>
-                {
-                  this.state.collapsed
-                    ?
-                    <ExpandMoreIcon/>
-                    :
-                    <ExpandLessIcon/>
-                }
-              </div>
-            }
-          
-          </Typography>
-        )}
+        {
+          name === 'default'
+            ?
+            null
+            :
+            this.renderHeading()
+        }
         
         <Collapse classes={{ container: classes.container, entered: classes.entered }} in={collapseIn}>
           <Paper className={classes.paper}>
             
-            {instantiateComponent(startComponent)}
+            {instantiateComponent(this.props.startComponent)}
             
-            {fields.map(field => {
-              return (
-                <Components.FormComponent
-                  key={field.name}
-                  {...field}
-                  errors={errors}
-                  throwError={throwError}
-                  currentValues={currentValues}
-                  updateCurrentValues={updateCurrentValues}
-                  addToDeletedValues={addToDeletedValues}
-                  deletedValues={deletedValues}
-                  clearFieldErrors={this.props.clearFieldErrors}
-                  formType={formType}
-                />
-              );
-            })}
+            {this.props.fields.map(field => (
+              <Components.FormComponent
+                key={field.name}
+                disabled={this.props.disabled}
+                {...field}
+                errors={this.props.errors}
+                throwError={this.props.throwError}
+                currentValues={this.props.currentValues}
+                updateCurrentValues={this.props.updateCurrentValues}
+                deletedValues={this.props.deletedValues}
+                addToDeletedValues={this.props.addToDeletedValues}
+                clearFieldErrors={this.props.clearFieldErrors}
+                formType={this.props.formType}
+                currentUser={this.props.currentUser}
+              />
+            ))}
             
-            {instantiateComponent(endComponent)}
+            {instantiateComponent(this.props.endComponent)}
           
           </Paper>
         </Collapse>
@@ -202,8 +196,7 @@ FormGroup.propTypes = {
   startComponent: PropTypes.node,
   endComponent: PropTypes.node,
   currentUser: PropTypes.object,
-  formGroupComponent: PropTypes.string,
 };
 
 
-replaceComponent('FormGroup', FormGroup, withCurrentUser, [withStyles, styles]);
+replaceComponent('FormGroup', FormGroup, [withStyles, styles]);

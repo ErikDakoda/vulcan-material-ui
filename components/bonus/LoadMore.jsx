@@ -45,7 +45,7 @@ const LoadMore = ({
                   }, { intl }) => {
   
   const isLoadingMore = networkStatus === 2;
-  const loadMoreText = intl.formatMessage({ id: 'common.load_more' });
+  const loadMoreText = intl.formatMessage({ id: 'global.load_more' });
   const title = `${loadMoreText} (${count}/${totalCount})`;
   
   return (
@@ -99,7 +99,7 @@ const LoadMore = ({
             
             <Typography variant="caption" className={classes.caption}>
               <FormattedMessage
-                id="common.no_more"
+                id="global.no_more"
                 defaultMessage="No more items"
               />
             </Typography>

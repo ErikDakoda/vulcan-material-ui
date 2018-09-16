@@ -4,7 +4,6 @@ import {
   Components,
   registerComponent,
   instantiateComponent,
-  withCurrentUser,
 } from 'meteor/vulcan:core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Users from 'meteor/vulcan:users';
@@ -27,16 +26,6 @@ class FormGroupNone extends PureComponent {
       hidden,
       classes,
       currentUser,
-      fields,
-      updateCurrentValues,
-      startComponent,
-      endComponent,
-      errors,
-      currentValues,
-      deletedValues,
-      formType,
-      throwError,
-      addToDeletedValues
     } = this.props;
     
     if (this.isAdmin && !Users.isAdmin(currentUser)) {
@@ -48,10 +37,10 @@ class FormGroupNone extends PureComponent {
     }
     
     //do not display if no fields, no startComponent and no endComponent
-    if (!startComponent && !endComponent && !fields.length) {
+    if (!this.props.startComponent && !this.props.endComponent && !this.props.fields.length) {
       return null;
     }
-    
+  
     const anchorName = name.split('.').length > 1 ? name.split('.')[1] : name;
     
     return (
@@ -59,26 +48,26 @@ class FormGroupNone extends PureComponent {
         
         <a name={anchorName}/>
         
-        {instantiateComponent(startComponent)}
+        {instantiateComponent(this.props.startComponent)}
+  
+        {this.props.fields.map(field => (
+          <Components.FormComponent
+            key={field.name}
+            disabled={this.props.disabled}
+            {...field}
+            errors={this.props.errors}
+            throwError={this.props.throwError}
+            currentValues={this.props.currentValues}
+            updateCurrentValues={this.props.updateCurrentValues}
+            deletedValues={this.props.deletedValues}
+            addToDeletedValues={this.props.addToDeletedValues}
+            clearFieldErrors={this.props.clearFieldErrors}
+            formType={this.props.formType}
+            currentUser={this.props.currentUser}
+          />
+        ))}
         
-        {fields.map(field => {
-          return (
-            <Components.FormComponent
-              key={field.name}
-              {...field}
-              errors={errors}
-              throwError={throwError}
-              currentValues={currentValues}
-              updateCurrentValues={updateCurrentValues}
-              addToDeletedValues={addToDeletedValues}
-              deletedValues={deletedValues}
-              clearFieldErrors={this.props.clearFieldErrors}
-              formType={formType}
-            />
-          );
-        })}
-        
-        {instantiateComponent(endComponent)}
+        {instantiateComponent(this.props.endComponent)}
       
       </div>
     );
@@ -100,4 +89,4 @@ FormGroupNone.propTypes = {
 };
 
 
-registerComponent('FormGroupNone', FormGroupNone, withCurrentUser, [withStyles, styles]);
+registerComponent('FormGroupNone', FormGroupNone, [withStyles, styles]);

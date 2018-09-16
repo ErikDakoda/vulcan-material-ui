@@ -1,6 +1,6 @@
 import React from 'react';
 import MuiInput from '../base-controls/MuiInput';
-import { replaceComponent } from 'meteor/vulcan:core';
+import { registerComponent } from 'meteor/vulcan:core';
 
 
 const TextareaComponent = ({ refFunction, ...properties }) =>
@@ -12,4 +12,4 @@ const TextareaComponent = ({ refFunction, ...properties }) =>
   />;
 
 
-replaceComponent('FormComponentTextarea', TextareaComponent);
+registerComponent('FormComponentTextarea', TextareaComponent);

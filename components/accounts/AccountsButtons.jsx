@@ -15,7 +15,7 @@ const styles = theme => ({
 });
 
 
-export class Buttons extends Component {
+export class AccountsButtons extends Component {
   render () {
     
     const {
@@ -35,14 +35,14 @@ export class Buttons extends Component {
 }
 
 
-Buttons.propTypes = {
+AccountsButtons.propTypes = {
   classes: PropTypes.object.isRequired,
   buttons: PropTypes.object,
   className: PropTypes.string,
 };
 
 
-Buttons.displayName = 'AccountsButtons';
+AccountsButtons.displayName = 'AccountsButtons';
 
 
-replaceComponent('AccountsButtons', Buttons, [withStyles, styles]);
+replaceComponent('AccountsButtons', AccountsButtons, [withStyles, styles]);

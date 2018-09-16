@@ -111,6 +111,10 @@ export default {
       'custom',
       'hideClear',
       'inputProperties',
+      'currentUser',
+      'nestedSchema',
+      'parentFieldName',
+      'itemIndex',
     ];
     
     return _omit(props, removedFields);

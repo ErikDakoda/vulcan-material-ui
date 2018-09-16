@@ -27,6 +27,19 @@ const styles = theme => ({
     verticalAlign: 'top',
   },
   
+  thirdWidthLeft: {
+    display: 'inline-block',
+    width: '31%',
+    verticalAlign: 'top',
+    marginRight: '3.5%',
+  },
+  
+  thirdWidthRight: {
+    display: 'inline-block',
+    width: '31%',
+    verticalAlign: 'top',
+  },
+  
   hidden: {
     display: 'none',
   },

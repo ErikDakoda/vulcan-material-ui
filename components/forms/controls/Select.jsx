@@ -1,6 +1,6 @@
 import React from 'react';
 import MuiSelect from '../base-controls/MuiSelect';
-import { replaceComponent } from 'meteor/vulcan:core';
+import { registerComponent } from 'meteor/vulcan:core';
 
 
 const SelectComponent = ({ refFunction, ...properties }) => {
@@ -11,4 +11,4 @@ const SelectComponent = ({ refFunction, ...properties }) => {
 };
 
 
-replaceComponent('FormComponentSelect', SelectComponent);
+registerComponent('FormComponentSelect', SelectComponent);

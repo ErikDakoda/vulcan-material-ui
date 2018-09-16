@@ -1,8 +1,8 @@
 
-# erikdakoda:vulcan-material-ui 1.11.2
+# erikdakoda:vulcan-material-ui 1.12.5
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui.com/). 
-This version has been tested against Vulcan 1.11.2 and Material-UI 1.5.0.
+This version has been tested against Vulcan 1.12.5 and Material-UI 1.5.0.
 
 To give me feedback open an issue on GitHub or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) 
 channel as erikdakoda.
@@ -115,9 +115,9 @@ You can pass a couple of extra options to inputs from the `form` property of you
       variant: 'switch',               // for checkboxgroups you can use either 
     },                                 //   'checkbox' (default) or 'switch'
     group: platformGroup,
-    viewableBy: ['members'],
-    insertableBy: ['members'],
-    editableBy: ['members'],
+    canRead: ['members'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
   },
 ```
 
@@ -183,9 +183,9 @@ There is an additional component, an autosuggest-based country select.
     type: String,
     label: 'Country',
     input: 'CountrySelect',
-    viewableBy: ['guests'],
-    insertableBy: ['members'],
-    editableBy: ['members'],
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
   },
 ```
 
