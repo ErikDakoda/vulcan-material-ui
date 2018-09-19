@@ -88,15 +88,9 @@ class Datatable extends PureComponent {
         collection: collection,
         ...options,
       };
-<<<<<<< de50185e90810d98e3a23d98ed20df6a40ed2711
-      
+
       const DatatableWithList = withMulti(listOptions)(Components.DatatableContents);
-      
-=======
 
-      const DatatableWithList = withList(listOptions)(Components.DatatableContents);
-
->>>>>>> Fixed static datatable behaviour
       return (
         <div className={classNames('datatable', `datatable-${collection._name}`, classes.root,
           className)}>
