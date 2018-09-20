@@ -39,20 +39,22 @@ const styles = theme => ({
     margin: -6,
     marginLeft: 0,
     '& svg': {
-      width: 16
+      width: 16,
+      height: 16,
     },
   },
+  clearDense: {
+    width: 32,
+    height: 32,
+    margin: -4,
+    marginLeft: 0,
+  },
+  clearDisabled: {
+    opacity: 0,
+  },
   dense: {
-    '& $root': {
-      width: 200,
-      padding: 4,
-    },
-    '& $clear': {
-      width: 32,
-      height: 32,
-      margin: -4,
-      marginLeft: 0,
-    }
+    width: 200,
+    padding: 4,
   },
   icon: {
     color: theme.palette.common.lightBlack,
@@ -65,9 +67,6 @@ const styles = theme => ({
     paddingBottom: 2,
     marginBottom: 1,
   },
-  clearDisabled: {
-    opacity: 0,
-  }
 });
 
 
@@ -96,6 +95,7 @@ class SearchInput extends PureComponent {
       value: '',
     });
     this.updateQuery('');
+    this.focusInput();
   }
   
   updateSearch (event) {
@@ -122,7 +122,7 @@ class SearchInput extends PureComponent {
     const searchIcon = <SearchIcon className={classes.icon} onClick={this.focusInput}/>;
     
     const clearButton = <IconButton
-      className={classNames('clear-button', classes.clear, !this.state.value &&
+      className={classNames('clear-button', classes.clear, dense && classes.clearDense, !this.state.value &&
         classes.clearDisabled)}
       onClick={this.clearSearch}
       disabled={!this.state.value}
@@ -131,17 +131,17 @@ class SearchInput extends PureComponent {
     </IconButton>;
     
     return (
-        <Input className={classNames('search-input', classes.root, className, dense && classes.dense)}
-               classes={{ input: classes.input }}
-               id="search-input"
-               inputRef={(input) => this.input = input}
-               value={this.state.value}
-               type="search"
-               onChange={this.updateSearch}
-               disableUnderline={true}
-               startAdornment={searchIcon}
-               endAdornment={clearButton}
-        />
+      <Input className={classNames('search-input', classes.root, dense && classes.dense, className)}
+             classes={{ input: classes.input }}
+             id="search-input"
+             inputRef={(input) => this.input = input}
+             value={this.state.value}
+             type="search"
+             onChange={this.updateSearch}
+             disableUnderline={true}
+             startAdornment={searchIcon}
+             endAdornment={clearButton}
+      />
     );
   }
   

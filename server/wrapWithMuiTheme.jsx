@@ -16,7 +16,7 @@ function wrapWithMuiTheme (app, { req, res, store, apolloClient }) {
 
   const theme = getCurrentTheme();
   
-  const generateClassName = createGenerateClassName({ seed: '0' });
+  const generateClassName = createGenerateClassName({ seed: '' });
   
   return (
     <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>

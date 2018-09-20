@@ -14,7 +14,7 @@ import classNames from 'classnames';
 const styles = theme => ({
   root: {
     textAlign: 'center',
-    marginTop: theme.spacing.unit * 5,
+    marginTop: theme.spacing.unit * 4,
   },
   button: {
     margin: theme.spacing.unit,
@@ -115,9 +115,9 @@ const FormSubmit = ({
 
 
 FormSubmit.propTypes = {
-  submitLabel: PropTypes.string,
-  cancelLabel: PropTypes.string,
-  revertLabel: PropTypes.string,
+  submitLabel: PropTypes.node,
+  cancelLabel: PropTypes.node,
+  revertLabel: PropTypes.node,
   cancelCallback: PropTypes.func,
   revertCallback: PropTypes.func,
   document: PropTypes.object,

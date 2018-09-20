@@ -191,16 +191,19 @@ const MuiSuggest = createReactClass({
   
   suggestionSelected: function (event, { suggestion }) {
     event.preventDefault();
+    event.stopPropagation();
     
     this.changeValue(suggestion);
     
-    if (this.props.showAllOptions) {
-      this.closeSuggestions();
-    }
+    //if (this.props.showAllOptions) {
+      this.releaseFocus();
+    //}
   },
   
-  closeSuggestions: function () {
-    setTimeout(() => {document.activeElement.blur();});
+  releaseFocus: function () {
+    setTimeout(() => {
+      document.body.focus();
+    }, 1000);
   },
   
   changeValue: function (suggestion) {
@@ -270,7 +273,7 @@ const MuiSuggest = createReactClass({
   },
   
   renderElement: function (startAdornment, endAdornment) {
-    const { classes, autoFocus, disableText } = this.props;
+    const { classes, autoFocus, disableText, showAllOptions } = this.props;
     
     return (
       <Autosuggest
@@ -282,13 +285,15 @@ const MuiSuggest = createReactClass({
           suggestion: classes.suggestion,
           suggestionsList: classes.suggestionsList,
         }}
-        highlightFirstSuggestion={!disableText}
+        highlightFirstSuggestion={!disableText && !showAllOptions}
         renderInputComponent={this.renderInputComponent}
         suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
         renderSuggestionsContainer={this.renderSuggestionsContainer}
         shouldRenderSuggestions={this.shouldRenderSuggestions}
+        focusInputOnSuggestionClick={false}
+        alwaysRenderSuggestions={false}
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}
         onSuggestionSelected={this.suggestionSelected}

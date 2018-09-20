@@ -17,6 +17,7 @@ const styles = theme => ({
   button: {},
   anchor: {},
   dialog: {},
+  paper: {},
   dialogTitle: {},
   dialogContent: {
     paddingTop: '4px',
@@ -81,6 +82,7 @@ class ModalTrigger extends PureComponent {
                 open={this.state.modalIsOpen}
                 onClose={this.closeModal}
                 fullWidth={true}
+                classes={{ paper: classes.paper }}
         >
           
           {
@@ -107,7 +109,7 @@ ModalTrigger.propTypes = {
   label: PropTypes.string,
   labelId: PropTypes.string,
   component: PropTypes.object,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  title: PropTypes.node,
   titleId: PropTypes.string,
   type: PropTypes.oneOf(['link', 'button']),
   children: PropTypes.node,
