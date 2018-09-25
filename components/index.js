@@ -3,6 +3,8 @@ import './accounts/AccountsButtons';
 import './accounts/AccountsField';
 import './accounts/AccountsFields';
 import './accounts/AccountsForm';
+import './accounts/AccountsPasswordOrService';
+import './accounts/AccountsSocialButtons';
 
 import './bonus/LoadMore';
 import './bonus/SearchInput';
