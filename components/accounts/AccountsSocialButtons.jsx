@@ -6,7 +6,7 @@ import classNames from 'classnames'
 
 const styles = theme => ({
   root: {
-    flexDirection: 'row-reverse',
+    justifyContent: 'flex-end',
     padding: theme.spacing.unit * 2,
     height: 'auto',
   },
