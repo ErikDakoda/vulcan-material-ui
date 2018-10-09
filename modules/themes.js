@@ -40,6 +40,19 @@ export const getTheme = (name) => {
   return createMuiTheme(themeInfo.theme);
 };
 
+/**
+ * Get the raw theme object registered with registerTheme()
+ *
+ * @param {String} name The name of the theme to get
+ * 
+ * @returns {Object} The object passed to registerTheme
+ */
+
+export const getRawTheme = (name) => {
+  const themeInfo = ThemesTable[name];
+  if (!themeInfo) return null;
+  return themeInfo.theme;
+}
 
 /**
  * Get the theme specified in the 'muiTheme' setting
