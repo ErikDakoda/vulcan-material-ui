@@ -1,15 +1,15 @@
 
-# erikdakoda:vulcan-material-ui 1.12.6
+# erikdakoda:vulcan-material-ui 1.12.8
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui.com/). 
-This version has been tested against Vulcan 1.12.6 and Material-UI 3.0.3.
+This version has been tested against Vulcan 1.12.8 and Material-UI 3.1.0.
 
 To give me feedback open an issue on GitHub or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) 
 channel as erikdakoda.
 
 There are some nice bonus features like a CountrySelect with autocomplete and theming.
 
-All components that use bootstrap in vulcan:core, vulcan:forms and vulcan:accounts 
+All components in vulcan:ui-bootstrap, vulcan:forms and vulcan:accounts 
 have been implemented except for Icon and DateTime (but they will still work).
 
 ## Installation
@@ -17,19 +17,19 @@ have been implemented except for Icon and DateTime (but they will still work).
 To add vulcan-material-ui to an existing Vulcan project, enter the following:
 
 ``` sh
-meteor add vulcan:ui-bootstrap
 meteor add erikdakoda:vulcan-material-ui
 
-meteor npm install --save @material-ui/core@1.5.0
+meteor npm install --save @material-ui/core
 meteor npm install --save mdi-material-ui
 meteor npm install --save react-autosuggest
 meteor npm install --save autosuggest-highlight
 meteor npm install --save react-isolated-scroll
+meteor npm install --save react-keyboard-event-handler
 ```
 
 > IMPORTANT: Please note that I have abandoned material-ui-icons in favor of mdi-material-ui because it has a much larger [selection of icons](https://materialdesignicons.com/).
 
-The package depends from the `vulcan:ui-boostrap` package, which handles the first registration of many Vulcan core components. This dependency will disappear with Vulcan 1.12.0 version.
+This package no longer depends on `vulcan:ui-boostrap`, so you can remove it.
 
 To activate the example layout copy the three components to your project and import them:
 

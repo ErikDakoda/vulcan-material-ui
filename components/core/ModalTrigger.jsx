@@ -30,19 +30,27 @@ class ModalTrigger extends PureComponent {
   constructor (props) {
     super(props);
     
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    
     this.state = { modalIsOpen: false };
+    
+    
   }
   
-  openModal () {
+  componentDidMount() {
+    if (this.props.action) {
+      this.props.action({
+        openModal: this.openModal,
+        closeModal: this.closeModal,
+      });
+    }
+  }
+
+  openModal = () => {
     this.setState({ modalIsOpen: true });
-  }
+  };
   
-  closeModal () {
+  closeModal = () => {
     this.setState({ modalIsOpen: false });
-  }
+  };
   
   render () {
     const {
@@ -71,7 +79,9 @@ class ModalTrigger extends PureComponent {
         :
         <a className={classes.anchor} href="#" onClick={this.openModal}>{label}</a>;
     
-    const childrenComponent = React.cloneElement(children, { closeModal: this.closeModal });
+    const childrenComponent = typeof children.type === 'function' ?
+      React.cloneElement(children, { closeModal: this.closeModal }) :
+      children;
     
     return (
       <span className={classNames('modal-trigger', classes.root, className)}>
@@ -87,7 +97,7 @@ class ModalTrigger extends PureComponent {
           
           {
             title &&
-            
+  
             <DialogTitle className={classes.dialogTitle}>{title}</DialogTitle>
           }
           
@@ -104,6 +114,15 @@ class ModalTrigger extends PureComponent {
 
 
 ModalTrigger.propTypes = {
+  /**
+   * Callback fired when the component mounts.
+   * This is useful when you want to trigger an action programmatically.
+   * It supports `openModal()` and `closeModal()`.
+   *
+   * @param {object} actions This object contains all possible actions
+   * that can be triggered programmatically.
+   */
+  action: PropTypes.func,
   className: PropTypes.string,
   dialogClassName: PropTypes.string,
   label: PropTypes.string,

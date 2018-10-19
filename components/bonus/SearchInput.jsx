@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { registerComponent } from 'meteor/vulcan:core';
+import { Components, registerComponent } from 'meteor/vulcan:core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import SearchIcon from 'mdi-material-ui/Magnify';
 import ClearIcon from 'mdi-material-ui/CloseCircle';
 import Input from '@material-ui/core/Input';
-import IconButton from '@material-ui/core/IconButton';
+import NoSsr from '@material-ui/core/NoSsr';
 import classNames from 'classnames';
 import _debounce from 'lodash/debounce';
+import KeyboardEventHandler from 'react-keyboard-event-handler';
 
 
 const styles = theme => ({
@@ -42,6 +43,7 @@ const styles = theme => ({
       width: 16,
       height: 16,
     },
+    flexDirection: 'column',
   },
   clearDense: {
     width: 32,
@@ -79,69 +81,96 @@ class SearchInput extends PureComponent {
       value: props.defaultValue || '',
     };
     
-    this.focusInput = this.focusInput.bind(this);
-    this.clearSearch = this.clearSearch.bind(this);
-    this.updateSearch = this.updateSearch.bind(this);
-    this.updateQuery = this.updateQuery.bind(this);
+    this.input = null;
+    
     this.updateQuery = _debounce(this.updateQuery, 500);
   }
   
-  focusInput () {
+  handleShortcutKeys = (key, event) => {
+    switch (key) {
+      case 's':
+        this.focusInput();
+        event.preventDefault();
+        break;
+      case 'c':
+      case 'esc':
+        this.clearSearch(event, true);
+        event.preventDefault();
+        break;
+    }
+  };
+  
+  handleFocus = () => {
+    this.input.select();
+  };
+  
+  focusInput = (event) => {
     this.input.focus();
-  }
+  };
   
-  clearSearch () {
-    this.setState({
-      value: '',
-    });
+  clearSearch = (event, dontFocus) => {
+    this.setState({ value: '' });
     this.updateQuery('');
-    this.focusInput();
-  }
-  
-  updateSearch (event) {
-    //event.preventDefault();
     
-    const value = event.target.value;
-    this.setState({
-      value: value
-    });
-    this.updateQuery(value);
-  }
+    if (!dontFocus) {
+      this.focusInput();
+    }
+  };
   
-  updateQuery (value) {
+  updateSearch = (event) => {
+    const value = event.target.value;
+    this.setState({ value: value });
+    this.updateQuery(value);
+  };
+  
+  updateQuery = (value) => {
     this.props.updateQuery(value);
-  }
+  };
   
   render () {
     const {
       classes,
       className,
-      dense
+      dense,
+      noShortcuts,
     } = this.props;
     
     const searchIcon = <SearchIcon className={classes.icon} onClick={this.focusInput}/>;
     
-    const clearButton = <IconButton
-      className={classNames('clear-button', classes.clear, dense && classes.clearDense, !this.state.value &&
-        classes.clearDisabled)}
+    const clearButton = <Components.TooltipIntl
+      title="search.clear"
+      icon={<ClearIcon/>}
       onClick={this.clearSearch}
+      classes={{
+        button: classNames('clear-button', classes.clear, dense && classes.clearDense, !this.state.value &&
+          classes.clearDisabled),
+      }}
       disabled={!this.state.value}
-    >
-      <ClearIcon/>
-    </IconButton>;
+    />;
     
     return (
-      <Input className={classNames('search-input', classes.root, dense && classes.dense, className)}
-             classes={{ input: classes.input }}
-             id="search-input"
-             inputRef={(input) => this.input = input}
-             value={this.state.value}
-             type="search"
-             onChange={this.updateSearch}
-             disableUnderline={true}
-             startAdornment={searchIcon}
-             endAdornment={clearButton}
-      />
+      <React.Fragment>
+        <Input className={classNames('search-input', classes.root, dense && classes.dense, className)}
+               classes={{ input: classes.input }}
+               id="search-input"
+               inputRef={input => this.input = input}
+               value={this.state.value}
+               type="search"
+               onChange={this.updateSearch}
+               onFocus={this.handleFocus}
+               disableUnderline={true}
+               startAdornment={searchIcon}
+               endAdornment={clearButton}
+        />
+        <NoSsr>
+          {
+            // KeyboardEventHandler is not valid on the server, where its name is undefined
+            typeof window !== 'undefined' && KeyboardEventHandler.name && !noShortcuts &&
+            
+            <KeyboardEventHandler handleKeys={['s', 'c', 'esc']} onKeyEvent={this.handleShortcutKeys}/>
+          }
+        </NoSsr>
+      </React.Fragment>
     );
   }
   
@@ -153,6 +182,7 @@ SearchInput.propTypes = {
   updateQuery: PropTypes.func.isRequired,
   className: PropTypes.string,
   dense: PropTypes.bool,
+  noShortcuts: PropTypes.bool,
 };
 
 

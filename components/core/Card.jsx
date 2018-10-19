@@ -1,12 +1,17 @@
-import { replaceComponent, Components } from 'meteor/vulcan:core';
-import { intlShape } from 'meteor/vulcan:i18n';
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import { intlShape } from 'meteor/vulcan:i18n';
+import { replaceComponent, Components } from 'meteor/vulcan:core';
 import moment from 'moment';
+import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import EditIcon from 'mdi-material-ui/Pencil';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import classNames from 'classnames';
 
 
 const getLabel = (field, fieldName, collection, intl) => {
@@ -52,7 +57,7 @@ const LimitedString = ({ string }) =>
   </div>;
 
 
-export const getFieldValue = (value, typeName) => {
+export const getFieldValue = (value, typeName, classes={}) => {
   
   if (typeof value === 'undefined' || value === null) {
     return '';
@@ -79,21 +84,21 @@ export const getFieldValue = (value, typeName) => {
     
     case 'Array':
       return <ol>{value.map(
-        (item, index) => <li key={index}>{getFieldValue(item, typeof item)}</li>)}</ol>;
+        (item, index) => <li key={index}>{getFieldValue(item, typeof item, classes)}</li>)}</ol>;
     
     case 'Object':
     case 'object':
       return (
-        <table className="table">
-          <tbody>
-          {_.map(value, (value, key) =>
-            <tr key={key}>
-              <td><strong>{key}</strong></td>
-              <td>{getFieldValue(value, typeof value)}</td>
-            </tr>
-          )}
-          </tbody>
-        </table>
+        <Table className="table">
+          <TableBody>
+            {_.map(value, (value, key) =>
+              <TableRow className={classNames(classes.table, 'table')} key={key}>
+                <TableCell className={classNames(classes.tableHeadCell, 'datacard-label')} variant="head">{key}</TableCell>
+                <TableCell className={classNames(classes.tableCell, 'datacard-value')} >{getFieldValue(value, typeof value, classes)}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       );
     
     case 'Date':
@@ -105,18 +110,23 @@ export const getFieldValue = (value, typeName) => {
 };
 
 
-const CardItem = ({ label, value, typeName }) =>
-  <tr>
-    <td className="datacard-label"><strong>{label}</strong></td>
-    <td className="datacard-value">{getFieldValue(value, typeName)}</td>
-  </tr>;
+const CardItem = ({ label, value, typeName, classes }) =>
+  <TableRow className={classes.tableRow}>
+    <TableCell className={classNames(classes.tableHeadCell, 'datacard-label')} variant="head">
+      {label}
+    </TableCell>
+    <TableCell className={classNames(classes.tableCell, 'datacard-value')}>
+      {getFieldValue(value, typeName, classes)}
+    </TableCell>
+  </TableRow>;
 
 
 const CardEdit = (props, context) => {
+  const classes = props.classes;
   const editTitle = context.intl.formatMessage({ id: 'cards.edit' });
   return (
-    <tr>
-      <td colSpan="2">
+    <TableRow className={classes.tableRow}>
+      <TableCell className={classes.tableCell} colSpan="2">
         <Components.ModalTrigger label={editTitle}
                                  component={<IconButton aria-label={editTitle}>
                                    <EditIcon/>
@@ -124,8 +134,8 @@ const CardEdit = (props, context) => {
         >
           <CardEditForm {...props} />
         </Components.ModalTrigger>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 };
 
@@ -144,23 +154,38 @@ const CardEditForm = ({ collection, document, closeModal }) =>
   />;
 
 
-const Card = ({ className, collection, document, currentUser, fields }, { intl }) => {
+const styles = theme => ({
+  root: {},
+  table: {
+    maxWidth: '100%'
+  },
+  tableBody: {},
+  tableRow: {},
+  tableCell: {},
+  tableHeadCell: {},
+});
+
+
+const Card = ({ className, collection, document, currentUser, fields, classes }, { intl }) => {
   
   const fieldNames = fields ? fields : _.without(_.keys(document), '__typename');
   const canUpdate = currentUser && collection.options.mutations.update.check(currentUser, document);
   
   return (
-    <div className={classNames(className, 'datacard', `datacard-${collection._name}`)}>
-      <table className="table table-bordered" style={{ maxWidth: '100%' }}>
-        <tbody>
-        {canUpdate ? <CardEdit collection={collection} document={document}/> : null}
-        {fieldNames.map((fieldName, index) =>
-          <CardItem key={index} value={document[fieldName]}
-                    typeName={getTypeName(document[fieldName], fieldName, collection)}
-                    label={getLabel(document[fieldName], fieldName, collection, intl)}/>
-        )}
-        </tbody>
-      </table>
+    <div className={classNames(classes.root, 'datacard', `datacard-${collection._name}`, className)}>
+      <Table className={classNames(classes.table, 'table')} style={{ maxWidth: '100%' }}>
+        <TableBody>
+          {canUpdate ? <CardEdit collection={collection} document={document} classes={classes}/> : null}
+          {fieldNames.map((fieldName, index) =>
+            <CardItem key={index}
+                      value={document[fieldName]}
+                      typeName={getTypeName(document[fieldName], fieldName, collection)}
+                      label={getLabel(document[fieldName], fieldName, collection, intl)}
+                      classes={classes}
+            />
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 };
@@ -175,6 +200,7 @@ Card.propTypes = {
   document: PropTypes.object,
   currentUser: PropTypes.object,
   fields: PropTypes.array,
+  classes: PropTypes.object.isRequired,
 };
 
 
@@ -183,4 +209,4 @@ Card.contextTypes = {
 };
 
 
-replaceComponent('Card', Card);
+replaceComponent('Card', Card, [withStyles, styles]);

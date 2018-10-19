@@ -11,16 +11,29 @@ import classNames from 'classnames';
 
 
 const styles = theme => ({
+  
   root: {
     display: 'inline-block',
   },
+  
   tooltip: {
     margin: '4px !important',
   },
+  
   buttonWrap: {
     display: 'inline-block',
   },
+  
   button: {},
+  
+  popoverPopper: {
+    zIndex: 1700,
+  },
+  
+  popoverTooltip: {
+    zIndex: 1701,
+  },
+  
 });
 
 
@@ -36,23 +49,32 @@ const TooltipIntl = (props, { intl }) => {
     classes,
     theme,
     enterDelay,
+    leaveDelay,
     buttonRef,
     variant,
+    parent,
     children,
     ...properties
   } = props;
   
+  const popperClass = parent === 'popover' && classes.popoverPopper;
+  const tooltipClass = parent === 'popover' && classes.popoverTooltip;
   const tooltipEnterDelay = typeof enterDelay === 'number' ? enterDelay : theme.utils.tooltipEnterDelay;
+  const tooltipLeaveDelay = typeof leaveDelay === 'number' ? leaveDelay : theme.utils.tooltipLeaveDelay;
   const titleText = props.title || intl.formatMessage({ id: titleId }, titleValues);
   const slug = Utils.slugify(titleId);
   
   return (
     <span className={classNames('tooltip-intl', classes.root, className)}>
-      <Tooltip classes={{ tooltip: classes.tooltip }}
-               id={`tooltip-${slug}`}
+      <Tooltip id={`tooltip-${slug}`}
                title={titleText}
                placement={placement}
                enterDelay={tooltipEnterDelay}
+               leaveDelay={tooltipLeaveDelay}
+               classes={{
+                 tooltip: classNames(classes.tooltip, tooltipClass),
+                 popper: popperClass,
+               }}
       >
         <span className={classes.buttonWrap}>
           {
@@ -120,12 +142,15 @@ TooltipIntl.propTypes = {
   variant: PropTypes.string,
   theme: PropTypes.object,
   enterDelay: PropTypes.number,
+  leaveDelay: PropTypes.number,
+  parent: PropTypes.oneOf(['default', 'popover']),
   children: PropTypes.node,
 };
 
 
 TooltipIntl.defaultProps = {
   placement: 'bottom',
+  parent: 'default',
 };
 
 

@@ -111,7 +111,7 @@ const styles = theme => ({
 
 const MuiSuggest = createReactClass({
   
-  element: null,
+  inputElement: null,
   
   mixins: [ComponentMixin],
   
@@ -128,6 +128,15 @@ const MuiSuggest = createReactClass({
     disableText: PropTypes.bool,
     showAllOptions: PropTypes.bool,
     className: PropTypes.string,
+    autoComplete: PropTypes.string,
+    autoFocus: PropTypes.bool,
+  },
+  
+  getDefaultProps: function () {
+    return {
+      autoComplete: 'off',
+      autoFocus: false,
+    };
   },
   
   getOptionFormatted: function (option) {
@@ -176,9 +185,13 @@ const MuiSuggest = createReactClass({
     return selectedOption || { label: '', value: null };
   },
   
-  handleBlur: function (event, { highlightedSuggestion: suggestion }) {
-    event.persist();
+  handleFocus: function (event) {
+    if (!this.inputElement) return;
     
+    this.inputElement.select();
+  },
+  
+  handleBlur: function (event, { highlightedSuggestion: suggestion }) {
     if (suggestion) {
       this.changeValue(suggestion);
     } else if (this.props.limitToList) {
@@ -190,20 +203,13 @@ const MuiSuggest = createReactClass({
   },
   
   suggestionSelected: function (event, { suggestion }) {
-    event.preventDefault();
-    event.stopPropagation();
-    
     this.changeValue(suggestion);
-    
-    //if (this.props.showAllOptions) {
-      this.releaseFocus();
-    //}
   },
   
   releaseFocus: function () {
     setTimeout(() => {
       document.body.focus();
-    }, 1000);
+    }, 0);
   },
   
   changeValue: function (suggestion) {
@@ -227,7 +233,7 @@ const MuiSuggest = createReactClass({
     });
   },
   
-  handleSuggestionsFetchRequested: function ({ value }) {
+  handleSuggestionsFetchRequested: function ({ value, reason }) {
     this.setState({
       suggestions: this.getSuggestions(value),
     });
@@ -292,16 +298,16 @@ const MuiSuggest = createReactClass({
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
         renderSuggestionsContainer={this.renderSuggestionsContainer}
         shouldRenderSuggestions={this.shouldRenderSuggestions}
-        focusInputOnSuggestionClick={false}
+        focusInputOnSuggestionClick={true}
         alwaysRenderSuggestions={false}
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}
         onSuggestionSelected={this.suggestionSelected}
         inputProps={{
-          autoFocus: autoFocus,
-          autoComplete: 'off',
+          autoFocus,
           classes,
           onChange: this.handleInputChange,
+          onFocus: this.handleFocus,
           onBlur: this.handleBlur,
           value: this.state.inputValue,
           readOnly: this.props.disableText,
@@ -324,10 +330,7 @@ const MuiSuggest = createReactClass({
         className={classes.textField}
         classes={{ root: classes.inputRoot, focused: classes.inputFocused }}
         value={value}
-        inputRef={(c) => {
-          ref(c);
-          this.element = c;
-        }}
+        inputRef={c => { ref(c); this.inputElement = c; }}
         type="text"
         startAdornment={startAdornment}
         endAdornment={endAdornment}
