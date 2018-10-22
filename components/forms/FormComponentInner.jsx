@@ -65,7 +65,10 @@ class FormComponentInner extends PureComponent {
       formInput,
       intlInput,
       nestedInput,
+      formComponents,
     } = this.props;
+  
+    const FormComponents = formComponents;
     
     const inputClass = classNames(
       classes.formInput,

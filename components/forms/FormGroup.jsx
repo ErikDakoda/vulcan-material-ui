@@ -135,7 +135,9 @@ class FormGroup extends PureComponent {
     
     const anchorName = name.split('.').length > 1 ? name.split('.')[1] : name;
     const collapseIn = !this.state.collapsed || this.hasErrors();
-    
+  
+    const FormComponents = this.props.formComponents;
+  
     return (
       <div className={classes.root}>
         
@@ -155,7 +157,7 @@ class FormGroup extends PureComponent {
             {instantiateComponent(this.props.startComponent)}
             
             {this.props.fields.map(field => (
-              <Components.FormComponent
+              <FormComponents.FormComponent
                 key={field.name}
                 disabled={this.props.disabled}
                 {...field}
@@ -168,6 +170,7 @@ class FormGroup extends PureComponent {
                 clearFieldErrors={this.props.clearFieldErrors}
                 formType={this.props.formType}
                 currentUser={this.props.currentUser}
+                formComponents={FormComponents}
               />
             ))}
             

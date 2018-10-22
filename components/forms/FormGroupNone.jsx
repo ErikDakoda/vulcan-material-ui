@@ -42,7 +42,9 @@ class FormGroupNone extends PureComponent {
     }
   
     const anchorName = name.split('.').length > 1 ? name.split('.')[1] : name;
-    
+  
+    const FormComponents = this.props.formComponents;
+  
     return (
       <div className={classes.root}>
         
@@ -51,7 +53,7 @@ class FormGroupNone extends PureComponent {
         {instantiateComponent(this.props.startComponent)}
   
         {this.props.fields.map(field => (
-          <Components.FormComponent
+          <FormComponents.FormComponent
             key={field.name}
             disabled={this.props.disabled}
             {...field}
@@ -64,6 +66,7 @@ class FormGroupNone extends PureComponent {
             clearFieldErrors={this.props.clearFieldErrors}
             formType={this.props.formType}
             currentUser={this.props.currentUser}
+            formComponents={FormComponents}
           />
         ))}
         

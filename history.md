@@ -1,3 +1,8 @@
+1.12.8_1 / 2018-10-22
+=====================
+
+ * Made form components compatible with new Form.formComponents property
+ 
 1.12.8 / 2018-10-19
 ===================
 

@@ -115,6 +115,7 @@ export default {
       'nestedSchema',
       'parentFieldName',
       'itemIndex',
+      'formComponents',
     ];
     
     return _omit(props, removedFields);
