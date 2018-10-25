@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { replaceComponent } from 'meteor/vulcan:core';
+import { replaceComponent, Components } from 'meteor/vulcan:core';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
 
 import Snackbar from '@material-ui/core/Snackbar';
@@ -28,13 +28,7 @@ const FormErrors = ({ errors, classes }) => {
     <ul className={classes.list}>
       {errors.map((error, index) => (
         <li key={index}>
-          {error.message || (
-            <FormattedMessage
-              id={error.id}
-              values={{ ...error.properties }}
-              defaultMessage={JSON.stringify(error)}
-            />
-          )}
+          <Components.FormError error={error} />
         </li>
       ))}
     </ul>
