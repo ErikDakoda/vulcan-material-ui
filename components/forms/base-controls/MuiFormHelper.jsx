@@ -40,8 +40,7 @@ const MuiFormHelper = (props) => {
   }
   
   const errorMessage = hasErrors &&
-    (errors[0].message ||
-    <Components.FormError error={error} />);
+    <Components.FormError error={error} />;
   
   return (
     <FormHelperText className={classes.formHelperText} error={hasErrors}>
