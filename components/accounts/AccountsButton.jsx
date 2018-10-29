@@ -36,7 +36,7 @@ export class AccountsButton extends Component {
 
 AccountsButton.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['link', 'submit']),
+  type: PropTypes.oneOf(['link', 'submit', 'button']),
   disabled: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
