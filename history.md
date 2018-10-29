@@ -1,3 +1,12 @@
+1.12.8_2 / 2018-10-29
+=====================
+
+ * Fixed localization in "clear search" tooltip
+ * Added name and aria-haspopup properties to the input component to improve compliance and facilitate UAT
+ * Replaced Date, Time and DateTime form controls with native controls as recommended by MUI. 
+   The deprecated react-datetime version of the controls are still there as DateRdt, TimeRdt and DateTimeRdt, but they are not registered.
+ * Updated readme
+ 
 1.12.8_1 / 2018-10-22
 =====================
 

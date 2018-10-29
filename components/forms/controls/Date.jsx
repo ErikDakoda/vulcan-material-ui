@@ -1,60 +1,37 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import DateTimePicker from 'react-datetime';
+import React from 'react';
+import MuiInput from '../base-controls/MuiInput';
 import { registerComponent } from 'meteor/vulcan:core';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-class DateComponent extends PureComponent {
+
+export const styles = theme => ({
   
-  constructor(props) {
-    super(props);
-    this.updateDate = this.updateDate.bind(this);
-  }
+  '@global': {
+    'input[type=date]::-ms-clear, input[type=date]::-ms-reveal': {
+      display: 'none',
+      width: 0,
+      height: 0,
+    },
+    'input[type=date]::-webkit-search-cancel-button': {
+      display: 'none',
+      '-webkit-appearance': 'none',
+    },
+    'input[type="date"]::-webkit-clear-button': {
+      display: 'none',
+      '-webkit-appearance': 'none',
+    },
+    
+    'input[type="date"]::-webkit-inner-spin-button,input[type="date"]::-webkit-outer-spin-button': {
+      '-webkit-appearance': 'none',
+      margin: 0,
+    },
+  },
+  
+});
 
-  // when the datetime picker has mounted, SmartForm will catch the date value (no formsy mixin in this component)
-  // componentDidMount() {
-  //   if (this.props.value) {
-  //     this.updateDate(this.props.value);
-  //   }
-  // }
 
-  updateDate(date) {
-    this.context.updateCurrentValues({[this.props.path]: date});
-  }
+const DateComponent = ({ refFunction, classes, ...properties }) =>
+  <MuiInput {...properties} ref={refFunction} type="date"/>;
 
-  render() {
 
-    const date = this.props.value ? (typeof this.props.value === 'string' ? new Date(this.props.value) : this.props.value) : null;
-
-    return (
-      <div className="form-group row">
-        <label className="control-label col-sm-3">{this.props.label}</label>
-        <div className="col-sm-9">
-          <DateTimePicker
-            value={date}
-            timeFormat={false}
-            // newDate argument is a Moment object given by react-datetime
-            onChange={newDate => this.updateDate(newDate)}
-            inputProps={{name: this.props.name}}
-          />
-        </div>
-      </div>
-    );
-  }
-}
-
-DateComponent.propTypes = {
-  control: PropTypes.any,
-  datatype: PropTypes.any,
-  group: PropTypes.any,
-  label: PropTypes.string,
-  name: PropTypes.string,
-  value: PropTypes.any,
-};
-
-DateComponent.contextTypes = {
-  updateCurrentValues: PropTypes.func,
-};
-
-export default DateComponent;
-
-registerComponent('FormComponentDate', DateComponent);
+registerComponent('FormComponentDate', DateComponent, [withStyles, styles]);

@@ -312,6 +312,8 @@ const MuiSuggest = createReactClass({
           value: this.state.inputValue,
           readOnly: this.props.disableText,
           disabled: this.props.disabled,
+          name: this.props.name,
+          'aria-haspopup': 'true',
           ...this.props.inputProps,
           startAdornment,
           endAdornment,
@@ -349,7 +351,12 @@ const MuiSuggest = createReactClass({
     const className = isSelected ? this.props.classes.selected : null;
     
     return (
-      <MenuItem selected={isHighlighted} component="div" className={className} onClick={suggestion.onClick}>
+      <MenuItem selected={isHighlighted}
+                component="div"
+                className={className}
+                onClick={suggestion.onClick}
+                data-value={suggestion.value}
+      >
         {
           suggestion.iconComponent &&
           <div className={this.props.classes.suggestionIcon}>
@@ -377,7 +384,7 @@ const MuiSuggest = createReactClass({
     const { classes } = this.props;
     
     return (
-      <Paper {...containerProps} square>
+      <Paper {...containerProps} id={`menu-${this.props.name}`} square>
         <IsolatedScroll className={classes.scroller}>
           {children}
         </IsolatedScroll>

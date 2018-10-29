@@ -31,7 +31,7 @@ const styles = theme => ({
     padding: 6,
   },
   clear: {
-    transition: theme.transitions.create('opacity', {
+    transition: theme.transitions.create('opacity,transform', {
       duration: theme.transitions.duration.short,
     }),
     opacity: 0.65,
@@ -138,7 +138,7 @@ class SearchInput extends PureComponent {
     const searchIcon = <SearchIcon className={classes.icon} onClick={this.focusInput}/>;
     
     const clearButton = <Components.TooltipIntl
-      title="search.clear"
+      titleId="search.clear"
       icon={<ClearIcon/>}
       onClick={this.clearSearch}
       classes={{

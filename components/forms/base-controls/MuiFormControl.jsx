@@ -56,10 +56,13 @@ const MuiFormControl = createReactClass({
       );
     }
     
+    const shrink = ['date', 'time', 'datetime'].includes(this.props.inputType) ? true : undefined;
+    
     return (
       <InputLabel className="control-label"
                   data-required={this.props.required}
                   htmlFor={this.props.htmlFor}
+                  shrink={shrink}
       >
         {this.props.label}
         {this.renderRequiredSymbol()}

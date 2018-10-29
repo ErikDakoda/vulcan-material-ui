@@ -22,6 +22,7 @@ export default {
       required: this.props.required,
       hasErrors: this.hasErrors(),
       className: this.props.className,
+      inputType: this.props.inputType,
     };
   },
   

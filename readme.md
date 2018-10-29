@@ -1,5 +1,5 @@
 
-# erikdakoda:vulcan-material-ui 1.12.8
+# erikdakoda:vulcan-material-ui 1.12.8_2
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui.com/). 
 This version has been tested against Vulcan 1.12.8 and Material-UI 3.1.0.
@@ -9,8 +9,7 @@ channel as erikdakoda.
 
 There are some nice bonus features like a CountrySelect with autocomplete and theming.
 
-All components in vulcan:ui-bootstrap, vulcan:forms and vulcan:accounts 
-have been implemented except for Icon and DateTime (but they will still work).
+All components in vulcan:ui-bootstrap, vulcan:forms and vulcan:accounts have been implemented except for Icon.
 
 ## Installation
 
@@ -20,12 +19,16 @@ To add vulcan-material-ui to an existing Vulcan project, enter the following:
 meteor add erikdakoda:vulcan-material-ui
 
 meteor npm install --save @material-ui/core
+meteor npm install --save react-jss
 meteor npm install --save mdi-material-ui
 meteor npm install --save react-autosuggest
 meteor npm install --save autosuggest-highlight
 meteor npm install --save react-isolated-scroll
 meteor npm install --save react-keyboard-event-handler
 ```
+
+> NOTE: If you want to avoid deprecation warnings added in MUI versions after 3.1.0, you can lock MUI to the currently supported version using `meteor npm install --save @material-ui/core@3.1.0`. Don't for get to remove or update the version number when you update this package in the future.
+
 
 > IMPORTANT: Please note that I have abandoned material-ui-icons in favor of mdi-material-ui because it has a much larger [selection of icons](https://materialdesignicons.com/).
 
@@ -125,7 +128,7 @@ You can pass a couple of extra options to inputs from the `form` property of you
 
 ## Form Groups
 
-You can pass a couple of extra options form groups as well:
+You can pass a couple of extra options to form groups as well:
 
 ``` javascript
   const platformGroup: {
