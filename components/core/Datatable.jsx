@@ -262,16 +262,16 @@ const DatatableContents = ({
   const onChangePage = (event, page) => {
     setPaginationTerms({itemsPerPage: rowsPerPage, 
                         limit: (page+1)*rowsPerPage, 
-                        offset: page*rowsPerPage})
-  }
+                        offset: page*rowsPerPage});
+    };
   const onChangeRowsPerPage = (event) => {
     let value = event.target.value;
     let offset = Math.max(0,parseInt((paginationTerms.limit-rowsPerPage)/value) * value);
     let limit = Math.min(offset+value, totalCount);
     setPaginationTerms({itemsPerPage: value, 
                         limit: limit,
-                        offset: offset})
-  }
+                        offset: offset});
+    };
 
   return (
     <React.Fragment>
@@ -437,6 +437,37 @@ DatatableHeader.contextTypes = {
 
 
 replaceComponent('DatatableHeader', DatatableHeader);
+
+
+/*
+
+DatatableSorter Component
+
+*/
+
+const DatatableSorter = ({ name, label, toggleSort, currentSort, sortable }) => 
+  <TableCell className="datatable-sorter"
+    sortDirection={!currentSort[name] ?  false : currentSort[name] === 1 ? "asc" : "desc" }
+  >
+  <Tooltip
+    title="Sort"
+    placement='bottom-start'
+    enterDelay={300}
+  >
+    <TableSortLabel
+      active={!currentSort[name] ? false : true}
+      direction={currentSort[name] === 1 ? "desc" : "asc"}
+      onClick={() => toggleSort(name)}
+    >
+      {label}
+    </TableSortLabel>
+  </Tooltip>
+  
+
+  </TableCell>
+
+replaceComponent('DatatableSorter', DatatableSorter);
+
 
 
 /*
