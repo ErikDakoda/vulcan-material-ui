@@ -46,7 +46,11 @@
     "meteor/no-session": 0,
     "no-case-declarations": 0,
     "no-console": 0,
-    "semi": "error"
+    "semi": "error",
+    "quotes": [
+      1,
+      "single"
+    ]
   },
   "env": {
     "browser": true,
