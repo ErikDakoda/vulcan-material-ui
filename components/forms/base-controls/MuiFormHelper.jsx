@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { instantiateComponent } from 'meteor/vulcan:core';
+import { instantiateComponent, Components } from 'meteor/vulcan:core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
@@ -40,12 +40,7 @@ const MuiFormHelper = (props) => {
   }
   
   const errorMessage = hasErrors &&
-    (errors[0].message ||
-    <FormattedMessage
-      id={errors[0].id}
-      values={{ ...errors[0].properties }}
-      defaultMessage={JSON.stringify(errors[0])}
-    />);
+    <Components.FormError error={error} />;
   
   return (
     <FormHelperText className={classes.formHelperText} error={hasErrors}>
