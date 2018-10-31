@@ -1,6 +1,6 @@
 Package.describe({
   name: 'erikdakoda:vulcan-material-ui',
-  version: '1.12.8_3',
+  version: '1.12.8_4',
   summary: 'Replacement for Vulcan (http://vulcanjs.org/) components using material-ui',
   git: 'https://github.com/ErikDakoda/vulcan-material-ui',
   documentation: 'README.md'
@@ -21,7 +21,6 @@ Package.onUse(function (api) {
     'accounts.css', 
     'forms.css', 
     'en_US.js',
-    'fr_FR.js',
   ], ['client', 'server']);
 
   api.mainModule('client/main.js', 'client');

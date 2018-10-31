@@ -1,3 +1,9 @@
+1.12.8_4 / 2018-10-31
+=====================
+
+ * Removed 'fr_FR.js' from package.js because any french strings loaded activates the french language
+ * Fixed delete button and its tooltips positioning in FormSubmit
+ 
 1.12.8_2 / 2018-10-29
 =====================
 

@@ -21,10 +21,9 @@ const styles = theme => ({
   },
   delete: {
     float: 'left',
-    width: 0,
   },
   tooltip: {
-    margin: 0,
+    margin: 3,
   }
 });
 
@@ -56,10 +55,10 @@ const FormSubmit = ({
         deleteDocument
           ?
           <Tooltip id={`tooltip-delete-${collectionName}`}
-                   classes={{ tooltip: classNames('delete-button', classes.tooltip, classes.delete) }}
+                   classes={{ tooltip: classNames('delete-button', classes.tooltip) }}
                    title={intl.formatMessage({ id: 'forms.delete' })}
                    placement="bottom">
-            <IconButton onClick={deleteDocument}>
+            <IconButton onClick={deleteDocument} className={classes.delete}>
               <DeleteIcon/>
             </IconButton>
           </Tooltip>
