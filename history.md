@@ -1,8 +1,15 @@
+1.12.8_5 / 2018-10-31
+=====================
+
+ * Fixed bugs in Datatable pagination
+ * Set Datatable paginate prop to false by default
+ 
 1.12.8_4 / 2018-10-31
 =====================
 
  * Removed 'fr_FR.js' from package.js because any french strings loaded activates the french language
  * Fixed delete button and its tooltips positioning in FormSubmit
+ * Added pagination to Datatable
  
 1.12.8_2 / 2018-10-29
 =====================
