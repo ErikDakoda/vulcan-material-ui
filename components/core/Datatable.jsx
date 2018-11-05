@@ -5,7 +5,8 @@ import {
   registerComponent,
   replaceComponent,
   withCurrentUser,
-  withMulti
+  withMulti,
+  Utils
 } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 import withStyles from '@material-ui/core/styles/withStyles';
