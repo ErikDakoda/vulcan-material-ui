@@ -259,7 +259,7 @@ const DatatableContents = ({
   
   const denseClass = dense && classes[dense + 'Table'];
   
-  // if (paginate) {
+  // pagination
   const rowsPerPage = paginationTerms.itemsPerPage;
   const limit = paginationTerms.limit;
   const page = parseInt((limit - 1) / rowsPerPage);
@@ -282,7 +282,6 @@ const DatatableContents = ({
       offset: offset
     });
   };
-  // }
   
   return (
     <React.Fragment>
