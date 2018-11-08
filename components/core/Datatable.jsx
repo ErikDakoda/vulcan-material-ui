@@ -259,22 +259,20 @@ const DatatableContents = ({
   
   const denseClass = dense && classes[dense + 'Table'];
   
-  // pagination
-  const rowsPerPage = paginationTerms.itemsPerPage;
-  const limit = paginationTerms.limit;
-  const page = parseInt((limit - 1) / rowsPerPage);
+  // Pagination functions
+  const getPage = (paginationTerms) => (parseInt((paginationTerms.limit - 1) / paginationTerms.itemsPerPage))
 
   const onChangePage = (event, page) => {
     setPaginationTerms({
-      itemsPerPage: rowsPerPage,
-      limit: (page + 1) * rowsPerPage,
-      offset: page * rowsPerPage
+      itemsPerPage: paginationTerms.itemsPerPage,
+      limit: (page + 1) * paginationTerms.itemsPerPage,
+      offset: page * paginationTerms.itemsPerPage
     });
   };
 
   const onChangeRowsPerPage = (event) => {
     let value = event.target.value;
-    let offset = Math.max(0, parseInt((paginationTerms.limit - rowsPerPage) / value) * value);
+    let offset = Math.max(0, parseInt((paginationTerms.limit - paginationTerms.itemsPerPage) / value) * value);
     let limit = Math.min(offset + value, totalCount);
     setPaginationTerms({
       itemsPerPage: value,
@@ -282,7 +280,7 @@ const DatatableContents = ({
       offset: offset
     });
   };
-  
+
   return (
     <React.Fragment>
       {
@@ -365,13 +363,13 @@ const DatatableContents = ({
       
       </Table>
       {
-        paginate &&
+        paginate && 
         
         <TablePagination
           component="div"
           count={totalCount}
-          rowsPerPage={rowsPerPage}
-          page={page}
+          rowsPerPage={paginationTerms.itemsPerPage}
+          page={getPage(paginationTerms)}
           backIconButtonProps={{
             'aria-label': 'Previous Page',
           }}
