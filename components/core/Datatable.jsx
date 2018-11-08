@@ -158,7 +158,7 @@ class Datatable extends PureComponent {
                               terms={{ query: this.state.query, orderBy: this.state.currentSort }}
                               currentUser={this.props.currentUser}
                               toggleSort={this.toggleSort}
-                              currentSort={this.state.currentSort}
+                              currentSort={this.state.currentSort} 
           />
         </div>
       );
@@ -259,28 +259,30 @@ const DatatableContents = ({
   
   const denseClass = dense && classes[dense + 'Table'];
   
-  if (paginate) {
-    const rowsPerPage = paginationTerms.itemsPerPage;
-    const limit = paginationTerms.limit;
-    const page = parseInt((limit - 1) / rowsPerPage);
-    const onChangePage = (event, page) => {
-      setPaginationTerms({
-        itemsPerPage: rowsPerPage,
-        limit: (page + 1) * rowsPerPage,
-        offset: page * rowsPerPage
-      });
-    };
-    const onChangeRowsPerPage = (event) => {
-      let value = event.target.value;
-      let offset = Math.max(0, parseInt((paginationTerms.limit - rowsPerPage) / value) * value);
-      let limit = Math.min(offset + value, totalCount);
-      setPaginationTerms({
-        itemsPerPage: value,
-        limit: limit,
-        offset: offset
-      });
-    };
-  }
+  // if (paginate) {
+  const rowsPerPage = paginationTerms.itemsPerPage;
+  const limit = paginationTerms.limit;
+  const page = parseInt((limit - 1) / rowsPerPage);
+
+  const onChangePage = (event, page) => {
+    setPaginationTerms({
+      itemsPerPage: rowsPerPage,
+      limit: (page + 1) * rowsPerPage,
+      offset: page * rowsPerPage
+    });
+  };
+
+  const onChangeRowsPerPage = (event) => {
+    let value = event.target.value;
+    let offset = Math.max(0, parseInt((paginationTerms.limit - rowsPerPage) / value) * value);
+    let limit = Math.min(offset + value, totalCount);
+    setPaginationTerms({
+      itemsPerPage: value,
+      limit: limit,
+      offset: offset
+    });
+  };
+  // }
   
   return (
     <React.Fragment>
