@@ -1,3 +1,9 @@
+1.12.8_6 / 2018-11-06
+=====================
+
+ * Fixed bug in Datatable.jsx
+ * Reduced spacing of form components
+ 
 1.12.8_5 / 2018-10-31
 =====================
 
