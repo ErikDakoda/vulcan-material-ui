@@ -1,5 +1,5 @@
 
-# erikdakoda:vulcan-material-ui 1.12.8_2
+# erikdakoda:vulcan-material-ui 1.12.8_7
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui.com/). 
 This version has been tested against Vulcan 1.12.8 and Material-UI 3.1.0.
@@ -116,7 +116,10 @@ You can pass a couple of extra options to inputs from the `form` property of you
       hideLabel: true,                 // hide the label
       rows: 10,                        // for textareas you can specify the rows
       variant: 'switch',               // for checkboxgroups you can use either 
-    },                                 //   'checkbox' (default) or 'switch'
+                                       //   'checkbox' (default) or 'switch'
+      inputProps: { step: 'any' }      // Attributes applied to the input element, for
+                                       //   ex pass the step attr to a number input
+    },
     group: platformGroup,
     canRead: ['members'],
     canCreate: ['members'],
