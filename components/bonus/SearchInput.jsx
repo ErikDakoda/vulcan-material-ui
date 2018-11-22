@@ -9,9 +9,10 @@ import NoSsr from '@material-ui/core/NoSsr';
 import classNames from 'classnames';
 import _debounce from 'lodash/debounce';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-
+import autosizeInput from 'autosize-input';
 
 const styles = theme => ({
+  
   '@global': {
     'input[type=text]::-ms-clear, input[type=text]::-ms-reveal':
       {
@@ -24,12 +25,14 @@ const styles = theme => ({
     'input[type="search"]::-webkit-search-results-button, input[type="search"]::-webkit-search-results-decoration':
       { display: 'none' },
   },
+  
   root: {
-    width: 220,
+    display: 'inline-flex',
     backgroundColor: theme.palette.common.faintBlack,
     borderRadius: 20,
     padding: 6,
   },
+  
   clear: {
     transition: theme.transitions.create('opacity,transform', {
       duration: theme.transitions.duration.short,
@@ -45,30 +48,40 @@ const styles = theme => ({
     },
     flexDirection: 'column',
   },
+  
   clearDense: {
     width: 32,
     height: 32,
     margin: -4,
     marginLeft: 0,
   },
+  
   clearDisabled: {
     opacity: 0,
+    pointerEvents: 'none',
   },
+  
   dense: {
-    width: 200,
     padding: 4,
   },
+  
   icon: {
     color: theme.palette.common.lightBlack,
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
   },
+  
   input: {
     lineHeight: 1,
     paddingTop: 2,
     paddingBottom: 2,
     marginBottom: 1,
+    /*transition: theme.transitions.create('width', {
+      duration: theme.transitions.duration.shortest,
+    }),*/
+    minWidth: 130,
   },
+  
 });
 
 
@@ -82,8 +95,35 @@ class SearchInput extends PureComponent {
     };
     
     this.input = null;
+    this.removeAutosize = null;
+    this.triggerResize = null;
     
     this.updateQuery = _debounce(this.updateQuery, 500);
+  }
+  
+  componentDidMount () {
+    if (!document) return;
+    const element = document.querySelector(`.search-input-${this.props.name} input[type=search]`);
+  
+    // We have to patch into addEventListener because autosizeInput provides no way to trigger resize
+    element._addEventListener = element.addEventListener;
+    element.addEventListener = function(type, listener, useCapture) {
+      if(useCapture === undefined)
+        useCapture = false;
+      this._addEventListener(type, listener, useCapture);
+      this.triggerResize = listener;
+    };
+
+    this.removeAutosize = autosizeInput(element);
+    
+    this.triggerResize = element.triggerResize;
+    element.addEventListener = element._addEventListener;
+  }
+  
+  componentWillUnmount () {
+    if (this.removeAutosize) {
+      this.removeAutosize();
+    }
   }
   
   handleShortcutKeys = (key, event) => {
@@ -109,9 +149,9 @@ class SearchInput extends PureComponent {
   };
   
   clearSearch = (event, dontFocus) => {
-    this.setState({ value: '' });
+    this.setState({ value: '' }, this.triggerResize);
     this.updateQuery('');
-    
+  
     if (!dontFocus) {
       this.focusInput();
     }
@@ -133,6 +173,7 @@ class SearchInput extends PureComponent {
       className,
       dense,
       noShortcuts,
+      name,
     } = this.props;
     
     const searchIcon = <SearchIcon className={classes.icon} onClick={this.focusInput}/>;
@@ -142,17 +183,18 @@ class SearchInput extends PureComponent {
       icon={<ClearIcon/>}
       onClick={this.clearSearch}
       classes={{
-        button: classNames('clear-button', classes.clear, dense && classes.clearDense, !this.state.value &&
-          classes.clearDisabled),
+        root: classNames(!this.state.value && classes.clearDisabled),
+        button: classNames('clear-button', classes.clear, dense && classes.clearDense),
       }}
       disabled={!this.state.value}
     />;
     
     return (
       <React.Fragment>
-        <Input className={classNames('search-input', classes.root, dense && classes.dense, className)}
+        <Input className={classNames('search-input', `search-input-${name}`, classes.root, dense && classes.dense, className)}
                classes={{ input: classes.input }}
-               id="search-input"
+               id={`search-input-${name}`}
+               name={name}
                inputRef={input => this.input = input}
                value={this.state.value}
                type="search"
@@ -183,6 +225,12 @@ SearchInput.propTypes = {
   className: PropTypes.string,
   dense: PropTypes.bool,
   noShortcuts: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+};
+
+
+SearchInput.defaultProps = {
+  name: 'search',
 };
 
 

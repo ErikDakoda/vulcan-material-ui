@@ -152,7 +152,7 @@ const AgendaJobActions = ({ collection, document }) => {
     Meteor.call('scheduleAgent', document.agentId);
   };
   
-  return <Components.TooltipIconButton titleId="executions.execute"
+  return <Components.TooltipIconButton titleId="executions.execute_now"
                                        icon={<Components.ExecutionsIcon/>}
                                        onClick={scheduleAgent}/>;
 };
