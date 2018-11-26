@@ -1,3 +1,8 @@
+1.12.8_9 / 2018-11-26
+=====================
+
+ * Fixed bug that displayed invalid total count at the bottom of data tables
+ 
 1.12.8_8 / 2018-11-23
 =====================
 
