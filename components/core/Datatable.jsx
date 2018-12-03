@@ -109,8 +109,14 @@ class Datatable extends PureComponent {
     if (this.props.data) {
       
       return <Components.DatatableContents
-        columns={this.props.data.length ? Object.keys(this.props.data[0]) : undefined} {...this.props}
-        results={this.props.data} showEdit={false} showNew={false}/>;
+        columns={this.props.data.length ? Object.keys(this.props.data[0]) : undefined}
+        {...this.props}
+        results={this.props.data}
+        count={this.props.data.length}
+        totalCount={this.props.data.length}
+        showEdit={false}
+        showNew={false}
+      />;
       
     } else {
       
@@ -163,7 +169,7 @@ class Datatable extends PureComponent {
                               terms={{ query: this.state.query, orderBy: orderBy }}
                               currentUser={this.props.currentUser}
                               toggleSort={this.toggleSort}
-                              currentSort={this.state.currentSort} 
+                              currentSort={this.state.currentSort}
           />
         </div>
       );
@@ -368,7 +374,7 @@ const DatatableContents = ({
       
       </Table>
       {
-        paginate && 
+        paginate &&
         
         <TablePagination
           component="div"
@@ -386,7 +392,7 @@ const DatatableContents = ({
         />
       }
       {
-        !paginate &&
+        !paginate && loadMore &&
         
         <Components.LoadMore className={classes.loadMore}
                              count={count}
