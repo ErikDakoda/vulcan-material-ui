@@ -1,3 +1,10 @@
+1.12.8_10 / 2018-12-09
+======================
+
+ * TooltipIntl: Added icon class
+ * FormGroupWithLine: Moved caret from the right side to next to the title
+ * Changed load_more.loaded_all string
+ 
 1.12.8_9 / 2018-11-26
 =====================
 

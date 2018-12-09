@@ -7,6 +7,6 @@ addStrings('en', {
   "search.clear": "Clear search",
   "load_more.load_more": "Load more",
   "load_more.loaded_count": "Loaded {count} of {totalCount}",
-  "load_more.loaded_all": "{totalCount, plural, =0 {No items} one {Loaded one item} other {Loaded # items}}",
+  "load_more.loaded_all": "{totalCount, plural, =0 {No items} one {One item} other {# items}}",
 
 });

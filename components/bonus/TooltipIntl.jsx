@@ -26,6 +26,8 @@ const styles = theme => ({
   
   button: {},
   
+  icon: {},
+  
   popoverPopper: {
     zIndex: 1700,
   },
@@ -57,6 +59,7 @@ const TooltipIntl = (props, { intl }) => {
     ...properties
   } = props;
   
+  const iconWithClass = icon && React.cloneElement(icon, { className: classes.icon });
   const popperClass = parent === 'popover' && classes.popoverPopper;
   const tooltipClass = parent === 'popover' && classes.popoverTooltip;
   const tooltipEnterDelay = typeof enterDelay === 'number' ? enterDelay : theme.utils.tooltipEnterDelay;
@@ -88,7 +91,7 @@ const TooltipIntl = (props, { intl }) => {
                       ref={buttonRef}
                       {...properties}
               >
-                {icon}
+                {iconWithClass}
               </Button>
       
               :
@@ -102,7 +105,7 @@ const TooltipIntl = (props, { intl }) => {
                             ref={buttonRef}
                             {...properties}
                 >
-                  {icon}
+                  {iconWithClass}
                 </IconButton>
         
                 :

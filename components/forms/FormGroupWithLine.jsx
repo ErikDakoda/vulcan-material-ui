@@ -35,7 +35,6 @@ const styles = theme => ({
     },
     '& > div:first-child': {
       ...theme.typography.subheading,
-      flexGrow: 1,
     },
     paddingTop: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
