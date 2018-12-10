@@ -69,7 +69,7 @@ const FormSubmit = ({
       {
         cancelCallback
           ?
-          <Button variant="raised"
+          <Button variant="contained"
                   className={classNames('cancel-button', classes.button)}
                   onClick={(event) => {
                     event.preventDefault();
@@ -84,7 +84,7 @@ const FormSubmit = ({
       {
         revertCallback
           ?
-          <Button variant="raised"
+          <Button variant="contained"
                   className={classNames('revert-button', classes.button)}
                   disabled={!isChanged()}
                   onClick={(event) => {
@@ -99,7 +99,7 @@ const FormSubmit = ({
           null
       }
 
-      <Button variant="raised"
+      <Button variant="contained"
               type="submit"
               color="secondary"
               className={classNames('submit-button', classes.button)}

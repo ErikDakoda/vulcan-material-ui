@@ -18,7 +18,7 @@ export class AccountsButton extends Component {
     
     return (
       <Button
-        variant={type === 'link' ? 'flat' : 'raised'}
+        variant={type === 'link' ? 'text' : 'contained'}
         size={type === 'link' ? 'small' : undefined}
         color="primary"
         className={classNames(`button-${Utils.slugify(label)}`, className)}
