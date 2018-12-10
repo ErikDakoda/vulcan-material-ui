@@ -79,7 +79,7 @@ class FormGroup extends PureComponent {
     
     return (
       <Typography className={classNames(classes.subheading, collapsible && classes.collapsible)}
-                  variant="subheading"
+                  variant="subtitle1"
                   onClick={this.toggle}
       >
     
