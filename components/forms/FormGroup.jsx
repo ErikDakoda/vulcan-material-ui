@@ -18,7 +18,7 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 3
   },
-  subheading: {
+  subtitle1: {
     display: 'flex',
     alignItems: 'center',
     paddingLeft: theme.spacing.unit / 2,
@@ -78,8 +78,8 @@ class FormGroup extends PureComponent {
     const collapsible = this.props.collapsible || this.isAdmin;
     
     return (
-      <Typography className={classNames(classes.subheading, collapsible && classes.collapsible)}
-                  variant="subheading"
+      <Typography className={classNames(classes.subtitle1, collapsible && classes.collapsible)}
+                  variant="subtitle1"
                   onClick={this.toggle}
       >
     

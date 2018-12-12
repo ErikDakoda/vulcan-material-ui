@@ -201,7 +201,7 @@ Countries are stored as their 2-letter country codes. I have included a helper f
 import Typography from '@material-ui/core/Typography';
 import { getCountryLabel } from 'meteor/erikdakoda:vulcan-material-ui';
 
-<Typography variant="subheading">
+<Typography variant="subtitle1">
   {getCountryLabel(supplier.country)}
 </Typography>
 ```
