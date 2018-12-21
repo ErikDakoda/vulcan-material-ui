@@ -1,3 +1,11 @@
+1.12.8_11 / 2018-12-21
+======================
+
+ * SearchInput: Added install autosize-input to readme
+ * Datatable: Fixed sorting delay
+ * Datatable: Added tableHeadCell class
+ * Datatable: Added cellClass column property, which can be a string or a function: column.cellClass({ column, document, currentUser })
+ 
 1.12.8_10 / 2018-12-09
 ======================
 
@@ -14,9 +22,9 @@
 =====================
 
  * Improved the functionality of the LoadMore component
-   * The showNoMore property has been deprecated
-   * A showCount property has been added (true by default) that shows a count of loaded and total items
-   * The load more icon or button is displayed even when infiniteScroll is enabled
+ * The showNoMore property has been deprecated
+ * A showCount property has been added (true by default) that shows a count of loaded and total items
+ * The load more icon or button is displayed even when infiniteScroll is enabled
  
 1.12.8_7 / 2018-11-10
 =====================

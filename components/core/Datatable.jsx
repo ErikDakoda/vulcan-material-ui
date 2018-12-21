@@ -54,6 +54,7 @@ const baseStyles = theme => ({
   tableBody: {},
   tableFooter: {},
   tableRow: {},
+  tableHeadCell: {},
   tableCell: {},
   clickRow: {},
   editCell: {},
@@ -136,12 +137,14 @@ class Datatable extends PureComponent {
       };
       
       const DatatableWithMulti = withMulti(listOptions)(Components.DatatableContents);
-
+      
       // add _id to orderBy when we want to sort a column, to avoid breaking the graphql() hoc;
       // see https://github.com/VulcanJS/Vulcan/issues/2090#issuecomment-433860782
-      // this.state.currentSort !== {} is always false, even when console.log(this.state.currentSort) displays {}. So we test on the length of keys for this object.
-      const orderBy = Object.keys(this.state.currentSort).length == 0 ? {} : { ...this.state.currentSort, _id: -1 };
-
+      // this.state.currentSort !== {} is always false, even when console.log(this.state.currentSort) displays
+      // {}. So we test on the length of keys for this object.
+      const orderBy = Object.keys(this.state.currentSort).length == 0 ? {} :
+        { ...this.state.currentSort, _id: -1 };
+      
       return (
         <div className={classNames('datatable', `datatable-${collection._name}`, classes.root,
           className)}>
@@ -271,8 +274,8 @@ const DatatableContents = ({
   const denseClass = dense && classes[dense + 'Table'];
   
   // Pagination functions
-  const getPage = (paginationTerms) => (parseInt((paginationTerms.limit - 1) / paginationTerms.itemsPerPage))
-
+  const getPage = (paginationTerms) => (parseInt((paginationTerms.limit - 1) / paginationTerms.itemsPerPage));
+  
   const onChangePage = (event, page) => {
     setPaginationTerms({
       itemsPerPage: paginationTerms.itemsPerPage,
@@ -280,7 +283,7 @@ const DatatableContents = ({
       offset: page * paginationTerms.itemsPerPage
     });
   };
-
+  
   const onChangeRowsPerPage = (event) => {
     let value = event.target.value;
     let offset = Math.max(0, parseInt((paginationTerms.limit - paginationTerms.itemsPerPage) / value) * value);
@@ -291,7 +294,7 @@ const DatatableContents = ({
       offset: offset
     });
   };
-
+  
   return (
     <React.Fragment>
       {
@@ -459,7 +462,8 @@ const DatatableHeader = ({ collection, intlNamespace, column, classes, toggleSor
     formattedLabel = intl.formatMessage({ id: columnName, defaultMessage: columnName });
   }
   
-  return <TableCell className={classNames(classes.tableCell, column.headerClass)}>{formattedLabel}</TableCell>;
+  return <TableCell
+    className={classNames(classes.tableHeadCell, column.headerClass)}>{formattedLabel}</TableCell>;
 };
 
 
@@ -600,9 +604,14 @@ const DatatableCell = ({ column, document, currentUser, classes }) => {
   const className = typeof columnName === 'string' ?
     `datatable-item-${columnName.toLowerCase()}` :
     '';
+  const cellClass = typeof column.cellClass === 'function' ?
+    column.cellClass({ column, document, currentUser }) :
+    typeof column.cellClass === 'string' ?
+      column.cellClass :
+      null;
   
   return (
-    <TableCell className={classNames(classes.tableCell, className)}>
+    <TableCell className={classNames(classes.tableCell, cellClass, className)}>
       <Component column={column}
                  document={document}
                  currentUser={currentUser}
