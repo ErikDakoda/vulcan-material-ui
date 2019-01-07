@@ -51,16 +51,18 @@ export default {
    * associating the label element with the form control.
    *
    * If we don't explicitly pass an `id` prop, we generate one based on the
-   * `name` and `label` properties.
+   * `name`, `label` and `itemIndex` (for nested forms) properties.
    */
   getId: function () {
     if (this.props.id) {
       return this.props.id;
     }
     const label = (typeof this.props.label === 'undefined' ? '' : this.props.label);
+    const itemIndex = (typeof this.props.itemIndex=== 'undefined' ? '' : this.props.itemIndex);
     return [
       'frc',
       this.props.name.split('[').join('_').replace(']', ''),
+      itemIndex,
       this.hashString(JSON.stringify(label))
     ].join('-');
   },
