@@ -17,10 +17,13 @@ const styles = theme => ({
   button: {},
   anchor: {},
   dialog: {},
-  paper: {},
+  dialogPaper: {},
   dialogTitle: {},
   dialogContent: {
     paddingTop: '4px',
+  },
+  dialogOverflow: {
+    overflowY: 'visible',
   },
 });
 
@@ -56,6 +59,7 @@ class ModalTrigger extends PureComponent {
     const {
       className,
       dialogClassName,
+      dialogOverflow,
       labelId,
       component,
       titleId,
@@ -68,6 +72,7 @@ class ModalTrigger extends PureComponent {
     
     const label = labelId ? intl.formatMessage({ id: labelId }) : this.props.label;
     const title = titleId ? intl.formatMessage({ id: titleId }) : this.props.title;
+    const overflowClass = dialogOverflow && classes.dialogOverflow;
     
     const triggerComponent = component
       ?
@@ -92,7 +97,7 @@ class ModalTrigger extends PureComponent {
                 open={this.state.modalIsOpen}
                 onClose={this.closeModal}
                 fullWidth={true}
-                classes={{ paper: classes.paper }}
+                classes={{ paper: classNames(classes.dialogPaper, overflowClass) }}
         >
           
           {
@@ -101,7 +106,7 @@ class ModalTrigger extends PureComponent {
             <DialogTitle className={classes.dialogTitle}>{title}</DialogTitle>
           }
           
-          <DialogContent className={classes.dialogContent}>
+          <DialogContent className={classNames(classes.dialogContent, overflowClass)}>
             {childrenComponent}
           </DialogContent>
         
@@ -125,6 +130,7 @@ ModalTrigger.propTypes = {
   action: PropTypes.func,
   className: PropTypes.string,
   dialogClassName: PropTypes.string,
+  dialogOverflow: PropTypes.bool,
   label: PropTypes.string,
   labelId: PropTypes.string,
   component: PropTypes.object,

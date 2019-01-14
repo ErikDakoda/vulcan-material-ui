@@ -1,3 +1,10 @@
+1.12.8_13 / 2019-01-14
+======================
+
+ * ModalTrigger: Added boolean dialogOverflow prop for use cases like popups that can go beyond the size of the dialog box
+ * MuiSuggest: Fixed bug - The disabled state was not displayed correctly
+ * MuiSuggest: Fixed bug - After selecting a suggestion, clicking on the control did not re-open the suggestions menu
+ 
 1.12.8_12 / 2019-01-12
 ======================
 
