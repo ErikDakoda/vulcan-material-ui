@@ -1,3 +1,9 @@
+1.12.8_14 / 2019-01-20
+======================
+
+ * Countries: Added validateRegion function, which given a region value or label, will return the region value ('NY' or 'New York' => 'NY)
+ * The contents of countries is now exported - this may be refactored out of the core vulcan-material-ui as some point
+ 
 1.12.8_13 / 2019-01-14
 ======================
 
