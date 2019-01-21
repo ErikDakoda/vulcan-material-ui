@@ -368,11 +368,13 @@ export const validateRegion = (countryValue, regionValue) => {
   
   const regions = countryInfo[countryValue].regions;
   
-  if (regions[regionValue]) {
+  let region = regions.find(nextRegion => nextRegion.value === regionValue);
+  
+  if (region) {
     return regionValue;
   }
   
-  const region = regions.find(region => region.label === regionValue);
+  region = regions.find(nextRegion => nextRegion.label === regionValue);
   
   if (region) {
     return region.value;
