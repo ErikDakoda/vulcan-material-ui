@@ -360,7 +360,8 @@ export const getCountryContinent = (countryValue) => {
 };
 
 
-// Given a region value or label, returns the region value (QC or Quebec => QC)
+// Given a region value or label, returns the region value (QC or Quebec => QC) 
+// or false if the regionValue is invalid
 export const validateRegion = (countryValue, regionValue) => {
   if (!countryInfo[countryValue] || !countryInfo[countryValue].regions) {
     return regionValue;
@@ -379,6 +380,6 @@ export const validateRegion = (countryValue, regionValue) => {
   if (region) {
     return region.value;
   } else {
-    return null;
+    return false;
   }
 };

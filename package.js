@@ -1,6 +1,6 @@
 Package.describe({
   name: 'erikdakoda:vulcan-material-ui',
-  version: '1.12.8_15',
+  version: '1.12.8_16',
   summary: 'Replacement for Vulcan (http://vulcanjs.org/) components using material-ui',
   git: 'https://github.com/ErikDakoda/vulcan-material-ui',
   documentation: 'README.md'
