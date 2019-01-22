@@ -206,12 +206,6 @@ const MuiSuggest = createReactClass({
     this.changeValue(suggestion);
   },
   
-  releaseFocus: function () {
-    setTimeout(() => {
-      document.body.focus();
-    }, 0);
-  },
-  
   changeValue: function (suggestion) {
     if (!suggestion) {
       suggestion = { label: '', value: null };
@@ -298,7 +292,7 @@ const MuiSuggest = createReactClass({
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
         renderSuggestionsContainer={this.renderSuggestionsContainer}
         shouldRenderSuggestions={this.shouldRenderSuggestions}
-        focusInputOnSuggestionClick={true}
+        focusInputOnSuggestionClick={false}
         alwaysRenderSuggestions={false}
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}
@@ -323,7 +317,7 @@ const MuiSuggest = createReactClass({
   },
   
   renderInputComponent: function (inputProps) {
-    const { classes, autoFocus, autoComplete, value, ref, startAdornment, endAdornment, ...rest } = inputProps;
+    const { classes, autoFocus, autoComplete, value, ref, startAdornment, endAdornment, disabled, ...rest } = inputProps;
     
     return (
       <Input
@@ -336,6 +330,7 @@ const MuiSuggest = createReactClass({
         type="text"
         startAdornment={startAdornment}
         endAdornment={endAdornment}
+        disabled={disabled}
         inputProps={{
           ...rest,
         }}
