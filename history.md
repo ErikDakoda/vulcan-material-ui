@@ -1,3 +1,9 @@
+1.12.8_17 / 2019-02-02
+======================
+
+ * TooltipIntl: Changed display from 'inline-block' to 'inherit' for more flexibility
+ * Countries: Added getRegionLabel function
+ 
 1.12.8_16 / 2019-01-21
 ======================
 

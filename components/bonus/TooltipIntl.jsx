@@ -13,7 +13,7 @@ import classNames from 'classnames';
 const styles = theme => ({
   
   root: {
-    display: 'inline-block',
+    display: 'inherit',
   },
   
   tooltip: {
@@ -21,7 +21,7 @@ const styles = theme => ({
   },
   
   buttonWrap: {
-    display: 'inline-block',
+    display: 'inherit',
   },
   
   button: {},
