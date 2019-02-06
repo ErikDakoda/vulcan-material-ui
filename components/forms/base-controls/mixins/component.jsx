@@ -119,6 +119,9 @@ export default {
       'parentFieldName',
       'itemIndex',
       'formComponents',
+      'autoValue',
+      'minCount',
+      'maxCount'
     ];
     
     return _omit(props, removedFields);
