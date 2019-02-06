@@ -50,6 +50,7 @@ import './forms/controls/Url';
 import './theme/ThemeStyles';
 
 import './ui/Button';
+import './ui/Alert';
 
 import './upload/UploadImage';
 import './upload/UploadInner';
