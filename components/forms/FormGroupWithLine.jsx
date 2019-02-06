@@ -19,7 +19,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * -3,
     marginRight: theme.spacing.unit * -3,
   },
-  subheading: {
+  subtitle1: {
     marginTop: theme.spacing.unit * 5,
     position: 'relative',
   },
@@ -34,7 +34,7 @@ const styles = theme => ({
       alignItems: 'center',
     },
     '& > div:first-child': {
-      ...theme.typography.subheading,
+      ...theme.typography.subtitle1,
     },
     paddingTop: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
@@ -76,11 +76,11 @@ class FormGroupWithLine extends PureComponent {
     const collapsible = this.props.collapsible || this.isAdmin;
     
     return (
-      <div className={classNames(classes.subheading, collapsible && classes.collapsible)} onClick={this.toggle}>
+      <div className={classNames(classes.subtitle1, collapsible && classes.collapsible)} onClick={this.toggle}>
         
         <Divider className={classes.divider}/>
         
-        <Typography className={classes.typography} variant="subheading" gutterBottom>
+        <Typography className={classes.typography} variant="subtitle1" gutterBottom>
           <div>
             {this.props.label}
           </div>

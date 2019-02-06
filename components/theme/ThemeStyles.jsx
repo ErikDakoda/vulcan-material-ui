@@ -125,30 +125,30 @@ const ThemeStyles = ({ theme, classes }) => {
     <Grid container className={classNames('theme-styles', classes.root)}>
       
       <Grid item xs={12}>
-        <Typography variant="display4">
-          Display 4: {describeTypography(theme, 'display4')}
+        <Typography variant="h1">
+          h1: {describeTypography(theme, 'h1')}
         </Typography>
-        <Typography variant="display3">
-          Display 3: {describeTypography(theme, 'display3')}
+        <Typography variant="h2">
+          h2: {describeTypography(theme, 'h2')}
         </Typography>
-        <Typography variant="display2">
-          Display 2: {describeTypography(theme, 'display2')}
+        <Typography variant="h3">
+          h3: {describeTypography(theme, 'h3')}
         </Typography>
-        <Typography variant="display1">
-          Display 1: {describeTypography(theme, 'display1')}
+        <Typography variant="h4">
+          h4: {describeTypography(theme, 'h4')}
         </Typography>
       </Grid>
       
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Typography variant="headline" gutterBottom>
-            Headline: {describeTypography(theme, 'headline')}
+          <Typography variant="h5" gutterBottom>
+            Headline: {describeTypography(theme, 'h5')}
           </Typography>
-          <Typography variant="title" gutterBottom>
-            Title: {describeTypography(theme, 'title')}
+          <Typography variant="h6" gutterBottom>
+            Title: {describeTypography(theme, 'h6')}
           </Typography>
-          <Typography variant="subheading" gutterBottom>
-            Subheading: {describeTypography(theme, 'subheading')}
+          <Typography variant="subtitle1" gutterBottom>
+            Subtitle1: {describeTypography(theme, 'subtitle1')}
           </Typography>
           <Typography variant="body1" gutterBottom>
             Body 1: {describeTypography(theme, 'body1')} - {latin}
