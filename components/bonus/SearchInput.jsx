@@ -8,7 +8,6 @@ import Input from '@material-ui/core/Input';
 import NoSsr from '@material-ui/core/NoSsr';
 import classNames from 'classnames';
 import _debounce from 'lodash/debounce';
-import KeyboardEventHandler from 'react-keyboard-event-handler';
 import autosizeInput from 'autosize-input';
 
 const styles = theme => ({
@@ -178,7 +177,7 @@ class SearchInput extends PureComponent {
     
     const searchIcon = <SearchIcon className={classes.icon} onClick={this.focusInput}/>;
     
-    const clearButton = <Components.TooltipIntl
+    const clearButton = <Components.TooltipButton
       titleId="search.clear"
       icon={<ClearIcon/>}
       onClick={this.clearSearch}
@@ -206,10 +205,8 @@ class SearchInput extends PureComponent {
         />
         <NoSsr>
           {
-            // KeyboardEventHandler is not valid on the server, where its name is undefined
-            typeof window !== 'undefined' && KeyboardEventHandler.name && !noShortcuts &&
-            
-            <KeyboardEventHandler handleKeys={['s', 'c', 'esc']} onKeyEvent={this.handleShortcutKeys}/>
+            !noShortcuts &&
+            <Components.KeyboardHandler handleKeys={['s', 'c', 'esc']} onKeyEvent={this.handleShortcutKeys}/>
           }
         </NoSsr>
       </React.Fragment>

@@ -21,7 +21,7 @@ const mainPalette = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
 const altPalette = ['A100', 'A200', 'A400', 'A700'];
 
 
-function getColorBlock(theme, classes, colorName, colorValue, colorTitle) {
+function getColorBlock (theme, classes, colorName, colorValue, colorTitle) {
   const bgColor = theme.palette[colorName][colorValue];
   
   let fgColor = theme.palette.common.black;
@@ -59,7 +59,7 @@ function getColorBlock(theme, classes, colorName, colorValue, colorTitle) {
   );
 }
 
-function getColorGroup(options) {
+function getColorGroup (options) {
   const { theme, classes, color, showAltPalette } = options;
   const cssColor = color.replace(' ', '').replace(color.charAt(0), color.charAt(0).toLowerCase());
   let colorsList = [];
@@ -74,7 +74,7 @@ function getColorGroup(options) {
   return (
     <ul className={classes.colorGroup} key={cssColor}>
       {getColorBlock(theme, classes, cssColor, 500, true)}
-      <div className={classes.blockSpace} />
+      <div className={classes.colorBlockSpace}/>
       {colorsList}
     </ul>
   );
@@ -82,21 +82,31 @@ function getColorGroup(options) {
 
 
 const styles = theme => ({
+  
   root: {},
+  
   paper: {
     padding: theme.spacing.unit * 3,
   },
+  
   name: {
     marginBottom: 60,
   },
-  blockSpace: {
-    height: 4,
+  
+  typographyBlockSpace: {
+    height: theme.spacing.unit * 3,
   },
+  
+  colorBlockSpace: {
+    height: theme.spacing.unit / 2,
+  },
+  
   colorContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  
   colorGroup: {
     padding: '16px 0',
     margin: '0 15px 0 0',
@@ -105,10 +115,12 @@ const styles = theme => ({
       flexGrow: 0,
     },
   },
+  
   colorValue: {
     ...theme.typography.caption,
     color: 'inherit',
   },
+  
 });
 
 
@@ -122,9 +134,9 @@ const latin = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitu
 
 const ThemeStyles = ({ theme, classes }) => {
   return (
-    <Grid container className={classNames('theme-styles', classes.root)}>
+    <Grid container className={classNames('theme-styles', classes.root)} spacing={16}>
       
-      <Grid item xs={12}>
+      <Grid item xs={12} gutter>
         <Typography variant="h1">
           h1: {describeTypography(theme, 'h1')}
         </Typography>
@@ -142,7 +154,7 @@ const ThemeStyles = ({ theme, classes }) => {
       <Grid item xs={12}>
         <Paper className={classes.paper}>
           <Typography variant="h5" gutterBottom>
-            Headline: {describeTypography(theme, 'h5')}
+            h5: {describeTypography(theme, 'h5')}
           </Typography>
           <Typography variant="h6" gutterBottom>
             Title: {describeTypography(theme, 'h6')}
@@ -150,6 +162,12 @@ const ThemeStyles = ({ theme, classes }) => {
           <Typography variant="subtitle1" gutterBottom>
             Subtitle1: {describeTypography(theme, 'subtitle1')}
           </Typography>
+          <Typography variant="subtitle2" gutterBottom>
+            Subtitle2: {describeTypography(theme, 'subtitle2')}
+          </Typography>
+          
+          <div className={classes.typographyBlockSpace}/>
+          
           <Typography variant="body1" gutterBottom>
             Body 1: {describeTypography(theme, 'body1')} - {latin}
           </Typography>
@@ -162,14 +180,20 @@ const ThemeStyles = ({ theme, classes }) => {
           <Typography variant="body2" gutterBottom>
             {latin}
           </Typography>
-          <Typography variant="caption" gutterBottom align="center">
-            Caption: {describeTypography(theme, 'caption')}
-          </Typography>
           <Typography gutterBottom>
             Base: {describeTypography(theme)} - {latin}
           </Typography>
+  
+          <div className={classes.typographyBlockSpace}/>
+          
+          <Typography variant="caption" gutterBottom align="center">
+            Caption text: {describeTypography(theme, 'caption')}
+          </Typography>
           <Typography variant="button" gutterBottom align="center">
-            Button - {describeTypography(theme)}
+            Button text - {describeTypography(theme)}
+          </Typography>
+          <Typography variant="overline" gutterBottom align="center">
+            Overline text - {describeTypography(theme)}
           </Typography>
         </Paper>
       </Grid>
@@ -184,7 +208,7 @@ const ThemeStyles = ({ theme, classes }) => {
           })
         }
       </Grid>
-  
+      
       <Grid item xs={12} sm={6} md={3}>
         {
           getColorGroup({
@@ -195,7 +219,7 @@ const ThemeStyles = ({ theme, classes }) => {
           })
         }
       </Grid>
-  
+      
       <Grid item xs={12} sm={6} md={3}>
         {
           getColorGroup({
@@ -206,7 +230,7 @@ const ThemeStyles = ({ theme, classes }) => {
           })
         }
       </Grid>
-  
+      
       <Grid item xs={12} sm={6} md={3}>
         {
           getColorGroup({
@@ -217,7 +241,7 @@ const ThemeStyles = ({ theme, classes }) => {
           })
         }
       </Grid>
-
+    
     </Grid>
   );
 };

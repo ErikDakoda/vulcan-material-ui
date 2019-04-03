@@ -14,7 +14,7 @@ const NewButton = ({
   
   <Components.ModalTrigger
     className={className}
-    component={<Components.TooltipIconButton titleId="datatable.new"
+    component={<Components.TooltipButton titleId="datatable.new"
                                              icon={<AddIcon/>}
                                              color={color}
                                              variant={variant}

@@ -1,3 +1,5 @@
+import { dynamicLoader, registerComponent } from 'meteor/vulcan:lib';
+
 import './accounts/AccountsButton';
 import './accounts/AccountsButtons';
 import './accounts/AccountsField';
@@ -6,10 +8,10 @@ import './accounts/AccountsForm';
 import './accounts/AccountsPasswordOrService';
 import './accounts/AccountsSocialButtons';
 
+registerComponent('KeyboardHandler', dynamicLoader(() => import('./bonus/KeyboardHandler')));
 import './bonus/LoadMore';
 import './bonus/SearchInput';
-import './bonus/TooltipIntl';
-import './bonus/TooltipIconButton';
+import './bonus/TooltipButton';
 
 import './core/Card';
 import './core/Datatable';

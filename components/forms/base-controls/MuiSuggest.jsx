@@ -203,6 +203,7 @@ const MuiSuggest = createReactClass({
   },
   
   suggestionSelected: function (event, { suggestion }) {
+    event.preventDefault();
     this.changeValue(suggestion);
   },
   

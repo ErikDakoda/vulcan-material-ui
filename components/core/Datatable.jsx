@@ -53,6 +53,7 @@ const baseStyles = theme => ({
   tableHead: {},
   tableBody: {},
   tableFooter: {},
+  tablePagination: {},
   tableRow: {},
   tableHeadCell: {},
   tableCell: {},
@@ -80,10 +81,15 @@ class Datatable extends PureComponent {
       value: '',
       query: '',
       currentSort: {},
+      paginationTerms: {
+        itemsPerPage: props.itemsPerPage,
+        limit: props.itemsPerPage,
+        offset: 0,
+      },
     };
   }
   
-  toggleSort = column => {
+  toggleSort = (column) => {
     let currentSort;
     if (!this.state.currentSort[column]) {
       currentSort = { [column]: 1 };
@@ -106,15 +112,24 @@ class Datatable extends PureComponent {
     }, 700);
   }
   
+  setPaginationTerms = (paginationTerms) => {
+    this.setState({ paginationTerms });
+  };
+  
   render () {
     if (this.props.data) {
+      const { paginate, data } = this.props;
+      const { itemsPerPage, offset } = this.state.paginationTerms;
+      const dataPage = paginate ? data.slice(offset, offset + itemsPerPage) : data;
       
       return <Components.DatatableContents
         columns={this.props.data.length ? Object.keys(this.props.data[0]) : undefined}
         {...this.props}
-        results={this.props.data}
-        count={this.props.data.length}
-        totalCount={this.props.data.length}
+        paginationTerms={paginate ? this.state.paginationTerms : undefined}
+        setPaginationTerms={paginate ? this.setPaginationTerms : undefined}
+        results={dataPage}
+        count={dataPage.length}
+        totalCount={data.length}
         showEdit={false}
         showNew={false}
       />;
@@ -195,6 +210,7 @@ Datatable.propTypes = {
   currentUser: PropTypes.object,
   classes: PropTypes.object,
   data: PropTypes.array,
+  totalCount: PropTypes.number,
   footerData: PropTypes.array,
   dense: PropTypes.string,
   queryDataRef: PropTypes.func,
@@ -204,6 +220,7 @@ Datatable.propTypes = {
   toggleSort: PropTypes.func,
   currentSort: PropTypes.object,
   paginate: PropTypes.bool,
+  itemsPerPage: PropTypes.number,
 };
 
 
@@ -227,6 +244,9 @@ const datatableContentsStyles = theme => (_assign({}, baseStyles(theme), {
   table: {
     marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 3,
+  },
+  tablePagination: {
+    marginTop: theme.spacing.unit * -3,
   },
   denseTable: theme.utils.denseTable,
   flatTable: theme.utils.flatTable,
@@ -379,19 +399,19 @@ const DatatableContents = ({
       {
         paginate &&
         
-        <TablePagination
-          component="div"
-          count={totalCount}
-          rowsPerPage={paginationTerms.itemsPerPage}
-          page={getPage(paginationTerms)}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={onChangePage}
-          onChangeRowsPerPage={onChangeRowsPerPage}
+        <TablePagination className={classes.tablePagination}
+                         component="div"
+                         count={totalCount}
+                         rowsPerPage={paginationTerms.itemsPerPage}
+                         page={getPage(paginationTerms)}
+                         backIconButtonProps={{
+                           'aria-label': 'Previous Page',
+                         }}
+                         nextIconButtonProps={{
+                           'aria-label': 'Next Page',
+                         }}
+                         onChangePage={onChangePage}
+                         onChangeRowsPerPage={onChangeRowsPerPage}
         />
       }
       {

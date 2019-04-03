@@ -1,3 +1,13 @@
+1.12.8_18 / 2019-04-03
+======================
+
+ * Upgraded to Material UI 3.9.3 and fixed deprecation warnings related to new Typography and Button variants
+ * Updated ThemeStyles component for MUI 3.9.3
+ * Upgraded to react-keyboard-event-handler 1.4.1 and abstracted it out into KeyboardHandler component that is dynamically loaded
+ * Merged and deprecated `TooltipIntl` and `TooltipIconButton` into a single `TooltipButton`
+ * Updated Datatable so that it can handle the pagination of arrays provided in the `data` prop
+ * Added new `dialogProperties` prop to ModalTrigger
+ 
 1.12.8_17 / 2019-02-02
 ======================
 

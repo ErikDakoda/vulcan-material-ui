@@ -7,6 +7,7 @@ import withTheme from '@material-ui/core/styles/withTheme';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import classNames from 'classnames';
 
 
@@ -36,10 +37,23 @@ const styles = theme => ({
     zIndex: 1701,
   },
   
+  small: {
+    width: 24,
+    height: 24,
+  },
+  
+  medium: {
+    width: 40,
+    height: 40,
+  },
+  
+  large: {
+  },
+  
 });
 
 
-const TooltipIntl = (props, { intl }) => {
+const TooltipButton = (props, { intl }) => {
   
   const {
     title,
@@ -47,6 +61,7 @@ const TooltipIntl = (props, { intl }) => {
     titleValues,
     placement,
     icon,
+    size,
     className,
     classes,
     theme,
@@ -64,7 +79,7 @@ const TooltipIntl = (props, { intl }) => {
   const tooltipClass = parent === 'popover' && classes.popoverTooltip;
   const tooltipEnterDelay = typeof enterDelay === 'number' ? enterDelay : theme.utils.tooltipEnterDelay;
   const tooltipLeaveDelay = typeof leaveDelay === 'number' ? leaveDelay : theme.utils.tooltipLeaveDelay;
-  const titleText = props.title || intl.formatMessage({ id: titleId }, titleValues);
+  const titleText = props.title || (titleId ? intl.formatMessage({ id: titleId }, titleValues) : '');
   const slug = Utils.slugify(titleId);
   
   return (
@@ -82,47 +97,48 @@ const TooltipIntl = (props, { intl }) => {
         <span className={classes.buttonWrap}>
           {
             variant === 'fab' && !!icon
-      
+    
               ?
-      
-              <Button className={classNames(classes.button, slug)}
-                      variant="fab"
-                      aria-label={title}
-                      ref={buttonRef}
-                      {...properties}
+    
+              <Fab className={classNames(classes.button, slug)}
+                   size={size}
+                   aria-label={title}
+                   ref={buttonRef}
+                   {...properties}
               >
                 {iconWithClass}
-              </Button>
-      
+              </Fab>
+    
               :
-      
+    
               !!icon
-        
+      
                 ?
-        
-                <IconButton className={classNames(classes.button, slug)}
+      
+                <IconButton className={classNames(classes.button, classes[size], slug)}
                             aria-label={title}
                             ref={buttonRef}
                             {...properties}
                 >
                   {iconWithClass}
                 </IconButton>
-        
+      
                 :
-        
+      
                 variant === 'button'
-          
+        
                   ?
                   <Button className={classNames(classes.button, slug)}
+                          size={size}
                           aria-label={title}
                           ref={buttonRef}
                           {...properties}
                   >
                     {children}
                   </Button>
-          
+        
                   :
-          
+        
                   children
           }
         </span>
@@ -133,12 +149,13 @@ const TooltipIntl = (props, { intl }) => {
 };
 
 
-TooltipIntl.propTypes = {
+TooltipButton.propTypes = {
   title: PropTypes.node,
   titleId: PropTypes.string,
   titleValues: PropTypes.object,
   placement: PropTypes.string,
   icon: PropTypes.node,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
   className: PropTypes.string,
   classes: PropTypes.object,
   buttonRef: PropTypes.func,
@@ -151,18 +168,19 @@ TooltipIntl.propTypes = {
 };
 
 
-TooltipIntl.defaultProps = {
+TooltipButton.defaultProps = {
   placement: 'bottom',
   parent: 'default',
+  size: 'large',
 };
 
 
-TooltipIntl.contextTypes = {
+TooltipButton.contextTypes = {
   intl: intlShape.isRequired,
 };
 
 
-TooltipIntl.displayName = 'TooltipIntl';
+TooltipButton.displayName = 'TooltipButton';
 
 
-registerComponent('TooltipIntl', TooltipIntl, [withStyles, styles], [withTheme]);
+registerComponent('TooltipButton', TooltipButton, [withStyles, styles], [withTheme]);

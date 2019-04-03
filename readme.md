@@ -1,7 +1,7 @@
-# erikdakoda:vulcan-material-ui 1.12.8_13
+# erikdakoda:vulcan-material-ui 1.12.8_18
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui.com/). 
-This version has been tested against Vulcan 1.12.8 and Material-UI 3.1.0.
+This version has been tested against Vulcan 1.12.8 and Material-UI 3.9.3.
 
 To give me feedback open an issue on GitHub or you can reach me on the [Vulcan Slack](https://vulcanjs.slack.com) 
 channel as erikdakoda.
@@ -23,12 +23,9 @@ meteor npm install --save mdi-material-ui
 meteor npm install --save react-autosuggest
 meteor npm install --save autosuggest-highlight
 meteor npm install --save react-isolated-scroll
-meteor npm install --save-exact react-keyboard-event-handler@1.3.2
+meteor npm install --save react-keyboard-event-handler
 meteor npm install --save autosize-input
 ```
-
-> NOTE: If you want to avoid deprecation warnings added in MUI versions after 3.1.0, you can lock MUI to the currently supported version using `meteor npm install --save @material-ui/core@3.1.0`. Don't for get to remove or update the version number when you update this package in the future.
-
 
 > IMPORTANT: Please note that I have abandoned material-ui-icons in favor of mdi-material-ui because it has a much larger [selection of icons](https://materialdesignicons.com/).
 
@@ -78,7 +75,7 @@ const theme = {
 };
 ```
 
-You can use tooltipEnterDelay (or any other variable you define in utils) anywhere you include the withTheme HOC. See `/components/bonus/TooltipIconButton.jsx` for an example.
+You can use tooltipEnterDelay (or any other variable you define in utils) anywhere you include the withTheme HOC. See `/components/bonus/TooltipButton.jsx` for an example.
 
 You can use errorMessage (or any other style fragment you define in utils) anywhere you include the withStyles HOC. See `/components/accounts/Form.jsx` for an example.
 
@@ -92,7 +89,7 @@ Sometimes the React rendered on the server and the client don't match exactly an
 
 Your pages should still render correctly, but there may be a blink and redraw when the first page after SSR loads in the browser.
 
-In your own code, make sure that your components will render the same on the server and the client. This means not referring to client-side object such as `document` or `jQuery`. If you have a misbehaving component, try wrapping it with [react-no-ssr](https://github.com/kadirahq/react-no-ssr). 
+In your own code, make sure that your components will render the same on the server and the client. This means not referring to client-side object such as `document` or `jQuery`. If you have a misbehaving component, try wrapping it with NoSsr (`import NoSsr from '@material-ui/core/NoSsr';`). 
 
 ## Form Controls
 
@@ -152,7 +149,7 @@ const AgendaJobActions = ({ collection, document }) => {
     Meteor.call('scheduleAgent', document.agentId);
   };
   
-  return <Components.TooltipIconButton titleId="executions.execute_now"
+  return <Components.TooltipButton titleId="executions.execute_now"
                                        icon={<Components.ExecutionsIcon/>}
                                        onClick={scheduleAgent}/>;
 };

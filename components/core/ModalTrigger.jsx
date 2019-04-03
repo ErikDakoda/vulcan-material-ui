@@ -60,6 +60,7 @@ class ModalTrigger extends PureComponent {
       className,
       dialogClassName,
       dialogOverflow,
+      dialogProperties,
       labelId,
       component,
       titleId,
@@ -98,6 +99,7 @@ class ModalTrigger extends PureComponent {
                 onClose={this.closeModal}
                 fullWidth={true}
                 classes={{ paper: classNames(classes.dialogPaper, overflowClass) }}
+                {...dialogProperties}
         >
           
           {
@@ -131,6 +133,7 @@ ModalTrigger.propTypes = {
   className: PropTypes.string,
   dialogClassName: PropTypes.string,
   dialogOverflow: PropTypes.bool,
+  dialogProperties: PropTypes.object,
   label: PropTypes.string,
   labelId: PropTypes.string,
   component: PropTypes.object,

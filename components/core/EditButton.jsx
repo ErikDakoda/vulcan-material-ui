@@ -17,7 +17,7 @@ const EditButton = ({
   
   <Components.ModalTrigger
     classes={triggerClasses}
-    component={<Components.TooltipIconButton titleId="datatable.edit"
+    component={<Components.TooltipButton titleId="datatable.edit"
                                              icon={<EditIcon/>}
                                              color={color}
                                              variant={variant}
