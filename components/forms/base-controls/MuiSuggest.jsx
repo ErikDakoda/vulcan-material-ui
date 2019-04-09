@@ -362,11 +362,11 @@ const MuiSuggest = createReactClass({
         <div>
           {parts.map((part, index) => {
             return part.highlight ? (
-              <span key={index} style={{ fontWeight: 500 }}>
+              <span key={index} style={{ fontWeight: 'bolder' }}>
               {part.text}
             </span>
             ) : (
-              <strong key={index} style={{ fontWeight: 300 }}>
+              <strong key={index} style={{ fontWeight: 'normal' }}>
                 {part.text}
               </strong>
             );
