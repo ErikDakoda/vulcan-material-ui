@@ -354,6 +354,12 @@ export const getCountryLabel = (countryValue) => {
 };
 
 
+export const getCountryCode = (countryName) => {
+  const country = countries.find(country => country.label === countryName);
+  return country ? country.value : '';
+};
+
+
 export const getCountryContinent = (countryValue) => {
   const country = countries.find(country => country.value === countryValue);
   return country ? country.continent : '';

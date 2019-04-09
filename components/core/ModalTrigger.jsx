@@ -61,6 +61,7 @@ class ModalTrigger extends PureComponent {
       dialogClassName,
       dialogOverflow,
       dialogProperties,
+      dialogProps,
       labelId,
       component,
       titleId,
@@ -100,6 +101,7 @@ class ModalTrigger extends PureComponent {
                 fullWidth={true}
                 classes={{ paper: classNames(classes.dialogPaper, overflowClass) }}
                 {...dialogProperties}
+                {...dialogProps}
         >
           
           {
@@ -134,6 +136,7 @@ ModalTrigger.propTypes = {
   dialogClassName: PropTypes.string,
   dialogOverflow: PropTypes.bool,
   dialogProperties: PropTypes.object,
+  dialogProps: PropTypes.object,
   label: PropTypes.string,
   labelId: PropTypes.string,
   component: PropTypes.object,

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Components, registerComponent, Utils } from 'meteor/vulcan:core';
+import { registerComponent, Utils } from 'meteor/vulcan:core';
 import { intlShape } from 'meteor/vulcan:i18n';
 import withStyles from '@material-ui/core/styles/withStyles';
 import withTheme from '@material-ui/core/styles/withTheme';
@@ -8,6 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
 
 
@@ -23,6 +24,7 @@ const styles = theme => ({
   
   buttonWrap: {
     display: 'inherit',
+    position: 'relative',
   },
   
   button: {},
@@ -47,7 +49,16 @@ const styles = theme => ({
     height: 40,
   },
   
-  large: {
+  large: {},
+  
+  progress: {
+    color: theme.palette.secondary.main,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 1,
   },
   
 });
@@ -61,6 +72,7 @@ const TooltipButton = (props, { intl }) => {
     titleValues,
     placement,
     icon,
+    loading,
     size,
     className,
     classes,
@@ -100,14 +112,17 @@ const TooltipButton = (props, { intl }) => {
     
               ?
     
-              <Fab className={classNames(classes.button, slug)}
-                   size={size}
-                   aria-label={title}
-                   ref={buttonRef}
-                   {...properties}
-              >
-                {iconWithClass}
-              </Fab>
+              <>
+                <Fab className={classNames(classes.button, slug)}
+                     size={size}
+                     aria-label={title}
+                     ref={buttonRef}
+                     {...properties}
+                >
+                  {iconWithClass}
+                </Fab>
+                {loading && <CircularProgress size="auto" className={classes.progress}/>}
+              </>
     
               :
     
@@ -115,19 +130,23 @@ const TooltipButton = (props, { intl }) => {
       
                 ?
       
-                <IconButton className={classNames(classes.button, classes[size], slug)}
-                            aria-label={title}
-                            ref={buttonRef}
-                            {...properties}
-                >
-                  {iconWithClass}
-                </IconButton>
+                <>
+                  <IconButton className={classNames(classes.button, classes[size], slug)}
+                              aria-label={title}
+                              ref={buttonRef}
+                              {...properties}
+                  >
+                    {iconWithClass}
+                  </IconButton>
+                  {loading && <CircularProgress size="auto" className={classes.progress}/>}
+                </>
       
                 :
       
                 variant === 'button'
         
                   ?
+        
                   <Button className={classNames(classes.button, slug)}
                           size={size}
                           aria-label={title}
@@ -155,6 +174,7 @@ TooltipButton.propTypes = {
   titleValues: PropTypes.object,
   placement: PropTypes.string,
   icon: PropTypes.node,
+  loading: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   className: PropTypes.string,
   classes: PropTypes.object,

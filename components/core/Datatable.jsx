@@ -148,6 +148,7 @@ class Datatable extends PureComponent {
       
       const listOptions = {
         collection: collection,
+        paginationTerms: this.state.paginationTerms,
         ...options,
       };
       
@@ -161,8 +162,7 @@ class Datatable extends PureComponent {
         { ...this.state.currentSort, _id: -1 };
       
       return (
-        <div className={classNames('datatable', `datatable-${collection._name}`, classes.root,
-          className)}>
+        <div className={classNames('datatable', `datatable-${collection._name}`, classes.root, className)}>
           {/* DatatableAbove Component part*/}
           {
             showSearch &&
