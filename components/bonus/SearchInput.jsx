@@ -117,7 +117,16 @@ class SearchInput extends PureComponent {
     
     this.triggerResize = element.triggerResize;
     element.addEventListener = element._addEventListener;
+  
+    if (this.props.action) {
+      this.props.action({
+        setSearch: this.setSearch,
+        clearSearch: this.clearSearch,
+        focusInput: this.focusInput,
+      });
+    }
   }
+  
   
   componentWillUnmount () {
     if (this.removeAutosize) {
@@ -125,29 +134,34 @@ class SearchInput extends PureComponent {
     }
   }
   
+  
   handleShortcutKeys = (key, event) => {
     switch (key) {
       case 's':
+      case 'f':
         this.focusInput();
         event.preventDefault();
         break;
       case 'c':
       case 'esc':
-        this.clearSearch(event, true);
+        this.clearSearch(true);
         event.preventDefault();
         break;
     }
   };
   
+  
   handleFocus = () => {
     this.input.select();
   };
+  
   
   focusInput = (event) => {
     this.input.focus();
   };
   
-  clearSearch = (event, dontFocus) => {
+  
+  clearSearch = (dontFocus) => {
     this.setState({ value: '' }, this.triggerResize);
     this.updateQuery('');
   
@@ -156,15 +170,23 @@ class SearchInput extends PureComponent {
     }
   };
   
+  
   updateSearch = (event) => {
     const value = event.target.value;
-    this.setState({ value: value });
+    this.setSearch(value);
+  };
+  
+  
+  setSearch = (value) => {
+    this.setState({ value: value }, this.triggerResize);
     this.updateQuery(value);
   };
+  
   
   updateQuery = (value) => {
     this.props.updateQuery(value);
   };
+  
   
   render () {
     const {
@@ -180,7 +202,7 @@ class SearchInput extends PureComponent {
     const clearButton = <Components.TooltipButton
       titleId="search.clear"
       icon={<ClearIcon/>}
-      onClick={this.clearSearch}
+      onClick={() => { this.clearSearch(); }}
       classes={{
         root: classNames(!this.state.value && classes.clearDisabled),
         button: classNames('clear-button', classes.clear, dense && classes.clearDense),
@@ -217,6 +239,17 @@ class SearchInput extends PureComponent {
 
 
 SearchInput.propTypes = {
+  /**
+   * Callback fired when the component mounts.
+   * This is useful when you want to trigger an action programmatically.
+   *         setSearch(value)
+   *         clearSearch(dontFocus)
+   *         focusInput()
+   *
+   * @param {object} actions This object contains all possible actions
+   * that can be triggered programmatically.
+   */
+  action: PropTypes.func,
   classes: PropTypes.object.isRequired,
   updateQuery: PropTypes.func.isRequired,
   className: PropTypes.string,

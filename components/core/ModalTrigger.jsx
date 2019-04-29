@@ -34,8 +34,6 @@ class ModalTrigger extends PureComponent {
     super(props);
     
     this.state = { modalIsOpen: false };
-    
-    
   }
   
   componentDidMount() {
@@ -47,11 +45,17 @@ class ModalTrigger extends PureComponent {
     }
   }
 
-  openModal = () => {
+  openModal = (event) => {
+    if (event) {
+      event.stopPropagation();
+    }
     this.setState({ modalIsOpen: true });
   };
   
-  closeModal = () => {
+  closeModal = (event) => {
+    if (event) {
+      event.stopPropagation();
+    }
     this.setState({ modalIsOpen: false });
   };
   
