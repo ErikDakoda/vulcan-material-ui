@@ -102,6 +102,7 @@ class ModalTrigger extends PureComponent {
         <Dialog className={classNames(dialogClassName)}
                 open={this.state.modalIsOpen}
                 onClose={this.closeModal}
+                onClick={(event) => { event.stopPropagation(); }}
                 fullWidth={true}
                 classes={{ paper: classNames(classes.dialogPaper, overflowClass) }}
                 {...dialogProperties}

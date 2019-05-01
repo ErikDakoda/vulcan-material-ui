@@ -1,3 +1,11 @@
+1.12.8_21 / 2019-05-01
+======================
+
+ * SearchInput: Added `action` prop to provide parent component the following functions: `setSearch(value)`, `clearSearch(dontFocus)`, and `focusInput()`
+ * TooltipButton: Added `loading` prop to display loading progress indicator
+ * Datatable: Fixed bug with pagination
+ * Countries: Added function `getCountryCode(countryName)`
+ 
 1.12.8_20 / 2019-04-29
 ======================
 
