@@ -1,3 +1,7 @@
+### NOTE: This package is no longer maintained because it has been rolled into the Vulcan repository.
+
+In [Vulcan](https://github.com/VulcanJS/Vulcan) 1.13.0+ you can use `meteor add vulcan:ui-material`. Refer to the latest [readme.md](https://github.com/VulcanJS/Vulcan/tree/devel/packages/vulcan-ui-material).
+
 # erikdakoda:vulcan-material-ui 1.12.8_19
 
 Replacement for [Vulcan](http://vulcanjs.org/) components using [Material-UI](https://material-ui.com/). 
