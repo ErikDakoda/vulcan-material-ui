@@ -8,9 +8,9 @@ import { SheetsRegistry } from 'react-jss/lib/jss';
 import JssCleanup from '../components/theme/JssCleanup';
 
 
-function wrapWithMuiTheme (app, { req, res, store, apolloClient }) {
+function wrapWithMuiTheme (app, { context }) {
   const sheetsRegistry = new SheetsRegistry();
-  req.sheetsRegistry = sheetsRegistry;
+  context.sheetsRegistry = sheetsRegistry;
   
   const sheetsManager = new Map();
 
@@ -30,11 +30,12 @@ function wrapWithMuiTheme (app, { req, res, store, apolloClient }) {
 }
 
 
-function injectJss ({ req, res }) {
-  const sheets = req.sheetsRegistry.toString();
-  
-  req.dynamicHead = req.dynamicHead || '';
-  req.dynamicHead += `<style id="jss-server-side">${sheets}</style>`;
+function injectJss(sink, { context }) {
+  const sheets = context.sheetsRegistry.toString();
+  sink.appendToHead(
+    `<style id="jss-server-side">${sheets}</style>`
+  );
+  return sink
 }
 
 
